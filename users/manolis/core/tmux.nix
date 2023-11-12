@@ -8,7 +8,6 @@
     mouse = true;
     terminal = "screen-256color";
     extraConfig = ''
-      set-option -ga terminal-overrides ",xterm-256color:Tc"
       set-option -g status-style fg=yellow,bg=black
       set-window-option -g window-status-style fg=brightblue,bg=default
       set-window-option -g window-status-current-style fg=brightred,bg=default

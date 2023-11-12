@@ -14,7 +14,7 @@
       vim-airline
       vim-airline-themes
       vim-sleuth
-      vim-solarized8
+      vim-colors-solarized
       vim-surround
       {
          plugin = undotree;
@@ -77,8 +77,7 @@
 
       syn on
       set background=dark
-      colorscheme solarized8_flat
-      set termguicolors
+      colorscheme solarized
     '';
   };
 }
