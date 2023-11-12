@@ -52,6 +52,8 @@
 
   users.users.manolis.extraGroups = [ "docker" "wheel" ];
 
+  programs.dconf.enable = true;
+
   environment.systemPackages = with pkgs; [
     cups-brother-hl1210w
     docker-compose
