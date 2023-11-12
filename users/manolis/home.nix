@@ -105,7 +105,7 @@
     enable = true;
     enableAutosuggestions = true;
     autocd = true;
-    defaultKeymap = "viins";
+    initExtra = "set -o vi\necho -e \"\n$(fortune -s)\n\"";
     oh-my-zsh = {
       enable = true;
       theme = "fox";
