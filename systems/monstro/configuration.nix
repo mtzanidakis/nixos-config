@@ -54,6 +54,10 @@
 
   programs.dconf.enable = true;
 
+  environment.plasma5.excludePackages = with pkgs.libsForQt5; [
+    elisa
+  ];
+
   environment.systemPackages = with pkgs; [
     cups-brother-hl1210w
     docker-compose
