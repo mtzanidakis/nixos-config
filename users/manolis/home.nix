@@ -110,7 +110,11 @@
       enable = true;
       theme = "fox";
       plugins = [
+        "docker"
+        "docker-compose"
         "git"
+        "golang"
+        "ripgrep"
         "sudo"
       ];
     };
@@ -135,7 +139,6 @@
       kingtail = "kubectl logs -f -n default daemonsets.apps/nginx-ingress-nginx-controller";
       lwdc = "docker-compose -f docker-compose.yml -f docker-compose.override.yml";
       lwdctail = "lwdc logs --no-log-prefix --no-color -f";
-      doco = "docker-compose";
     };
   };
 
