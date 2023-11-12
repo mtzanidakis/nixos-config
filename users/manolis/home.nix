@@ -18,7 +18,6 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    alacritty
     bitwarden
     fortune
     htop
@@ -28,6 +27,7 @@
     pwgen
     ripgrep
 
+    jetbrains-mono
     jellyfin-media-player
   ];
 
@@ -181,5 +181,9 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+  };
+
+  programs.alacritty = {
+    enable = true;
   };
 }
