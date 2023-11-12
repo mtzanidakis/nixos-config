@@ -4,14 +4,12 @@
   imports = [
     ../manolis
     ../manolis/core/keychain.nix
+    ../manolis/gui
   ];
 
   home.packages = with pkgs; [
     bitwarden
 
-    jetbrains-mono
     jellyfin-media-player
   ];
-
-  programs.alacritty.enable = true;
 }
