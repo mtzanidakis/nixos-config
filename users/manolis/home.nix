@@ -162,4 +162,9 @@
       "--timeout 120"
     ];
   };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
 }
