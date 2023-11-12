@@ -1,4 +1,7 @@
 #!/bin/sh
+set -e
 pushd ~/src/nixos-config
-home-manager switch -f ./users/manolis-$(hostname -s)/home.nix
+nix build .#homeManagerConfigurations.manolis-$(hostname -s).activationPackage
+./result/activate
+rm -f -- result
 popd
