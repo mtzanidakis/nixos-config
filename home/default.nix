@@ -4,6 +4,8 @@
   home.username = "manolis";
   home.homeDirectory = "/home/manolis";
 
+  programs.home-manager.enable = true;
+
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
@@ -13,9 +15,23 @@
   # release notes.
   home.stateVersion = "23.05"; # Please read the comment before changing.
 
-  programs.home-manager.enable = true;
-
   imports = [
-    ./core
+    ./core/direnv.nix
+    ./core/fzf.nix
+    ./core/git.nix
+    ./core/tmux.nix
+    ./core/zsh.nix
   ];
+
+  home.packages = with pkgs; [
+    bat
+    fortune
+    htop
+    ncdu
+    neofetch
+    nmap
+    pwgen
+    ripgrep
+  ];
+
 }

@@ -1,37 +1,30 @@
 {
-  description = "My nixos configuration";
+  description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    # default to nixpkgs-unstable
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
-  let
-    system = "x86_64-linux";
-
-    pkgs = import nixpkgs {
-      inherit system;
-      config = { allowUnfree = true; };
-    };
-
-    lib = nixpkgs.lib;
-  in {
-    homeManagerConfigurations = {
-      manolis-monstro = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          ./users/manolis-monstro/home.nix
-        ];
-      };
-    };
-
+  outputs = inputs@{ nixpkgs, home-manager, ... }: {
     nixosConfigurations = {
-      monstro = lib.nixosSystem {
-        inherit system;
+      monstro = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
         modules = [
           ./systems/monstro/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.manolis = import ./systems/monstro/home.nix;
+            };
+          }
         ];
       };
     };
