@@ -10,6 +10,7 @@
   ];
 
   home.packages = with pkgs; [
+    ddosify
     fx
     gh
     glow
@@ -20,6 +21,8 @@
     nfpm
     nssTools
     #postman
+    speedtest-go
+    testssl
     upx
   ];
 }
