@@ -1,15 +1,17 @@
 { config, pkgs, ... }:
 
 {
-  services.printing.enable = true;
+  services = {
+    avahi = {
+      enable = true;
+      nssmdns = true;
+    };
 
-  environment.systemPackages = with pkgs; [
-    cups-brother-hl1210w
-  ];
-
-  services.avahi = {
-    enable = true;
-    nssmdns = true;
-    openFirewall = true;
+    printing = {
+      enable = true;
+      drivers = with pkgs; [
+        cups-brother-hl1210w
+      ];
+    };
   };
 }

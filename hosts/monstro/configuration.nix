@@ -5,8 +5,9 @@
     ../../nixos
     ../../nixos/bluetooth.nix
     ../../nixos/fonts.nix
-    ../../nixos/pipewire.nix
     ../../nixos/kde.nix
+    ../../nixos/pipewire.nix
+    ../../nixos/printing.nix
 
     ./hardware-configuration.nix
   ];
