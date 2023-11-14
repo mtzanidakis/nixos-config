@@ -25,6 +25,7 @@
     neofetch
     nmap
     pwgen
+    rclone
     restic
     ripgrep
     sshfs
