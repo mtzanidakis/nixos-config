@@ -2,11 +2,9 @@
 
 {
   imports = [
-    ./direnv.nix
     ./fzf.nix
     ./git.nix
     ./keychain.nix
-    ./neovim.nix
     ./starship.nix
     ./tmux.nix
     ./zsh.nix

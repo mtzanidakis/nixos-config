@@ -3,5 +3,7 @@
 {
   imports = [
     ./db.nix
+    ./direnv.nix
+    ./neovim.nix
   ];
 }
