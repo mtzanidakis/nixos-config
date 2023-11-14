@@ -4,6 +4,7 @@
   imports = [
     ./db.nix
     ./direnv.nix
+    ./docker.nix
     ./neovim.nix
     ./vscode.nix
   ];
