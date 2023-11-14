@@ -10,7 +10,6 @@
       LC_ADDRESS = "el_GR.UTF-8";
       LC_TELEPHONE = "el_GR.UTF-8";
       LC_MEASUREMENT = "el_GR.UTF-8";
-      LC_ALL = "en_US.UTF-8";
     };
   };
 
