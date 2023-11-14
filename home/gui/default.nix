@@ -8,7 +8,6 @@
 
   home.packages = with pkgs; [
     bitwarden
-    firefox
     xwaylandvideobridge
   ];
 }
