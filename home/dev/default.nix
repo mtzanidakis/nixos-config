@@ -6,6 +6,7 @@
     ./direnv.nix
     ./docker.nix
     ./go.nix
+    ./k8s.nix
     ./neovim.nix
     ./vscode.nix
   ];
