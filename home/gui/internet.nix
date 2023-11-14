@@ -5,6 +5,7 @@
     discord
     filezilla
     firefox
+    google-chrome
     nextcloud-client
     signal-desktop
     slack
