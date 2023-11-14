@@ -64,6 +64,10 @@
   programs.zsh.enable = true;
 
   services = {
+    fwupd = {
+      enable = true;
+    };
+
     openssh = {
       enable = true;
       settings = {
