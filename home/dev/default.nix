@@ -5,6 +5,7 @@
     ./db.nix
     ./direnv.nix
     ./docker.nix
+    ./go.nix
     ./neovim.nix
     ./vscode.nix
   ];

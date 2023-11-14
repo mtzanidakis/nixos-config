@@ -13,6 +13,7 @@
       nerdcommenter
       vim-airline
       vim-airline-themes
+      vim-go
       vim-sleuth
       vim-colors-solarized
       vim-surround
