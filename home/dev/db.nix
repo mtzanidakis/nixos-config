@@ -9,5 +9,6 @@
     mongosh
     mycli
     pgcli
+    sqlite
   ];
 }
