@@ -7,6 +7,13 @@
   # keep last 10 generations
   boot.loader.systemd-boot.configurationLimit = 10;
 
+  boot.kernel.sysctl = {
+    "vm.page-cluster" = 0;
+    "vm.swappiness" = 180;
+    "vm.watermark_boost_factor" = 0;
+    "vm.watermark_scale_factor" = 125;
+  };
+
   nix = {
     # weekly gc
     gc = {
