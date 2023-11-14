@@ -30,12 +30,17 @@
     dua
     eza
     fortune
+    gocryptfs
     htop
+    inetutils
+    lm_sensors
     ncdu
     neofetch
     nmap
     pwgen
+    restic
     ripgrep
+    sshfs
     unzip
     unrar
     zip
