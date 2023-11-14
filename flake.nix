@@ -16,13 +16,13 @@
       monstro = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./systems/monstro/configuration.nix
+          ./hosts/monstro/configuration.nix
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.manolis = import ./systems/monstro/home.nix;
+              users.manolis = import ./hosts/monstro/home.nix;
             };
           }
         ];

@@ -3,10 +3,10 @@
 {
   imports =
     [
-      ../common.nix
-      ../bluetooth.nix
-      ../pipewire.nix
-      ../kde.nix
+      ../../nixos
+      ../../nixos/bluetooth.nix
+      ../../nixos/pipewire.nix
+      ../../nixos/kde.nix
 
       ./hardware-configuration.nix
     ];
@@ -25,7 +25,6 @@
 
   environment.systemPackages = with pkgs; [
     docker-compose
-    firefox
   ];
 
   # This value determines the NixOS release from which the default

@@ -8,6 +8,7 @@
 
   home.packages = with pkgs; [
     bitwarden
+    firefox
 
     jetbrains-mono
     xwaylandvideobridge

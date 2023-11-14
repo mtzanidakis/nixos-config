@@ -25,6 +25,7 @@
 
   home.packages = with pkgs; [
     bat
+    dnsutils
     fortune
     htop
     ncdu
