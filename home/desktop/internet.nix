@@ -10,6 +10,7 @@
     signal-desktop
     slack
     transmission-qt
+    yt-dlp
     zoom-us
   ];
 }

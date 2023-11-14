@@ -2,8 +2,8 @@
 
 {
   home.packages = with pkgs; [
-    jellyfin-media-player
-    mpv
-    vlc
+    bitwarden
+    hunspell
+    libreoffice-qt
   ];
 }

@@ -3,11 +3,12 @@
 {
   imports = [
     ./alacritty.nix
-    ./mediaplayers.nix
+    ./internet.nix
+    ./multimedia.nix
+    ./productivity.nix
   ];
 
   home.packages = with pkgs; [
-    bitwarden
     xwaylandvideobridge
   ];
 }
