@@ -19,6 +19,7 @@
     gocryptfs
     htop
     inetutils
+    jq
     lm_sensors
     ncdu
     neofetch
