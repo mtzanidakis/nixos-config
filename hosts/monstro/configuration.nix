@@ -8,12 +8,12 @@
     ../../nixos/kde.nix
     ../../nixos/pipewire.nix
     ../../nixos/printing.nix
+    ../../nixos/systemd-boot.nix
 
     ./hardware-configuration.nix
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # install zen kernel
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
   networking.hostName = "monstro";
