@@ -1,16 +1,15 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ../../nixos
-      ../../nixos/bluetooth.nix
-      ../../nixos/fonts.nix
-      ../../nixos/pipewire.nix
-      ../../nixos/kde.nix
+  imports = [
+    ../../nixos
+    ../../nixos/bluetooth.nix
+    ../../nixos/fonts.nix
+    ../../nixos/pipewire.nix
+    ../../nixos/kde.nix
 
-      ./hardware-configuration.nix
-    ];
+    ./hardware-configuration.nix
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
