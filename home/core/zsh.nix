@@ -7,20 +7,8 @@
     autocd = true;
     initExtra = ''
       set -o vi
-      echo -e "\n$(fortune -s)\n"
+      echo -e "\n$(fortune -s)"
     '';
-    oh-my-zsh = {
-      enable = true;
-      theme = "fox";
-      plugins = [
-        "docker"
-        "docker-compose"
-        "git"
-        "golang"
-        "ripgrep"
-        "sudo"
-      ];
-    };
     shellAliases = {
       cp = "nocorrect cp -i";
       rm = "nocorrect rm -i";
