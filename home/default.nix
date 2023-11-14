@@ -33,6 +33,10 @@
     nmap
     pwgen
     ripgrep
+    unzip
+    unrar
+    zip
+    zstd
   ];
 
 }
