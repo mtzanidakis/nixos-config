@@ -10,16 +10,8 @@
         truncation_symbol = "…";
       };
 
-      hostname = {
-        ssh_only = false;
-      };
-
       kubernetes = {
         disabled = false;
-      };
-
-      username = {
-        show_always = true;
       };
     };
   };
