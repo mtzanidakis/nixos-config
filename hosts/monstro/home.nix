@@ -3,8 +3,7 @@
 {
   imports = [
     ../../home
-    ../../home/core/keychain.nix
-    ../../home/core/neovim.nix
+    ../../home/core
     ../../home/gui
     ../../home/gui/graphics.nix
     ../../home/gui/internet.nix

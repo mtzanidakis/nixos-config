@@ -14,36 +14,4 @@
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
   home.stateVersion = "23.05"; # Please read the comment before changing.
-
-  imports = [
-    ./core/direnv.nix
-    ./core/fzf.nix
-    ./core/git.nix
-    ./core/starship.nix
-    ./core/tmux.nix
-    ./core/zsh.nix
-  ];
-
-  home.packages = with pkgs; [
-    bat
-    dnsutils
-    dua
-    eza
-    fortune
-    gocryptfs
-    htop
-    inetutils
-    lm_sensors
-    ncdu
-    neofetch
-    nmap
-    pwgen
-    restic
-    ripgrep
-    sshfs
-    unzip
-    unrar
-    zip
-    zstd
-  ];
 }
