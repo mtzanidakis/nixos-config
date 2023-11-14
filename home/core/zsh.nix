@@ -10,6 +10,7 @@
       echo -e "\n$(fortune -s)"
     '';
     shellAliases = {
+      ls = "exa --all --header --git --icons --long";
       cp = "nocorrect cp -i";
       rm = "nocorrect rm -i";
       mv = "nocorrect mv -i";

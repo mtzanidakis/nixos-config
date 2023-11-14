@@ -19,6 +19,7 @@
     ./core/direnv.nix
     ./core/fzf.nix
     ./core/git.nix
+    ./core/starship.nix
     ./core/tmux.nix
     ./core/zsh.nix
   ];
@@ -26,6 +27,8 @@
   home.packages = with pkgs; [
     bat
     dnsutils
+    dua
+    eza
     fortune
     htop
     ncdu
@@ -38,28 +41,4 @@
     zip
     zstd
   ];
-
-  programs.starship = {
-    enable = true;
-
-    settings = {
-      directory = {
-        truncate_to_repo = false;
-        truncation_symbol = "…";
-      };
-
-      hostname = {
-        ssh_only = false;
-      };
-
-      kubernetes = {
-        disabled = false;
-      };
-
-      username = {
-        show_always = true;
-      };
-    };
-  };
-
 }
