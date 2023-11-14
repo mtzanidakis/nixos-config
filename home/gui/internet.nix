@@ -3,6 +3,7 @@
 {
   home.packages = with pkgs; [
     discord
+    filezilla
     firefox
     nextcloud-client
     signal-desktop
