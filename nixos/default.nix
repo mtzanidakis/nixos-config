@@ -9,9 +9,6 @@
   # enable zram swap
   zramSwap.enable = true;
 
-  # keep last 10 generations
-  boot.loader.systemd-boot.configurationLimit = 10;
-
   boot.kernel.sysctl = {
     "vm.page-cluster" = 0;
     "vm.swappiness" = 180;
