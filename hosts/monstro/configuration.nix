@@ -10,6 +10,7 @@
     ../../nixos/printing.nix
     ../../nixos/steam.nix
     ../../nixos/systemd-boot.nix
+    ../../nixos/virt-manager.nix
 
     ./hardware-configuration.nix
   ];
