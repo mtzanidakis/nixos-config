@@ -29,6 +29,7 @@
     restic
     ripgrep
     sshfs
+    tailspin
     unzip
     unrar
     zip
