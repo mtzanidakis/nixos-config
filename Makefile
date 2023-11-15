@@ -1,3 +1,5 @@
+all: upgrade
+
 .PHONY: deploy
 deploy:
 	nixos-rebuild switch --flake .#
