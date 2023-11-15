@@ -3,6 +3,7 @@
 {
   imports = [
     ./alacritty.nix
+    ./games.nix
     ./internet.nix
     ./multimedia.nix
     ./productivity.nix
