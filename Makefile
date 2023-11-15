@@ -10,8 +10,8 @@ deploy-debug:
 gc:
 	nix-collect-garbage
 
-.PHONY: gc-all
-gc-all:
+.PHONY: gc-old
+gc-old:
 	nix-collect-garbage -d
 
 .PHONY: update
