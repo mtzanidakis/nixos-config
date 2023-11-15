@@ -6,6 +6,31 @@
     enableAutosuggestions = true;
     autocd = true;
     initExtra = ''
+      function kwide {
+        kubectl $@ -o wide
+      }
+
+      function ktail {
+        local _app=$1; shift
+        kubectl logs --prefix -f -l app=''${_app} $@ | \
+          grep -E -v 'health|metrics'
+      }
+
+      function weather {
+        local _city=Cholargos
+        [[ "$1" ]] && _city="$1"
+        curl -s "https://wttr.in/''${_city}?format=3"
+      }
+
+      function rsb {
+        local _rsb=$HOME/.rsbackup
+        if [[ -z "$1" ]]; then
+          echo "available options: $(cd ''${_rsb}; echo *)"
+          return 2
+        fi
+        cd "''${_rsb}/$1"
+      }
+
       set -o vi
       echo -e "\n$(fortune -s)"
     '';
