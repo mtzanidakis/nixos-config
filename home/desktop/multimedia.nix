@@ -13,9 +13,19 @@
     kdenlive
     jellyfin-media-player
     mousai
-    mpv
     obs-studio
     vhs
     vlc
   ];
+
+  programs.mpv = {
+    enable = true;
+    config = {
+      gpu-context = "wayland";
+      hwdec = "auto-safe";
+      profile = "gpu-hq";
+      ytdl-format = "bestvideo+bestaudio";
+      vo = "gpu";
+    };
+  };
 }
