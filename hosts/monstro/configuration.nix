@@ -7,6 +7,7 @@
     ../../nixos/docker.nix
     ../../nixos/fonts.nix
     ../../nixos/kde.nix
+    ../../nixos/lwdevhosts.nix
     ../../nixos/pipewire.nix
     ../../nixos/printing.nix
     ../../nixos/steam.nix
