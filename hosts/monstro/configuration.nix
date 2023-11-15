@@ -4,6 +4,7 @@
   imports = [
     ../../nixos
     ../../nixos/bluetooth.nix
+    ../../nixos/docker.nix
     ../../nixos/fonts.nix
     ../../nixos/kde.nix
     ../../nixos/pipewire.nix
