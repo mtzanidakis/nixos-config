@@ -10,8 +10,13 @@
         truncation_symbol = "…";
       };
 
+      gcloud = {
+        disabled = true;
+      };
+
       kubernetes = {
         disabled = false;
+        format = "[$symbol$context(/$namespace)]($style) in ";
       };
     };
   };
