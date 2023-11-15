@@ -7,6 +7,7 @@
     firefox
     google-chrome
     nextcloud-client
+    nicotine-plus
     signal-desktop
     slack
     transmission-qt
