@@ -3,6 +3,7 @@
 {
   imports = [
     ../../nixos
+    ../../nixos/amd_gpu.nix
     ../../nixos/bluetooth.nix
     ../../nixos/docker.nix
     ../../nixos/flatpak.nix
