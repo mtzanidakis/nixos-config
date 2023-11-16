@@ -24,6 +24,7 @@
     ncdu
     neofetch
     nmap
+    nvd
     pwgen
     rclone
     restic
