@@ -19,6 +19,7 @@
     kdeconnect-kde
     krecorder
     sddm-kcm
+    skanlite
   ];
 
   # skip default packages
