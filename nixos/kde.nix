@@ -16,6 +16,7 @@
 
   environment.systemPackages = with pkgs.libsForQt5; [
     kcalc
+    kdeconnect-kde
     krecorder
     sddm-kcm
   ];
