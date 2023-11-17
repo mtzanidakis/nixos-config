@@ -11,5 +11,19 @@
 
   home.packages = with pkgs; [
     xwaylandvideobridge
+    xorg.xhost
   ];
+
+  home.file.pw-pa-conf = {
+    text = ''
+      pulse.properties = {
+          server.address = [
+              "unix:native"
+              "unix:/tmp/pulseaudio.socket"
+          ]
+      }
+    '';
+
+    target = "${config.xdg.configHome}/pipewire/pipewire-pulse.conf.d/socket.conf";
+  };
 }
