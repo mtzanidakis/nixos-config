@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
 {
+
+  home.sessionVariables = {
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=60";
+  };
+
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
