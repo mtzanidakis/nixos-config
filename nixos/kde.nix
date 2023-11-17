@@ -14,12 +14,14 @@
 
   programs.dconf.enable = true;
 
+  environment.systemPackages = with pkgs.libsForQt5; [
+    kcalc
+    krecorder
+    sddm-kcm
+  ];
+
   # skip default packages
   environment.plasma5.excludePackages = with pkgs.libsForQt5; [
     elisa
-  ];
-
-  environment.systemPackages = with pkgs; [
-    sddm-kcm
   ];
 }
