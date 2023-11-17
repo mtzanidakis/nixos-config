@@ -10,6 +10,8 @@
     ./zsh.nix
   ];
 
+  programs.nix-index.enable = true;
+
   home.packages = with pkgs; [
     bat
     dnsutils

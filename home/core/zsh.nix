@@ -21,6 +21,9 @@
     };
 
     initExtra = ''
+      # run nix-index first to generate index
+      source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+
       function kwide {
         kubectl $@ -o wide
       }
