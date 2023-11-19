@@ -13,29 +13,29 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  boot.initrd.luks.devices."crypt".device = "/dev/disk/by-uuid/a0691ca1-79d3-4a3d-8e9d-c22da4db815a";
+
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/8ce12104-f022-4891-b394-dee653f29d14";
+    { device = "/dev/disk/by-label/NIXOS";
       fsType = "btrfs";
       options = [ "subvol=root" "compress=zstd" "noatime"];
     };
 
-  boot.initrd.luks.devices."crypt".device = "/dev/disk/by-uuid/a0691ca1-79d3-4a3d-8e9d-c22da4db815a";
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-label/NIXBOOT";
+      fsType = "vfat";
+    };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/8ce12104-f022-4891-b394-dee653f29d14";
+    { device = "/dev/disk/by-label/NIXOS";
       fsType = "btrfs";
       options = [ "subvol=home" "compress=zstd" "noatime" ];
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/8ce12104-f022-4891-b394-dee653f29d14";
+    { device = "/dev/disk/by-label/NIXOS";
       fsType = "btrfs";
       options = [ "subvol=nix" "compress=zstd" "noatime" ];
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/6B63-3DAE";
-      fsType = "vfat";
     };
 
   swapDevices = [ ];
