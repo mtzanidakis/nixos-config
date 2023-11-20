@@ -4,6 +4,7 @@
   imports = [
    ./localization.nix
    ./users.nix
+   ./vim.nix
   ];
 
   # enable zram swap
@@ -45,16 +46,10 @@
       curl
       git
       gnumake
-      vim
     ];
 
     # add zsh completion for system packages
     pathsToLink = [ "/share/zsh" ];
-
-    variables = {
-      EDITOR = "vim";
-      VISUAL = "vim";
-    };
   };
 
   # enable zsh
