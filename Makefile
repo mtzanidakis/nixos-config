@@ -12,9 +12,9 @@ all: upgrade
 build:
 	nixos-rebuild build --flake .#
 
-.PHONY: deploy-debug
+.PHONY: build-debug
 build-debug:
-	nixos-rebuild build --flake --show-trace .#
+	nixos-rebuild build --show-trace --flake .#
 
 .PHONY: deploy
 deploy:
