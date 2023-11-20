@@ -5,4 +5,6 @@
     ../../home
     ../../home/core
   ];
+
+  programs.keychain.enable = false;
 }
