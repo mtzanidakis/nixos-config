@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [
@@ -9,8 +9,11 @@
     ./hardware-configuration.nix
   ];
 
-  # install zen kernel
+  # install latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # disable zram swap
+  zramSwap.enable = lib.mkForce false;
 
   networking.hostName = "etsi";
 
