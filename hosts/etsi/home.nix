@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   imports = [
@@ -6,5 +6,5 @@
     ../../home/core
   ];
 
-  programs.keychain.enable = false;
+  programs.keychain.enable = lib.mkForce false;
 }
