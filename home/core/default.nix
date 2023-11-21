@@ -14,6 +14,7 @@
 
   home.packages = with pkgs; [
     bat
+    comma
     dnsutils
     dua
     eza
