@@ -13,17 +13,16 @@
   ];
 
   home.packages = with pkgs; [
+    bruno
     ddosify
     fx
     gh
     glow
     go-task
     graphviz
-    insomnia
     mkcert
     nfpm
     nssTools
-    #postman
     speedtest-go
     testssl
     upx
