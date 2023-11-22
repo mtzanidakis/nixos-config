@@ -18,6 +18,7 @@
     kcalc
     kdeconnect-kde
     krecorder
+    kweather
     sddm-kcm
     skanlite
   ];
