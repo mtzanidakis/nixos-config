@@ -9,12 +9,6 @@
     ./hardware-configuration.nix
   ];
 
-  # install latest kernel
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  # disable zram swap
-  zramSwap.enable = lib.mkForce false;
-
   networking.hostName = "etsi";
   networking.interfaces.eno1.wakeOnLan.enable = true;
 

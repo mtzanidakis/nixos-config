@@ -15,12 +15,10 @@
     ../../nixos/steam.nix
     ../../nixos/systemd-boot.nix
     ../../nixos/virt-manager.nix
+    ../../nixos/zramswap.nix
 
     ./hardware-configuration.nix
   ];
-
-  # install zen kernel
-  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   networking = {
     hostName = "monstro";
