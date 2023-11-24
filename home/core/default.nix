@@ -36,6 +36,7 @@
     tailspin
     unzip
     unrar
+    wol
     zip
     zstd
   ];
