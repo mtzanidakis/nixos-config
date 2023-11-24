@@ -16,6 +16,7 @@
   zramSwap.enable = lib.mkForce false;
 
   networking.hostName = "etsi";
+  networking.interfaces.eno1.wakeOnLan.enable = true;
 
   users = {
     groups = {
