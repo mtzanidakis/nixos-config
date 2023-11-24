@@ -22,8 +22,11 @@
   # install zen kernel
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
-  networking.hostName = "monstro";
-  networking.networkmanager.enable = true; 
+  networking = {
+    hostName = "monstro";
+    networkmanager.enable = true;
+    interfaces.enp6s0.wakeOnLan.enable = true;
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
