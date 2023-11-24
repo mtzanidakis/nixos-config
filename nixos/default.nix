@@ -44,6 +44,7 @@
   environment = {
     systemPackages = with pkgs; [
       curl
+      ethtool
       git
       gnumake
     ];
