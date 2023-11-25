@@ -39,6 +39,8 @@
       ethtool
       git
       gnumake
+      pciutils
+      usbutils
     ];
 
     # add zsh completion for system packages
