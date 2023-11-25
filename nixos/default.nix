@@ -39,6 +39,7 @@
       ethtool
       git
       gnumake
+      nvme-cli
       pciutils
       usbutils
     ];
