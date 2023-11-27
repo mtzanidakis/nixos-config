@@ -36,6 +36,12 @@
       options = [ "subvol=nix" "compress=zstd" "noatime" ];
     };
 
+  fileSystems."/data" =
+    { device = "/dev/disk/by-label/NIXOS";
+      fsType = "btrfs";
+      options = [ "subvol=data" "noatime" ];
+    };
+
   swapDevices = [
     { device = "/dev/disk/by-label/NIXSWAP"; }
   ];
