@@ -4,6 +4,7 @@
   virtualisation.docker = {
     enable = true;
     autoPrune.enable = true;
+    liveRestore = false;
     storageDriver = "btrfs";
   };
 
