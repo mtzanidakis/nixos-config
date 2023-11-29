@@ -48,6 +48,7 @@
           set mouse=a
           set cursorline
           set cursorcolumn
+          set noswap
 
           au VimResized * exe "normal! \<c-w>="
 
