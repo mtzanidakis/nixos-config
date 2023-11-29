@@ -40,6 +40,19 @@
       options = [ "subvol=nix" "compress=zstd" "noatime" ];
     };
 
+  fileSystems."/mnt/data1/games" =
+    { device = "/dev/disk/by-label/NIXDATA1";
+      fsType = "btrfs";
+      options = [ "subvol=games" "compress=zstd" "noatime" ];
+    };
+
+  fileSystems."/mnt/data2" =
+    { device = "/dev/disk/by-label/NIXDATA2";
+      fsType = "ext4";
+      options = [ "noatime" ];
+    };
+
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
