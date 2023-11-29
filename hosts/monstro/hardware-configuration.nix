@@ -13,6 +13,10 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  boot.extraModprobeConfig = ''
+    options btusb enable_autosuspend=n
+  '';
+
   fileSystems."/" =
     { device = "/dev/disk/by-label/NIXOS";
       fsType = "btrfs";
