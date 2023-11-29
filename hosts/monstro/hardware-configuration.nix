@@ -13,8 +13,6 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  boot.initrd.luks.devices."crypt".device = "/dev/disk/by-uuid/a0691ca1-79d3-4a3d-8e9d-c22da4db815a";
-
   fileSystems."/" =
     { device = "/dev/disk/by-label/NIXOS";
       fsType = "btrfs";
