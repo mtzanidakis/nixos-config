@@ -66,8 +66,11 @@
       mv = "nocorrect mv -i";
       df = "df -h";
       dmesg = "dmesg -HT";
+      dpss = "docker ps --format 'table {{.ID}}\t{{.Image}}\t{{.Names}}\t{{.Status}}'";
       du = "du -hsc";
       gti = "git";
+      gdet = "git deltag";
+      gret = "git retag";
       mkdir = "nocorrect mkdir";
       whatsmyip = "dig -4 +short myip.opendns.com @resolver1.opendns.com";
       whatsmyip-curl = "curl -4 -s https://ifconfig.co";
