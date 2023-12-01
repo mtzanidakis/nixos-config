@@ -20,6 +20,10 @@ build-debug:
 deploy:
 	nixos-rebuild switch --flake .#
 
+.PHONY: deploy-boot
+deploy-boot:
+	nixos-rebuild boot --flake .#
+
 .PHONY: gc
 gc: | $(result_dir)
 	nix-collect-garbage
