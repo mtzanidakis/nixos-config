@@ -12,11 +12,6 @@
   boot.initrd.kernelModules = [ ];
   boot.extraModulePackages = [ ];
   boot.kernelModules = [ "kvm-amd" ];
-  boot.kernelParams = [ "usbcore.autosuspend=-1" ];
-
-  boot.extraModprobeConfig = ''
-    options btusb enable_autosuspend=n
-  '';
 
   fileSystems."/" =
     { device = "/dev/disk/by-label/NIXOS";
