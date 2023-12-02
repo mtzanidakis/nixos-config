@@ -6,7 +6,7 @@ NixOS Configurations for my systems, using [Flakes](https://nixos.wiki/wiki/Flak
 
 Boot a NixOS installation media, format the drive and mount root partition on `/mnt` and all additional partitions under this path. 
 
-Clone this repository and run `nixos-install --flake .#HOSTNAME` to install `HOSTNAME` system.
+Clone this repository and run `sudo nixos-install --flake .#HOSTNAME` to install `HOSTNAME` system.
 
 ## Update the system
 
