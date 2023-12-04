@@ -15,26 +15,6 @@
     fontconfig = {
       subpixel.rgba = "rgb";
       hinting.style = "slight";
-      localConf = ''
-        <alias binding="same">
-           <family>Helvetica</family>
-           <accept>
-           <family>Arial</family>
-           </accept>
-         </alias>
-         <alias binding="same">
-           <family>Times</family>
-           <accept>
-           <family>Times New Roman</family>
-           </accept>
-         </alias>
-         <alias binding="same">
-           <family>Courier</family>
-           <accept>
-           <family>Courier New</family>
-           </accept>
-         </alias>
-      '';
     };
   };
 }
