@@ -7,7 +7,7 @@
     ../../nixos/docker.nix
     ../../nixos/flatpak.nix
     ../../nixos/fonts.nix
-    ../../nixos/fprintd.nix
+    #../../nixos/fprintd.nix
     ../../nixos/kde.nix
     ../../nixos/lwdevhosts.nix
     ../../nixos/pipewire.nix
