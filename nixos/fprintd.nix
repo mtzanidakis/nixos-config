@@ -6,6 +6,6 @@
   ];
 
   services.fprintd = {
-    enabled = true;
+    enable = true;
   };
 }
