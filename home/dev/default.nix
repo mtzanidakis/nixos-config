@@ -23,6 +23,7 @@
     mkcert
     nfpm
     nssTools
+    scc
     speedtest-go
     testssl
     upx
