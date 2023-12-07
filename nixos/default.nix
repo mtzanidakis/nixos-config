@@ -46,6 +46,9 @@
 
     # add zsh completion for system packages
     pathsToLink = [ "/share/zsh" ];
+
+    # add ~/bin to PATH
+    homeBinInPath = true;
   };
 
   # enable zsh
