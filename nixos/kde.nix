@@ -12,9 +12,11 @@
     };
   };
 
+  services.colord.enable = true;
   programs.dconf.enable = true;
 
   environment.systemPackages = with pkgs.libsForQt5; [
+    colord-kde
     kcalc
     kdeconnect-kde
     krecorder
