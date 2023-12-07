@@ -48,7 +48,17 @@
           set mouse=a
           set cursorline
           set cursorcolumn
-          set noswap
+
+          set backupdir=~/.local/vim-backup
+          set directory=~/.local/vim/swap
+          set undodir=~/.local/vim/undo
+
+          for _dir in ["backup", "swap", "undo"]
+            let target_path = expand("~/.local/vim/" . _dir)
+            if !isdirectory(target_path)
+              call mkdir(target_path, "p", 0700)
+            endif
+          endfor
 
           au VimResized * exe "normal! \<c-w>="
 
@@ -68,11 +78,6 @@
 
           nnoremap <F5> :UndotreeToggle<CR>
           if has("persistent_undo")
-            let target_path = expand('~/.local/vim-undo')
-            if !isdirectory(target_path)
-              call mkdir(target_path, "p", 0700)
-            endif
-            let &undodir=target_path
             set undofile
           endif
         '';
