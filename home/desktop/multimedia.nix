@@ -3,7 +3,6 @@
 {
   home.packages = with pkgs; [
     audacity
-    blender
     curtail
     darktable
     ffmpeg
