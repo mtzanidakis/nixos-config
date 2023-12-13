@@ -29,11 +29,6 @@
   # allow unfree packages globally
   nixpkgs.config.allowUnfree = true;
 
-  # XXX: allow temporarily; unbreak builds
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0"
-  ];
-
   # timezone
   time.timeZone = "Europe/Athens";
 
