@@ -49,7 +49,7 @@
           set cursorline
           set cursorcolumn
 
-          set backupdir=~/.local/vim-backup
+          set backupdir=~/.local/vim/backup
           set directory=~/.local/vim/swap
           set undodir=~/.local/vim/undo
 
