@@ -7,6 +7,5 @@
     calibre
     hunspell
     libreoffice-qt
-    ollama
   ];
 }
