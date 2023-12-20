@@ -9,6 +9,8 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  services.btrfs.autoScrub.enable = true;
+
   nix = {
     # weekly gc
     gc = {
