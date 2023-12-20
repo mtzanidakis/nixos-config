@@ -41,6 +41,7 @@
       gnumake
       nvme-cli
       pciutils
+      smartmontools
       usbutils
     ];
 
