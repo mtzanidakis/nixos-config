@@ -15,31 +15,13 @@
 
   fileSystems."/" =
     { device = "/dev/disk/by-label/NIXOS";
-      fsType = "btrfs";
-      options = [ "subvol=root" "compress=zstd" "noatime"];
+      fsType = "ext4";
+      options = [ "noatime" "discard" ];
     };
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-label/NIXBOOT";
       fsType = "vfat";
-    };
-
-  fileSystems."/home" =
-    { device = "/dev/disk/by-label/NIXOS";
-      fsType = "btrfs";
-      options = [ "subvol=home" "compress=zstd" "noatime" ];
-    };
-
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-label/NIXOS";
-      fsType = "btrfs";
-      options = [ "subvol=nix" "compress=zstd" "noatime" ];
-    };
-
-  fileSystems."/data" =
-    { device = "/dev/disk/by-label/NIXOS";
-      fsType = "btrfs";
-      options = [ "subvol=data" "noatime" ];
     };
 
   swapDevices = [
