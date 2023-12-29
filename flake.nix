@@ -43,21 +43,6 @@
         ];
       };
 
-      pitsi = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        modules = [
-          ./hosts/pitsi/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.manolis = import ./hosts/pitsi/home.nix;
-            };
-          }
-        ];
-      };
-
       zigu = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
