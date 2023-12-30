@@ -7,8 +7,6 @@
    ./vim.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
   nix = {
     # weekly gc
     gc = {

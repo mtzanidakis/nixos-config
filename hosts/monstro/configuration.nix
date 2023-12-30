@@ -20,6 +20,8 @@
     ./hardware-configuration.nix
   ];
 
+  boot.kernelPackages = pkgs.linuxPackages_zen;
+
   networking = {
     hostName = "monstro";
     networkmanager.enable = true;
