@@ -25,7 +25,6 @@
   networking = {
     hostName = "monstro";
     networkmanager.enable = true;
-    firewall.enable = false;
     interfaces.enp5s0.wakeOnLan.enable = true;
   };
 
