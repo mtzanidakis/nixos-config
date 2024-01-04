@@ -35,9 +35,11 @@
     systemPackages = with pkgs; [
       curl
       ethtool
+      file
       git
       gnumake
       nvme-cli
+      openssl
       pciutils
       smartmontools
       usbutils
