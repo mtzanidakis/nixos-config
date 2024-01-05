@@ -20,7 +20,7 @@
     networkConfig.DHCP = "ipv4";
     address = [
       # replace this address with the one assigned to your instance
-      "2a01:4f8:1c1b:c912::1/64"
+      "2a01:4f8:c17:2326::1/64"
     ];
     routes = [
       { routeConfig.Gateway = "fe80::1"; }
