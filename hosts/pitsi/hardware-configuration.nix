@@ -28,4 +28,6 @@
   swapDevices = [
     { device = "/dev/disk/by-label/NIXSWAP"; }
   ];
+
+  networking.useNetworkd = true;
 }
