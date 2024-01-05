@@ -9,6 +9,10 @@
     ./hardware-configuration.nix
   ];
 
+  users.users.manolis.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG7wZQ2vg+fcPbKMP8B6q1rIpwplVnsK6QiinxnXfEr5"
+  ];
+
   networking.hostName = "pitsi";
 
   # This value determines the NixOS release from which the default
