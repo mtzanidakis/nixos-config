@@ -14,6 +14,18 @@
   ];
 
   networking.hostName = "pitsi";
+  systemd.network.enable = true;
+  systemd.network.networks."10-wan" = {
+    matchConfig.Name = "enp1s0"; # either ens3 (amd64) or enp1s0 (arm64)
+    networkConfig.DHCP = "ipv4";
+    address = [
+      # replace this address with the one assigned to your instance
+      "2a01:4f8:1c1b:c912::1/64"
+    ];
+    routes = [
+      { routeConfig.Gateway = "fe80::1"; }
+    ];
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
