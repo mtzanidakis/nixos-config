@@ -38,6 +38,7 @@
       file
       git
       gnumake
+      molly-guard
       nvme-cli
       openssl
       pciutils
