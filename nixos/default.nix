@@ -33,6 +33,7 @@
   # default packages
   environment = {
     systemPackages = with pkgs; [
+      cifs-utils
       curl
       ethtool
       file
