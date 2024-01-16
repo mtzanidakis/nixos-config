@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs; [
     go-migrate
-    iredis
+    #iredis
     mongodb-compass
     mongodb-tools
     mongosh
