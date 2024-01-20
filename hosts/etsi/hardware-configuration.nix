@@ -24,29 +24,40 @@
       fsType = "vfat";
     };
 
-  fileSystems."/mnt/icybox/slot1" =
+  fileSystems."/mnt/pool/slot1" =
     { device = "/dev/disk/by-label/ICY_SLOT1";
       fsType = "ext4";
       options = [ "noatime" "noexec" "nosuid" ];
     };
 
-  fileSystems."/mnt/icybox/slot2" =
+  fileSystems."/mnt/pool/slot2" =
     { device = "/dev/disk/by-label/ICY_SLOT2";
       fsType = "ext4";
       options = [ "noatime" "noexec" "nosuid" ];
     };
 
-  fileSystems."/mnt/icybox/slot3" =
+  fileSystems."/mnt/pool/slot3" =
     { device = "/dev/disk/by-label/ICY_SLOT3";
       fsType = "ext4";
       options = [ "noatime" "noexec" "nosuid" ];
     };
 
-  fileSystems."/mnt/icybox/slot4" =
+  fileSystems."/mnt/parity" =
     { device = "/dev/disk/by-label/ICY_SLOT4";
       fsType = "ext4";
       options = [ "noatime" "noexec" "nosuid" ];
     };
+
+  fileSystems."/storage" = {
+    fsType = "fuse.mergerfs";
+    device = "/mnt/pool/*";
+    options = [
+      "cache.files=partial"
+      "dropcacheonclose=true"
+      "category.create=mfs"
+      "minfreespace=100G"
+    ];
+  };
 
   swapDevices = [
     { device = "/dev/disk/by-label/NIXSWAP"; }
