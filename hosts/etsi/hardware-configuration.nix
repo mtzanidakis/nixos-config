@@ -36,11 +36,11 @@
       options = [ "noatime" "noexec" "nosuid" ];
     };
 
-  fileSystems."/mnt/pool/slot3" =
-    { device = "/dev/disk/by-label/ICY_SLOT3";
-      fsType = "ext4";
-      options = [ "noatime" "noexec" "nosuid" ];
-    };
+  #fileSystems."/mnt/pool/slot3" =
+    #{ device = "/dev/disk/by-label/ICY_SLOT3";
+      #fsType = "ext4";
+      #options = [ "noatime" "noexec" "nosuid" ];
+    #};
 
   fileSystems."/mnt/parity" =
     { device = "/dev/disk/by-label/ICY_SLOT4";
