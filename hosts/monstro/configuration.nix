@@ -25,7 +25,7 @@
   networking = {
     hostName = "monstro";
     networkmanager.enable = true;
-    interfaces.enp5s0.wakeOnLan.enable = true;
+    interfaces.enp6s0.wakeOnLan.enable = true;
   };
 
   virtualisation.docker.storageDriver = "btrfs";
