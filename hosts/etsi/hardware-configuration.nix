@@ -24,6 +24,30 @@
       fsType = "vfat";
     };
 
+  fileSystems."/mnt/icybox/slot1" =
+    { device = "/dev/disk/by-label/ICY_SLOT1";
+      fsType = "ext4";
+      options = [ "noatime" "noexec" "nosuid" ];
+    };
+
+  fileSystems."/mnt/icybox/slot2" =
+    { device = "/dev/disk/by-label/ICY_SLOT2";
+      fsType = "ext4";
+      options = [ "noatime" "noexec" "nosuid" ];
+    };
+
+  fileSystems."/mnt/icybox/slot3" =
+    { device = "/dev/disk/by-label/ICY_SLOT3";
+      fsType = "ext4";
+      options = [ "noatime" "noexec" "nosuid" ];
+    };
+
+  fileSystems."/mnt/icybox/slot4" =
+    { device = "/dev/disk/by-label/ICY_SLOT4";
+      fsType = "ext4";
+      options = [ "noatime" "noexec" "nosuid" ];
+    };
+
   swapDevices = [
     { device = "/dev/disk/by-label/NIXSWAP"; }
   ];
