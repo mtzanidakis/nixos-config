@@ -48,7 +48,7 @@
       options = [ "noatime" "noexec" "nosuid" ];
     };
 
-  fileSystems."/storage" = {
+  fileSystems."/mnt/storage" = {
     fsType = "fuse.mergerfs";
     device = "/mnt/pool/*";
     options = [
