@@ -20,7 +20,6 @@
         "kubectl"
         "nmap"
         "ripgrep"
-        "sudo"
         "vi-mode"
       ];
     };
