@@ -20,9 +20,9 @@
   };
 
   # X11 keyboard layout
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "us,gr";
-    xkbOptions = "grp:alt_shift_toggle,ctrl:nocaps,grp_led:caps,terminate:ctrl_alt_bksp";
+    options = "grp:alt_shift_toggle,ctrl:nocaps,grp_led:caps,terminate:ctrl_alt_bksp";
   };
 
 }
