@@ -8,5 +8,6 @@
     hunspell
     libreoffice-qt
     pdfcpu
+    trezor-suite
   ];
 }
