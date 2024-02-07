@@ -24,6 +24,7 @@
   networking = {
     hostName = "zigu";
     networkmanager.enable = true;
+    firewall.checkReversePath = "loose";
   };
 
   virtualisation.docker.storageDriver = "btrfs";
