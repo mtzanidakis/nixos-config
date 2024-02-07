@@ -37,6 +37,7 @@
   environment = {
     systemPackages = with pkgs; [
       cifs-utils
+      linuxPackages_latest.cpupower
       curl
       ethtool
       file
