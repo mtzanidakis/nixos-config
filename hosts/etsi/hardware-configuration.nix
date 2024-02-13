@@ -51,11 +51,17 @@
   fileSystems."/mnt/storage" = {
     fsType = "fuse.mergerfs";
     device = "/mnt/pool/*";
+    noCheck = true;
     options = [
       "cache.files=partial"
       "dropcacheonclose=true"
       "category.create=mfs"
       "minfreespace=100G"
+    ];
+    depends = [
+      "/mnt/pool/slot1"
+      "/mnt/pool/slot2"
+      "/mnt/pool/slot3"
     ];
   };
 
