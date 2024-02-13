@@ -13,6 +13,31 @@
   networking.hostName = "etsi";
   networking.interfaces.eno1.wakeOnLan.enable = true;
 
+  services.snapraid = {
+    enable = true;
+    dataDisks = {
+      d1 = "/mnt/pool/slot1";
+      d2 = "/mnt/pool/slot2";
+      d3 = "/mnt/pool/slot3";
+    };
+    contentFiles = [
+      "/var/snapraid.content"
+      "/mnt/pool/slot1/.snapraid.content"
+      "/mnt/pool/slot2/.snapraid.content"
+      "/mnt/pool/slot3/.snapraid.content"
+    ];
+    parityFiles = [
+      "/mnt/parity/snapraid.parity"
+    ];
+    exclude = [
+      "*.unrecoverable"
+      "/tmp/"
+      "/lost+found/"
+    ];
+    sync.interval = "daily";
+    scrub.interval = "weekly";
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave
