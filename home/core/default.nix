@@ -10,7 +10,10 @@
     ./zsh.nix
   ];
 
-  programs.nix-index.enable = true;
+  programs = {
+    nix-index.enable = true;
+    zoxide.enable = true;
+  };
 
   home.packages = with pkgs; [
     bat
