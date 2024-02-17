@@ -12,7 +12,12 @@
 
   programs = {
     nix-index.enable = true;
-    zoxide.enable = true;
+    zoxide = {
+      enable = true;
+      options = [
+        "--cmd cd"
+      ];
+    };
   };
 
   home.packages = with pkgs; [
