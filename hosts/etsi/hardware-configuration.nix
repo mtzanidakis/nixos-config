@@ -14,13 +14,17 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-label/NIXOS";
+    { 
+      #device = "/dev/disk/by-label/NIXOS";
+      device = "/dev/nvme0n1p3";
       fsType = "ext4";
       options = [ "noatime" "discard" ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-label/NIXBOOT";
+    { 
+      #device = "/dev/disk/by-label/NIXBOOT";
+      device = "/dev/nvme0n1p3";
       fsType = "vfat";
     };
 
