@@ -24,7 +24,7 @@
   fileSystems."/boot" =
     { 
       #device = "/dev/disk/by-label/NIXBOOT";
-      device = "/dev/nvme0n1p3";
+      device = "/dev/nvme0n1p1";
       fsType = "vfat";
     };
 
