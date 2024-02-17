@@ -33,6 +33,7 @@
       "*.unrecoverable"
       "/tmp/"
       "/lost+found/"
+      "/eisvoleas/"
     ];
     sync.interval = "daily";
     scrub.interval = "weekly";
