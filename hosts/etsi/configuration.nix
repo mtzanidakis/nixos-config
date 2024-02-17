@@ -18,13 +18,11 @@
     dataDisks = {
       d1 = "/mnt/pool/slot1";
       d2 = "/mnt/pool/slot2";
-      d3 = "/mnt/pool/slot3";
     };
     contentFiles = [
       "/var/snapraid.content"
       "/mnt/pool/slot1/.snapraid.content"
       "/mnt/pool/slot2/.snapraid.content"
-      "/mnt/pool/slot3/.snapraid.content"
     ];
     parityFiles = [
       "/mnt/parity/snapraid.parity"
@@ -33,7 +31,6 @@
       "*.unrecoverable"
       "/tmp/"
       "/lost+found/"
-      "/eisvoleas/"
     ];
     sync.interval = "daily";
     scrub.interval = "weekly";
