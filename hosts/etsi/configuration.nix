@@ -18,6 +18,7 @@
     dataDisks = {
       d1 = "/mnt/pool/slot1";
       d2 = "/mnt/pool/slot2";
+      d3 = "/mnt/pool/slot3";
     };
     contentFiles = [
       "/var/snapraid.content"
