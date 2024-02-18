@@ -24,6 +24,7 @@
       "/var/snapraid.content"
       "/mnt/pool/slot1/.snapraid.content"
       "/mnt/pool/slot2/.snapraid.content"
+      "/mnt/pool/slot3/.snapraid.content"
     ];
     parityFiles = [
       "/mnt/parity/snapraid.parity"
