@@ -27,6 +27,7 @@
     bat
     comma
     dnsutils
+    dogdns
     dua
     eza
     fortune
