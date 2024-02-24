@@ -11,6 +11,9 @@
   ];
 
   programs = {
+    atuin = {
+      enable = true;
+    };
     nix-index.enable = true;
     zoxide = {
       enable = true;
