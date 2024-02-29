@@ -13,6 +13,12 @@
   programs = {
     atuin = {
       enable = true;
+      settings = {
+        enter_accept = false;
+      };
+      flags = [
+        "--disable-up-arrow"
+      ];
     };
     nix-index.enable = true;
     zoxide = {
