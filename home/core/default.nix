@@ -31,6 +31,7 @@
 
   home.packages = with pkgs; [
     bat
+    btop
     comma
     dnsutils
     dogdns
@@ -52,6 +53,7 @@
     ripgrep
     sshfs
     tailspin
+    tldr
     unzip
     unrar
     wget
