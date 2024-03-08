@@ -5,17 +5,17 @@
     enable = true;
     displayManager = {
       sddm.enable = true;
-      defaultSession = "plasmawayland";
+      defaultSession = "plasma";
     };
     desktopManager = {
-      plasma5.enable = true;
+      plasma6.enable = true;
     };
   };
 
   services.colord.enable = true;
   programs.dconf.enable = true;
 
-  environment.systemPackages = with pkgs.libsForQt5; [
+  environment.systemPackages = with pkgs.kdePackages; [
     colord-kde
     kcalc
     kdeconnect-kde
@@ -26,7 +26,7 @@
   ];
 
   # skip default packages
-  environment.plasma5.excludePackages = with pkgs.libsForQt5; [
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
     elisa
   ];
 }
