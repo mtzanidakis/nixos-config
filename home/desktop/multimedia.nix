@@ -7,6 +7,7 @@
     darktable
     ffmpeg
     gimp
+    glaxnimate
     handbrake
     imagemagick
     kdenlive
