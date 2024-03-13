@@ -1,32 +1,35 @@
 { config, pkgs, ... }:
 
 {
-  services.xserver = {
-    enable = true;
-    displayManager = {
-      sddm.enable = true;
-      defaultSession = "plasma";
-    };
-    desktopManager = {
-      plasma6.enable = true;
+  programs.dconf.enable = true;
+
+  services = {
+    colord.enable = true;
+    desktopManager.plasma6.enable = true;
+    xserver = {
+      enable = true;
+      displayManager = {
+        sddm.enable = true;
+        defaultSession = "plasma";
+      };
     };
   };
 
-  services.colord.enable = true;
-  programs.dconf.enable = true;
+  environment = {
+    # extra kde packages
+    systemPackages = with pkgs.kdePackages; [
+      colord-kde
+      kcalc
+      kdeconnect-kde
+      krecorder
+      kweather
+      sddm-kcm
+      skanlite
+    ];
 
-  environment.systemPackages = with pkgs.kdePackages; [
-    colord-kde
-    kcalc
-    kdeconnect-kde
-    krecorder
-    kweather
-    sddm-kcm
-    skanlite
-  ];
-
-  # skip default packages
-  environment.plasma6.excludePackages = with pkgs.kdePackages; [
-    elisa
-  ];
+    # skip default packages
+    plasma6.excludePackages = with pkgs.kdePackages; [
+      elisa
+    ];
+  };
 }
