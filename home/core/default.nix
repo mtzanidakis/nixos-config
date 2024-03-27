@@ -41,6 +41,7 @@
     gocryptfs
     htop
     inetutils
+    jnv
     jq
     lm_sensors
     ncdu
