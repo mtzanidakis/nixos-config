@@ -6,6 +6,7 @@
     filezilla
     firefox
     google-chrome
+    monolith
     nextcloud-client
     nicotine-plus
     signal-desktop
