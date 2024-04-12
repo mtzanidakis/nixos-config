@@ -5,7 +5,7 @@
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
-      LC_TIME = "en_US.UTF-8";
+      LC_TIME = "el_GR.UTF-8";
       LC_MONETARY = "el_GR.UTF-8";
       LC_ADDRESS = "el_GR.UTF-8";
       LC_TELEPHONE = "el_GR.UTF-8";
