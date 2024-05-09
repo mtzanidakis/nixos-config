@@ -13,6 +13,7 @@
   ];
 
   home.packages = with pkgs; [
+    backblaze-b2
     bruno
     ddosify
     fx

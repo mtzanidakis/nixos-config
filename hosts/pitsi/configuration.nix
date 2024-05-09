@@ -4,6 +4,7 @@
   imports = [
     ../../nixos
     ../../nixos/docker.nix
+    ../../nixos/restic.nix
     ../../nixos/systemd-boot.nix
 
     ./hardware-configuration.nix
