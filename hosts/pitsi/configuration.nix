@@ -15,6 +15,7 @@
   ];
 
   networking.hostName = "pitsi";
+  networking.domain = "netriin.net";
   systemd.network.enable = true;
   systemd.network.networks."10-wan" = {
     matchConfig.Name = "enp1s0"; # either ens3 (amd64) or enp1s0 (arm64)
