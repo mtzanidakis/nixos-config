@@ -4,6 +4,7 @@
   imports = [
     ../../nixos
     ../../nixos/docker.nix
+    ../../nixos/opensmtpd.nix
     ../../nixos/restic.nix
     ../../nixos/systemd-boot.nix
 
@@ -14,8 +15,20 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG7wZQ2vg+fcPbKMP8B6q1rIpwplVnsK6QiinxnXfEr5"
   ];
 
-  networking.hostName = "pitsi";
-  networking.domain = "netriin.net";
+  networking = {
+    hostName = "pitsi";
+    domain = "netriin.net";
+    firewall = {
+      enable = true;
+      trustedInterfaces = [ "docker0" ];
+      allowedTCPPorts = [ 22 80 443 ];
+      allowedUDPPorts = [ 41641 ];
+      extraCommands = ''
+        iptables -A INPUT -p tcp --destination-port 25 -s 172.16.0.0/12 -j ACCEPT
+      '';
+    };
+  };
+
   systemd.network.enable = true;
   systemd.network.networks."10-wan" = {
     matchConfig.Name = "enp1s0"; # either ens3 (amd64) or enp1s0 (arm64)
@@ -27,6 +40,13 @@
     routes = [
       { routeConfig.Gateway = "fe80::1"; }
     ];
+  };
+
+  environment.etc.mailname = {
+    text = ''
+      pitsi.netriin.net
+    '';
+    mode = "0644";
   };
 
   # This value determines the NixOS release from which the default
