@@ -23,9 +23,6 @@
       trustedInterfaces = [ "docker0" ];
       allowedTCPPorts = [ 22 80 443 ];
       allowedUDPPorts = [ 41641 ];
-      extraCommands = ''
-        iptables -A INPUT -p tcp --destination-port 25 -s 172.16.0.0/12 -j ACCEPT
-      '';
     };
   };
 
