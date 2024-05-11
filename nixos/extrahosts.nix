@@ -13,5 +13,9 @@
     127.0.0.1 companion.learnworlds.develop
     127.0.0.1 kafka-ui.learnworlds.develop
     127.0.0.1 profiler.learnworlds.develop
+
+    # local dev hosts
+    127.0.0.1 aris.local
+    127.0.0.1 proteins.local
   '';
 }

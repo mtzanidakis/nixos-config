@@ -6,11 +6,11 @@
     ../../nixos/intel_gpu.nix
     ../../nixos/bluetooth.nix
     ../../nixos/docker.nix
+    ../../nixos/extrahosts.nix
     ../../nixos/flatpak.nix
     ../../nixos/fonts.nix
     #../../nixos/fprintd.nix
     ../../nixos/kde.nix
-    ../../nixos/lwdevhosts.nix
     ../../nixos/pipewire.nix
     ../../nixos/printing.nix
     ../../nixos/steam.nix
