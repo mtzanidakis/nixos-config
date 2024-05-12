@@ -18,19 +18,8 @@
       ];
 
       paths = [
-        "/data/services/*/.env"
-        "/data/services/*/config"
-        "/data/services/*/data"
-        "/data/services/*/docker-compose.override.yml"
-        "/data/services/*/dumps"
-        "/data/services/*/logs"
-        "/data/sites/*/.env"
-        "/data/sites/*/config"
-        "/data/sites/*/data"
-        "/data/sites/*/docker-compose.override.yml"
-        "/data/sites/*/dumps"
-        "/data/sites/*/logs"
-        "/data/sites/*/wp-content"
+        "/home"
+        "/root"
       ];
 
       pruneOpts = [
