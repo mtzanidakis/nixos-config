@@ -8,4 +8,10 @@
   };
 
   users.users.manolis.extraGroups = [ "docker" ];
+
+  environment = {
+    systemPackages = with pkgs; [
+      ctop
+    ];
+  };
 }

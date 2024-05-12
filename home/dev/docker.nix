@@ -2,7 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    ctop
     diffoci
     dive
     docker-buildx
