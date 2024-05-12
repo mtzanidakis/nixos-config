@@ -6,7 +6,7 @@
       mailutils
     ];
 
-    etc.aliases = {
+    etc."smtpd/aliases" = {
       text = ''
         root: manolis@netriin.net
         abuse: root
@@ -25,14 +25,10 @@
   services.opensmtpd = {
     enable = true;
     serverConfiguration = ''
-      table aliases file:/etc/aliases
-
-      listen on lo
-      listen on docker0
-
+      listen on 0.0.0.0
+      table aliases file:/etc/smtpd/aliases
       action "local" maildir alias <aliases>
       action "relay" relay
-
       match for local action "local"
       match from local for any action "relay"
       match from any for any action "relay"
