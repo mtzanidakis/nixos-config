@@ -17,13 +17,7 @@
 
   networking = {
     hostName = "pitsi";
-    domain = "netriin.net";
-    firewall = {
-      enable = true;
-      trustedInterfaces = [ "docker0" ];
-      allowedTCPPorts = [ 22 80 443 ];
-      allowedUDPPorts = [ 41641 ];
-    };
+    firewall.enable = false;
   };
 
   systemd.network.enable = true;
@@ -40,9 +34,7 @@
   };
 
   environment.etc.mailname = {
-    text = ''
-      pitsi.netriin.net
-    '';
+    text = "pitsi.netriin.net";
     mode = "0644";
   };
 
