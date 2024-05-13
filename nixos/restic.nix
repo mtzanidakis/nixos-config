@@ -13,8 +13,7 @@
       };
 
       exclude = [
-        ".git"
-        ".gitkeep"
+        "lost+found"
       ];
 
       paths = [
