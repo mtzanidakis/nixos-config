@@ -40,8 +40,6 @@
 
   services.restic.backups.periodic.paths = [
     "/data"
-    "/home"
-    "/root"
   ];
 
   # This value determines the NixOS release from which the default
