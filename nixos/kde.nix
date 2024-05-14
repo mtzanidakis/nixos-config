@@ -22,6 +22,7 @@
       kcalc
       kdeconnect-kde
       krecorder
+      ksshaskpass
       kweather
       sddm-kcm
       skanlite
