@@ -5,6 +5,7 @@
     ../../nixos
     ../../nixos/docker.nix
     ../../nixos/mergerfs.nix
+    ../../nixos/restic.nix
     ../../nixos/systemd-boot.nix
 
     ./hardware-configuration.nix
@@ -37,6 +38,10 @@
     sync.interval = "daily";
     scrub.interval = "weekly";
   };
+
+  services.restic.backups.periodic.paths = [
+    "/var/services"
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
