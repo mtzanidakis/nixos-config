@@ -8,6 +8,7 @@
     vimAlias = true;
     coc.enable = true;
     plugins = with pkgs.vimPlugins; [
+      NeoSolarized
       copilot-vim
       fzf-vim
       nerdcommenter
@@ -15,7 +16,6 @@
       vim-airline-themes
       vim-go
       vim-sleuth
-      vim-colors-solarized
       vim-surround
       {
          plugin = undotree;
@@ -78,7 +78,7 @@
 
       syn on
       set background=dark
-      colorscheme solarized
+      colorscheme NeoSolarized
     '';
   };
 }
