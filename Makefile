@@ -16,6 +16,10 @@ build:
 build-debug:
 	nixos-rebuild build --show-trace --flake .#
 
+.PHONY: diff
+diff:
+	nvd diff /run/current-system result
+
 .PHONY: deploy
 deploy:
 	nixos-rebuild switch --flake .#
@@ -33,8 +37,7 @@ gc-old: | $(result_dir)
 	nix-collect-garbage -d
 
 .PHONY: ls-updates
-ls-updates: update build
-	nvd diff /run/current-system result
+ls-updates: update build diff
 
 .PHONY: update
 update:
