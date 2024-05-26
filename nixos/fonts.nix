@@ -3,7 +3,6 @@
 {
   fonts = {
     packages = with pkgs; [
-      corefonts
       dejavu_fonts
       noto-fonts
       noto-fonts-cjk
