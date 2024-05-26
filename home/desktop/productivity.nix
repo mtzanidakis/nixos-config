@@ -8,6 +8,7 @@
     hunspell
     libreoffice-qt
     pdfcpu
+    tradingview
     trezor-suite
   ];
 }
