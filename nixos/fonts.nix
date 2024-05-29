@@ -4,6 +4,7 @@
   fonts = {
     packages = with pkgs; [
       dejavu_fonts
+      roboto
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
