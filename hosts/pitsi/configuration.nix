@@ -29,7 +29,7 @@
       "2a01:4f8:c17:c437::1/64"
     ];
     routes = [
-      { routeConfig.Gateway = "fe80::1"; }
+      { Gateway = "fe80::1"; }
     ];
   };
 
