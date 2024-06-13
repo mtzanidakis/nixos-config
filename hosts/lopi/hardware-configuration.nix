@@ -29,11 +29,5 @@
     { device = "/dev/disk/by-label/NIXSWAP"; }
   ];
 
-  fileSystems."/data" =
-    { device = "/dev/disk/by-label/MIKADATA";
-      fsType = "ext4";
-      options = [ "noatime" ];
-    };
-
   networking.useNetworkd = true;
 }
