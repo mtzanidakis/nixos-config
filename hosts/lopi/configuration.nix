@@ -38,9 +38,9 @@
     mode = "0644";
   };
 
-  #services.restic.backups.periodic.paths = [
-    #"/data"
-  #];
+  services.restic.backups.periodic.paths = [
+    "/var/services"
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
