@@ -14,20 +14,28 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-label/NIXOS";
+  fileSystems."/" = {
+      device = "/dev/disk/by-label/NIXOS";
       fsType = "ext4";
       options = [ "noatime" ];
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-label/NIXBOOT";
+  fileSystems."/boot" = {
+      device = "/dev/disk/by-label/NIXBOOT";
       fsType = "vfat";
     };
 
   swapDevices = [
     { device = "/dev/disk/by-label/NIXSWAP"; }
   ];
+
+  fileSystems."/mnt/storagebox" = {
+      device = "//u410238.your-storagebox.de/backup";
+      fsType = "cifs";
+      options = let
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,user,users";
+        in ["${automount_opts},credentials=/root/.config/storagebox-secrets,uid=1000,gid=1000"];
+    };
 
   networking.useNetworkd = true;
 }
