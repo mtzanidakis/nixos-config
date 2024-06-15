@@ -39,6 +39,8 @@
       "credentials=/root/.config/storagebox-secrets"
       "uid=1000"
       "gid=1000"
+      "echo_interval=30"
+      "vers=3.0"
     ];
   };
 }
