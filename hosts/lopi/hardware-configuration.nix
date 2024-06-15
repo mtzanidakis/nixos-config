@@ -4,9 +4,9 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/profiles/qemu-guest.nix")
-    ];
+  imports = [
+    (modulesPath + "/profiles/qemu-guest.nix")
+  ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "virtio_pci" "virtio_scsi" "usbhid" "sr_mod" ];
   boot.initrd.kernelModules = [ "virtio_gpu" ];
@@ -14,31 +14,31 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
+  networking.useNetworkd = true;
+
   fileSystems."/" = {
-      device = "/dev/disk/by-label/NIXOS";
-      fsType = "ext4";
-      options = [ "noatime" ];
-    };
+    device = "/dev/disk/by-label/NIXOS";
+    fsType = "ext4";
+    options = [ "noatime" ];
+  };
 
   fileSystems."/boot" = {
-      device = "/dev/disk/by-label/NIXBOOT";
-      fsType = "vfat";
-    };
+    device = "/dev/disk/by-label/NIXBOOT";
+    fsType = "vfat";
+  };
 
   swapDevices = [
     { device = "/dev/disk/by-label/NIXSWAP"; }
   ];
 
   fileSystems."/mnt/storagebox" = {
-      device = "//u410238.your-storagebox.de/backup";
-      fsType = "cifs";
-      options = [
-        "_netdev"
-        "credentials=/root/.config/storagebox-secrets"
-        "uid=1000"
-        "gid=1000"
-      ];
-    };
-
-  networking.useNetworkd = true;
+    device = "//u410238.your-storagebox.de/backup";
+    fsType = "cifs";
+    options = [
+      "_netdev"
+      "credentials=/root/.config/storagebox-secrets"
+      "uid=1000"
+      "gid=1000"
+    ];
+  };
 }
