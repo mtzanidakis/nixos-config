@@ -43,4 +43,18 @@
       "vers=3.0"
     ];
   };
+
+  fileSystems."/mnt/media" = {
+    device = "/mnt/storagebox/media";
+    fsType = "fuse./etc/profiles/per-user/manolis/bin/gocryptfs";
+    noCheck = true;
+    options = [
+      "allow_other"
+      "nofail"
+      "passfile=/root/.config/media-gocryptfs"
+    ];
+    depends = [
+      "/mnt/storagebox"
+    ];
+  };
 }
