@@ -11,7 +11,7 @@
     nicotine-plus
     signal-desktop
     slack
-    transmission-qt
+    transmission_3-qt
     yt-dlp
     zoom-us
   ];
