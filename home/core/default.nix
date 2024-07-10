@@ -37,6 +37,7 @@
     dogdns
     dua
     eza
+    fastfetch
     fortune
     gocryptfs
     htop
@@ -45,7 +46,6 @@
     jq
     lm_sensors
     ncdu
-    neofetch
     nmap
     nvd
     pwgen
