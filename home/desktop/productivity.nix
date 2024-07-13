@@ -5,6 +5,7 @@
     bitwarden
     bitwarden-cli
     calibre
+    fastfetch
     hunspell
     libreoffice-qt
     pdfcpu

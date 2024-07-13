@@ -37,7 +37,6 @@
     dogdns
     dua
     eza
-    fastfetch
     fortune
     gocryptfs
     htop
