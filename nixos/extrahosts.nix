@@ -14,6 +14,7 @@
     127.0.0.1 companion.learnworlds.develop
     127.0.0.1 kafka-ui.learnworlds.develop
     127.0.0.1 profiler.learnworlds.develop
+    127.0.0.1 www.learnworlds.develop
 
     # local dev hosts
     127.0.0.1 adminer.local
