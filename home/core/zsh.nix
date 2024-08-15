@@ -19,7 +19,6 @@
         "golang"
         "kubectl"
         "nmap"
-        "ripgrep"
         "vi-mode"
       ];
     };
