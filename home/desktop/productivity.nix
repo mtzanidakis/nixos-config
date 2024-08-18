@@ -8,6 +8,7 @@
     fastfetch
     hunspell
     libreoffice-qt
+    obsidian
     pdfcpu
     tradingview
     trezor-suite
