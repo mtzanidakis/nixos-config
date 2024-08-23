@@ -10,6 +10,7 @@
     glaxnimate
     handbrake
     imagemagick
+    inkscape
     kdenlive
     jellyfin-media-player
     mousai
