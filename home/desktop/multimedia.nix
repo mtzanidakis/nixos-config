@@ -15,6 +15,7 @@
     jellyfin-media-player
     mousai
     obs-studio
+    scribus
     vhs
     vlc
   ];
