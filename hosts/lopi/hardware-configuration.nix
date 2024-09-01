@@ -41,6 +41,7 @@
       "gid=1000"
       "echo_interval=30"
       "vers=3.0"
+      "cache=none"
     ];
   };
 
