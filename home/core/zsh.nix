@@ -72,7 +72,7 @@
       rm = "nocorrect rm -i";
       mv = "nocorrect mv -i";
       df = "df -h";
-      dmesg = "sudo dmesg -HT";
+      dmesg = "sudo dmesg -HTP";
       dpss = "docker ps --format 'table {{.ID}}\t{{.Image}}\t{{.Names}}\t{{.Status}}'";
       du = "du -hsc";
       gti = "git";
