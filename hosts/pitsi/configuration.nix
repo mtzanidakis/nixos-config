@@ -42,6 +42,23 @@
     "/data"
   ];
 
+  services.logrotate.settings = {
+    # global options
+    header = {
+      dateext = true;
+    };
+
+    # dockerized traefik access.log
+    "/data/services/traefik/logs/access.log" = {
+      frequency = "daily";
+      rotate = 7;
+      compress = true;
+      postrotate = ''
+        /run/current-system/sw/bin/docker kill --signal=USR1 traefik
+      '';
+    };
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave
