@@ -54,7 +54,6 @@
     sshfs
     tailspin
     tldr
-    yq
     unzip
     unrar
     wget

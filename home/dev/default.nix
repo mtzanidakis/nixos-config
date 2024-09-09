@@ -21,6 +21,7 @@
     glow
     go-task
     graphviz
+    jd-diff-patch
     mkcert
     nfpm
     nssTools
@@ -28,5 +29,6 @@
     speedtest-go
     testssl
     upx
+    yq
   ];
 }
