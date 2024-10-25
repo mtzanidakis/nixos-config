@@ -6,7 +6,7 @@
       dejavu_fonts
       roboto
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       ubuntu_font_family
       (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
