@@ -11,5 +11,6 @@
     kubectl
     kubectx
     kubernetes-helm
+    stern
   ];
 }
