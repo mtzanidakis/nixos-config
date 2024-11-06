@@ -52,7 +52,6 @@
     restic
     ripgrep
     sshfs
-    tailspin
     tldr
     unzip
     unrar
