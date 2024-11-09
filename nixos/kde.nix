@@ -20,6 +20,7 @@
     systemPackages = with pkgs.kdePackages; [
       colord-kde
       kcalc
+      kclock
       kdeconnect-kde
       krecorder
       ksshaskpass
