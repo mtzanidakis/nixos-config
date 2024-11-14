@@ -117,21 +117,6 @@
           }
         ];
       };
-
-      zigu = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/zigu/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.manolis = import ./hosts/zigu/home.nix;
-            };
-          }
-        ];
-      };
     };
   };
 }
