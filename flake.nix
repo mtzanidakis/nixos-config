@@ -28,6 +28,21 @@
         ];
       };
 
+      gizu = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/gizu/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.manolis = import ./hosts/gizu/home.nix;
+            };
+          }
+        ];
+      };
+
       lopi = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
