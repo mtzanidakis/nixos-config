@@ -10,6 +10,8 @@
         truncation_symbol = "…";
       };
 
+      command_timeout = 2000;
+
       gcloud = {
         disabled = true;
       };
