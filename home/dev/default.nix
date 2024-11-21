@@ -21,6 +21,7 @@
     glow
     go-task
     graphviz
+    hyperfine
     jd-diff-patch
     mkcert
     nfpm
