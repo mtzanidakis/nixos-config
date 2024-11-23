@@ -11,6 +11,7 @@
     ../../nixos/fonts.nix
     ../../nixos/fprintd.nix
     ../../nixos/kde.nix
+    ../../nixos/ollama.nix
     ../../nixos/pipewire.nix
     ../../nixos/printing.nix
     ../../nixos/steam.nix
@@ -32,6 +33,8 @@
   services.udev.packages = with pkgs; [
     trezor-udev-rules
   ];
+
+  services.ollama.acceleration = "rocm";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
