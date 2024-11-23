@@ -34,7 +34,12 @@
     trezor-udev-rules
   ];
 
-  services.ollama.acceleration = "rocm";
+  services.ollama = {
+    acceleration = "rocm";
+    #environmentVariables = {
+      #HSA_OVERRIDE_GFX_VERSION = "11.0.0";
+    #};
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
