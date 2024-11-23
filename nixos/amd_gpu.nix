@@ -17,5 +17,6 @@
     clinfo
     lact
     rocmPackages.rocminfo
+    rocmPackages.rocm-smi
   ];
 }
