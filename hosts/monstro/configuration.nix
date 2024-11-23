@@ -10,6 +10,7 @@
     ../../nixos/flatpak.nix
     ../../nixos/fonts.nix
     ../../nixos/kde.nix
+    ../../nixos/ollama.nix
     ../../nixos/pipewire.nix
     ../../nixos/printing.nix
     ../../nixos/steam.nix
@@ -32,6 +33,8 @@
   services.udev.packages = with pkgs; [
     trezor-udev-rules
   ];
+
+  services.ollama.acceleration = "rocm";
 
   users = {
     groups = {
