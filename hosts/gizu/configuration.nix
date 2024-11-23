@@ -9,7 +9,7 @@
     ../../nixos/extrahosts.nix
     ../../nixos/flatpak.nix
     ../../nixos/fonts.nix
-    #../../nixos/fprintd.nix
+    ../../nixos/fprintd.nix
     ../../nixos/kde.nix
     ../../nixos/pipewire.nix
     ../../nixos/printing.nix
