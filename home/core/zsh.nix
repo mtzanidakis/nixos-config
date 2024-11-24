@@ -84,7 +84,7 @@
       kns = "kubens";
       kctx = "kubectx";
       kingtail = "kubectl logs -f -n default daemonsets.apps/nginx-ingress-nginx-controller";
-      lwdc = "docker-compose -f docker-compose.yml -f extra/account.yml -f extra/website.yml -f docker-compose.override.yml";
+      lwdc = "docker-compose -f docker-compose.yml -f extra/account.yml -f extra/adminer.yml -f extra/website.yml -f docker-compose.override.yml";
       lwdctail = "lwdc logs --no-log-prefix --no-color -f";
     };
   };

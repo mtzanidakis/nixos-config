@@ -7,6 +7,7 @@
     127.0.0.1 api.learnworlds.develop
     127.0.0.1 apitasks-scheduler.learnworlds.develop
     127.0.0.1 account.learnworlds.develop
+    127.0.0.1 adminer.learnworlds.develop
     127.0.0.1 analytics.learnworlds.develop
     127.0.0.1 assets.learnworlds.develop
     127.0.0.1 aurora.learnworlds.develop
