@@ -16,6 +16,7 @@
     mousai
     obs-studio
     scribus
+    spotify
     vhs
     vlc
   ];
