@@ -6,11 +6,11 @@
       dejavu_fonts
       departure-mono
       roboto
+      nerd-fonts.jetbrains-mono
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji
       ubuntu_font_family
-      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
 
     fontconfig = {
