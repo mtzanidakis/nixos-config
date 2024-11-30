@@ -6,6 +6,7 @@
     bitwarden-cli
     calibre
     fastfetch
+    gnome-frog
     hunspell
     libreoffice-qt
     obsidian
