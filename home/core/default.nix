@@ -36,6 +36,7 @@
     dnsutils
     dogdns
     dua
+    exfatprogs
     eza
     fortune
     gocryptfs
