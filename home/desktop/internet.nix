@@ -9,6 +9,7 @@
     monolith
     nextcloud-client
     nicotine-plus
+    read-it-later
     signal-desktop
     slack
     transmission_3-qt
