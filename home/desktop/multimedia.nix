@@ -16,7 +16,8 @@
     mousai
     obs-studio
     scribus
-    spotify
+    tidal-dl
+    tidal-hifi
     vhs
     vlc
   ];
