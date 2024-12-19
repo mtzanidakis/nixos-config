@@ -13,6 +13,7 @@
   boot.initrd.luks.devices."nixcrypt".device = "/dev/disk/by-label/NIXCRYPT";
   boot.extraModulePackages = [ ];
   boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelParams = [ "preempt=full" ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-label/NIXOS";
