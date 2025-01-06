@@ -39,6 +39,7 @@
       cifs-utils
       linuxPackages_latest.cpupower
       curl
+      efibootmgr
       ethtool
       file
       git
