@@ -31,5 +31,6 @@
     testssl
     upx
     yq
+    zed-editor
   ];
 }
