@@ -23,6 +23,13 @@
       ui_font_size = 18;
       buffer_font_size = 16;
       buffer_font_family = "JetBrainsMono Nerd Font";
+      assistant = {
+        default_model = {
+          provider = "ollama";
+          model = "qwen2.5-coder:latest";
+        };
+        version = "2";
+      };
       theme = {
         mode = "system";
         light = "Solarized Light";
