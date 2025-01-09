@@ -8,6 +8,7 @@
     ./go.nix
     ./k8s.nix
     ./neovim.nix
+    ./php.nix
     ./virt-manager.nix
     ./vscode.nix
   ];
