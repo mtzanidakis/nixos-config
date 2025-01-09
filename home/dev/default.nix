@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -11,6 +11,7 @@
     ./php.nix
     ./virt-manager.nix
     ./vscode.nix
+    ./zed-editor.nix
   ];
 
   home.packages = with pkgs; [
@@ -32,6 +33,5 @@
     testssl
     upx
     yq
-    zed-editor
   ];
 }
