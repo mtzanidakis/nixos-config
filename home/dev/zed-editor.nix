@@ -16,6 +16,7 @@
     ];
 
     extraPackages = with pkgs; [
+      alejandra
       nil
     ];
 
@@ -37,7 +38,7 @@
           ];
           formatter = {
             external = {
-              command = "nixfmt";
+              command = "alejandra";
             };
           };
         };
