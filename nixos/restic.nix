@@ -1,5 +1,3 @@
-{ config, lib, pkgs, ... }:
-
 {
   services.restic.backups = {
     periodic = {

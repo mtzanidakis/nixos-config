@@ -1,10 +1,8 @@
-{ config, pkgs, ... }:
-
-{
+{pkgs, ...}: {
   imports = [
-   ./localization.nix
-   ./users.nix
-   ./vim.nix
+    ./localization.nix
+    ./users.nix
+    ./vim.nix
   ];
 
   nix = {
@@ -20,7 +18,7 @@
       auto-optimise-store = true;
 
       # enable flakes
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = ["nix-command" "flakes"];
     };
   };
 
@@ -52,7 +50,7 @@
     ];
 
     # add zsh completion for system packages
-    pathsToLink = [ "/share/zsh" ];
+    pathsToLink = ["/share/zsh"];
 
     # add ~/bin to PATH
     homeBinInPath = true;

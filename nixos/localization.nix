@@ -1,5 +1,3 @@
-{ config, pkgs, ... }:
-
 {
   # locale
   i18n = {
@@ -24,5 +22,4 @@
     layout = "us,gr";
     options = "grp:alt_shift_toggle,ctrl:nocaps,grp_led:caps,terminate:ctrl_alt_bksp";
   };
-
 }

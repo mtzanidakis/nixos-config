@@ -1,5 +1,3 @@
-{ config, lib, pkgs, ... }:
-
 {
   imports = [
     ../../nixos
@@ -29,7 +27,7 @@
       "2a01:4f8:c2c:48cb::1/64"
     ];
     routes = [
-      { Gateway = "fe80::1"; }
+      {Gateway = "fe80::1";}
     ];
   };
 

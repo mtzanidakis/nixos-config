@@ -1,5 +1,3 @@
-{ config, ... }:
-
 {
   # enable zram swap
   zramSwap.enable = true;

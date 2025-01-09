@@ -1,6 +1,4 @@
-{ config, pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -18,18 +16,18 @@
       vim-sleuth
       vim-surround
       {
-         plugin = undotree;
-         config = ''
-           nnoremap <F5> :UndotreeToggle<CR>
-           if has("persistent_undo")
-             let target_path = expand('~/.local/nvim-undo')
-             if !isdirectory(target_path)
-               call mkdir(target_path, "p", 0700)
-             endif
-             let &undodir=target_path
-             set undofile
-           endif
-         '';
+        plugin = undotree;
+        config = ''
+          nnoremap <F5> :UndotreeToggle<CR>
+          if has("persistent_undo")
+            let target_path = expand('~/.local/nvim-undo')
+            if !isdirectory(target_path)
+              call mkdir(target_path, "p", 0700)
+            endif
+            let &undodir=target_path
+            set undofile
+          endif
+        '';
       }
     ];
     extraConfig = ''

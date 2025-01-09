@@ -1,6 +1,4 @@
-{ config, pkgs, ... }:
-
-{
+{pkgs, ...}: {
   users = {
     groups = {
       manolis = {
@@ -13,7 +11,7 @@
         isNormalUser = true;
         uid = 1000;
         group = "manolis";
-        extraGroups = [ "wheel" ];
+        extraGroups = ["wheel"];
         createHome = true;
         home = "/home/manolis";
         initialPassword = "password";
