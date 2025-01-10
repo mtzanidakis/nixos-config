@@ -43,7 +43,6 @@
           sysvshm
           tidy
           tokenizer
-          xml
           xmlreader
           xmlwriter
           xsl
