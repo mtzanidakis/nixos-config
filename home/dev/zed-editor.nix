@@ -5,6 +5,7 @@
     extensions = [
       "dockerfile"
       "docker-compose"
+      "git-firefly"
       "golangci_lint"
       "helm"
       "html"
