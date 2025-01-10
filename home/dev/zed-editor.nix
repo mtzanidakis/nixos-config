@@ -21,9 +21,12 @@
 
     userSettings = {
       vim_mode = true;
+      load_direnv = "shell_hook";
+      show_whitespaces = "all";
       ui_font_size = 18;
       buffer_font_size = 16;
       buffer_font_family = "JetBrainsMono Nerd Font";
+      hour_format = "hour24";
       assistant = {
         default_model = {
           provider = "ollama";
@@ -52,6 +55,18 @@
       telemetry = {
         metrics = false;
         diagnostics = false;
+      };
+      terminal = {
+        blinking = "off";
+        env = {
+          TERM = "alacritty";
+        };
+        detect_venv = {
+          on = {
+            directories = [".env" "env" ".venv" "venv"];
+            activate_script = "default";
+          };
+        };
       };
     };
   };
