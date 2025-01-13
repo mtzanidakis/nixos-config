@@ -9,6 +9,7 @@
     kubectl
     kubectx
     kubernetes-helm
+    kubent
     stern
   ];
 }
