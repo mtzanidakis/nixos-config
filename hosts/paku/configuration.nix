@@ -24,7 +24,7 @@
 
   virtualisation.docker.storageDriver = "btrfs";
   services.btrfs.autoScrub.enable = true;
-  services.xserver.xkb.options = "grp:alt_shift_toggle,terminate:ctrl_alt_bksp";
+  services.xserver.xkb.options = lib.mkForce "grp:alt_shift_toggle,terminate:ctrl_alt_bksp";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
