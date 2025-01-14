@@ -1,6 +1,6 @@
 {lib, ...}: {
   imports = [
-    ../../home
+    ../../home/aris.nix
     ../../home/core
     ../../home/desktop/aris.nix
   ];
