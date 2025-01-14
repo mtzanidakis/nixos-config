@@ -5,6 +5,7 @@
     ../../nixos/mergerfs.nix
     ../../nixos/restic.nix
     ../../nixos/systemd-boot.nix
+    ../../nixos/users-home.nix
 
     ./hardware-configuration.nix
   ];
