@@ -42,6 +42,35 @@
     "/var/services"
   ];
 
+  services.samba = {
+    enable = true;
+    securityType = "user";
+    settings = {
+      global = {
+        "workgroup" = "WORKGROUP";
+        "server string" = "etsi";
+        "netbios name" = "etsi";
+        "security" = "user";
+        "hosts allow" = "192.168.68. 127.0.0.1 localhost";
+        "hosts deny" = "0.0.0.0/0";
+        "guest account" = "nobody";
+        "map to guest" = "bad user";
+      };
+      "storage" = {
+        "path" = "/mnt/storage";
+        "read only" = "no";
+        "guest ok" = "no";
+        "browseable" = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+      };
+    };
+  };
+
+  services.samba-wsdd = {
+    enable = true;
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave
