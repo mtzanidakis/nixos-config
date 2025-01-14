@@ -50,8 +50,8 @@
         "server string" = "etsi";
         "netbios name" = "etsi";
         "security" = "user";
-        "bind interfaces only" = "yes";
-        "interfaces" = "lo eno1 tailscale0";
+        #"bind interfaces only" = "yes";
+        #"interfaces" = "lo eno1 tailscale0";
         "guest account" = "nobody";
         "map to guest" = "bad user";
       };
