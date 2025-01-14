@@ -1,4 +1,4 @@
-{
+{lib, ...}: {
   imports = [
     ../../nixos
     ../../nixos/nvidia1xxx_gpu.nix
