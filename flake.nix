@@ -83,6 +83,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               users.manolis = import ./hosts/paku/home.nix;
+              users.aris = import ./hosts/paku/home-aris.nix;
             };
           }
         ];
