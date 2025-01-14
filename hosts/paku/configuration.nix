@@ -17,8 +17,10 @@
     ./hardware-configuration.nix
   ];
 
-  networking.hostName = "paku";
-  networkmanager.enable = true;
+  networking = {
+    hostName = "paku";
+    networkmanager.enable = true;
+  };
 
   virtualisation.docker.storageDriver = "btrfs";
   services.btrfs.autoScrub.enable = true;
