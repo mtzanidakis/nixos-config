@@ -50,8 +50,8 @@
         "server string" = "etsi";
         "netbios name" = "etsi";
         "security" = "user";
-        "hosts allow" = "192.168.68. 127.0.0.1 localhost";
-        "hosts deny" = "0.0.0.0/0";
+        "bind interfaces only" = "yes";
+        "interfaces" = "lo eno1 tailscale0";
         "guest account" = "nobody";
         "map to guest" = "bad user";
       };
