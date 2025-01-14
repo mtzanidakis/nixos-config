@@ -42,6 +42,7 @@
     inetutils
     jnv
     jq
+    iperf
     lm_sensors
     ncdu
     nmap
