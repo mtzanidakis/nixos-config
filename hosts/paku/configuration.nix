@@ -25,7 +25,7 @@
   virtualisation.docker.storageDriver = "btrfs";
   services.btrfs.autoScrub.enable = true;
   services.xserver.xkb.options = lib.mkForce "grp:alt_shift_toggle,terminate:ctrl_alt_bksp";
-  services.displayManager.sddm = {
+  services.displayManager = {
     autoLogin.enable = true;
     autoLogin.user = "aris";
   };
