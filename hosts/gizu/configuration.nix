@@ -35,7 +35,6 @@
   services.ollama = {
     acceleration = "rocm";
     environmentVariables = {
-      OLLAMA_LLM_LIBRARY = "rocm_v60000u_avx2";
       HSA_OVERRIDE_GFX_VERSION = "11.0.2";
     };
   };
