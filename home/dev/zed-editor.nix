@@ -29,8 +29,10 @@
       hour_format = "hour24";
       assistant = {
         default_model = {
-          provider = "ollama";
-          model = "qwen2.5-coder:latest";
+          # provider = "ollama";
+          # model = "qwen2.5-coder:latest";
+          provider = "copilot_chat";
+          model = "gpt-4o";
         };
         version = "2";
       };
