@@ -34,9 +34,7 @@
 
   services.ollama = {
     acceleration = "rocm";
-    environmentVariables = {
-      HSA_OVERRIDE_GFX_VERSION = "11.0.2";
-    };
+    rocmOverrideGfx = "11.0.2";
   };
 
   # This value determines the NixOS release from which the default
