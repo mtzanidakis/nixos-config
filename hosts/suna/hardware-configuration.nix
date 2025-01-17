@@ -17,57 +17,14 @@
   boot.extraModulePackages = [];
 
   fileSystems."/" = {
-    #device = "/dev/disk/by-label/NIXOS";
-    device = "/dev/nvme0n1p3";
+    device = "/dev/disk/by-label/NIXOS";
     fsType = "ext4";
     options = ["noatime" "discard"];
   };
 
   fileSystems."/boot" = {
-    #device = "/dev/disk/by-label/NIXBOOT";
-    device = "/dev/nvme0n1p1";
+    device = "/dev/disk/by-label/NIXBOOT";
     fsType = "vfat";
-  };
-
-  fileSystems."/mnt/pool/slot1" = {
-    device = "/dev/disk/by-label/ICY_SLOT1";
-    fsType = "ext4";
-    options = ["noatime" "noexec" "nosuid"];
-  };
-
-  fileSystems."/mnt/pool/slot2" = {
-    device = "/dev/disk/by-label/ICY_SLOT2";
-    fsType = "ext4";
-    options = ["noatime" "noexec" "nosuid"];
-  };
-
-  fileSystems."/mnt/pool/slot3" = {
-    device = "/dev/disk/by-label/ICY_SLOT3";
-    fsType = "ext4";
-    options = ["discard" "noatime" "noexec" "nosuid"];
-  };
-
-  fileSystems."/mnt/parity" = {
-    device = "/dev/disk/by-label/ICY_SLOT4";
-    fsType = "ext4";
-    options = ["noatime" "noexec" "nosuid"];
-  };
-
-  fileSystems."/mnt/storage" = {
-    fsType = "fuse.mergerfs";
-    device = "/mnt/pool/*";
-    noCheck = true;
-    options = [
-      "cache.files=partial"
-      "dropcacheonclose=true"
-      "category.create=mfs"
-      "minfreespace=100G"
-    ];
-    depends = [
-      "/mnt/pool/slot1"
-      "/mnt/pool/slot2"
-      "/mnt/pool/slot3"
-    ];
   };
 
   swapDevices = [

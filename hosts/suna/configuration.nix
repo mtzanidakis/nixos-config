@@ -2,7 +2,6 @@
   imports = [
     ../../nixos
     ../../nixos/docker.nix
-    ../../nixos/mergerfs.nix
     ../../nixos/restic.nix
     ../../nixos/systemd-boot.nix
     ../../nixos/users-home.nix
@@ -11,8 +10,7 @@
   ];
 
   networking = {
-    hostName = "etsi";
-    interfaces.eno1.wakeOnLan.enable = true;
+    hostName = "suna";
     firewall = {
       allowedTCPPorts = [
         45876 # beszel
@@ -20,67 +18,9 @@
     };
   };
 
-  services.snapraid = {
-    enable = true;
-    dataDisks = {
-      d1 = "/mnt/pool/slot1";
-      d2 = "/mnt/pool/slot2";
-      d3 = "/mnt/pool/slot3";
-    };
-    contentFiles = [
-      "/var/snapraid.content"
-      "/mnt/pool/slot1/.snapraid.content"
-      "/mnt/pool/slot2/.snapraid.content"
-      "/mnt/pool/slot3/.snapraid.content"
-    ];
-    parityFiles = [
-      "/mnt/parity/snapraid.parity"
-    ];
-    exclude = [
-      "*.unrecoverable"
-      "/tmp/"
-      "/lost+found/"
-    ];
-    sync.interval = "daily";
-    scrub.interval = "weekly";
-  };
-
   services.restic.backups.periodic.paths = [
     "/var/services"
   ];
-
-  services.samba = {
-    enable = true;
-    openFirewall = true;
-    settings = {
-      global = {
-        "workgroup" = "WORKGROUP";
-        "server string" = "etsi";
-        "netbios name" = "etsi";
-        "security" = "user";
-        "use sendfile" = "yes";
-        "guest account" = "nobody";
-        "map to guest" = "bad user";
-      };
-      "storage" = {
-        "path" = "/mnt/storage";
-        "read only" = "no";
-        "guest ok" = "no";
-        "browseable" = "yes";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-      };
-    };
-  };
-
-  services.samba-wsdd = {
-    enable = true;
-    openFirewall = true;
-  };
-
-  services.scrutiny = {
-    enable = true;
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -88,5 +28,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
 }
