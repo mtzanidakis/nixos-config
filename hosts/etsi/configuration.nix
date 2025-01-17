@@ -10,8 +10,15 @@
     ./hardware-configuration.nix
   ];
 
-  networking.hostName = "etsi";
-  networking.interfaces.eno1.wakeOnLan.enable = true;
+  networking = {
+    hostName = "etsi";
+    interfaces.eno1.wakeOnLan.enable = true;
+    firewall = {
+      allowedTCPPorts = [
+        45876 # beszel
+      ];
+    };
+  };
 
   services.snapraid = {
     enable = true;
@@ -44,6 +51,7 @@
 
   services.samba = {
     enable = true;
+    openFirewall = true;
     settings = {
       global = {
         "workgroup" = "WORKGROUP";
@@ -67,6 +75,7 @@
 
   services.samba-wsdd = {
     enable = true;
+    openFirewall = true;
   };
 
   services.scrutiny = {
