@@ -11,11 +11,7 @@
 
   networking = {
     hostName = "suna";
-    firewall = {
-      allowedTCPPorts = [
-        45876 # beszel
-      ];
-    };
+    interfaces.enp3s0.wakeOnLan.enable = true;
   };
 
   services.restic.backups.periodic.paths = [
