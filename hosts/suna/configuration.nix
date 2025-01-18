@@ -1,10 +1,10 @@
 {
   imports = [
     ../../nixos
+    ../../nixos/bluetooth.nix
     ../../nixos/docker.nix
     ../../nixos/restic.nix
     ../../nixos/systemd-boot.nix
-    ../../nixos/users-home.nix
 
     ./hardware-configuration.nix
   ];
