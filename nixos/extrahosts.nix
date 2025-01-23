@@ -16,6 +16,7 @@
     127.0.0.1 profiler.learnworlds.develop
     127.0.0.1 string-is.learnworlds.develop
     127.0.0.1 www.learnworlds.develop
+    127.0.0.1 urlshortener.learnworlds.develop
 
     # local dev hosts
     127.0.0.1 adminer.local
