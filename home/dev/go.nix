@@ -10,5 +10,6 @@
     golangci-lint
     gopls
     gotools
+    go-tools
   ];
 }
