@@ -4,8 +4,8 @@
     enable32Bit = true;
     extraPackages = with pkgs; [
       libvdpau-va-gl
-      rocmPackages.clr.icd
-      rocmPackages.rocm-runtime
+      #rocmPackages.clr.icd
+      #rocmPackages.rocm-runtime
       vaapiVdpau
     ];
   };
@@ -14,7 +14,7 @@
     amdgpu_top
     clinfo
     lact
-    rocmPackages.rocminfo
-    rocmPackages.rocm-smi
+    #rocmPackages.rocminfo
+    #rocmPackages.rocm-smi
   ];
 }
