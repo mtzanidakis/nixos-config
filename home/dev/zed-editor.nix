@@ -32,7 +32,8 @@
           # provider = "ollama";
           # model = "qwen2.5-coder:latest";
           provider = "copilot_chat";
-          model = "gpt-4o";
+          #model = "gpt-4o";
+          model = "claude-3-5-sonnet";
         };
         version = "2";
       };
