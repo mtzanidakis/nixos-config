@@ -25,7 +25,14 @@
     networkmanager.enable = true;
   };
 
-  virtualisation.docker.storageDriver = "btrfs";
+  virtualisation.docker = {
+    storageDriver = "btrfs";
+    daemon.settings = {
+      ipv6 = true;
+      fixed-cidr-v6 = "fd00::/80";
+    };
+  };
+
   services.btrfs.autoScrub.enable = true;
 
   services.udev.packages = with pkgs; [
