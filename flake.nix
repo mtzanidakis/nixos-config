@@ -47,21 +47,6 @@
         ];
       };
 
-      lopi = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        modules = [
-          ./hosts/lopi/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.manolis = import ./hosts/lopi/home.nix;
-            };
-          }
-        ];
-      };
-
       mika = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
