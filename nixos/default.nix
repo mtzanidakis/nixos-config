@@ -36,6 +36,7 @@
     systemPackages = with pkgs; [
       cifs-utils
       linuxPackages_latest.cpupower
+      comma
       curl
       efibootmgr
       ethtool
