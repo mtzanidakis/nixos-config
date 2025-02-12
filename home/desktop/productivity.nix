@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     bitwarden
-    bitwarden-cli
+    #bitwarden-cli
     buffer
     calibre
     fastfetch
