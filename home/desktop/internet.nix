@@ -8,7 +8,6 @@
     nextcloud-client
     nicotine-plus
     ntfy-sh
-    read-it-later
     shoutrrr
     signal-desktop
     slack
