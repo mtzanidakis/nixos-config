@@ -17,6 +17,7 @@
   boot.extraModulePackages = [];
   boot.kernelModules = ["kvm-amd"];
   boot.kernelParams = ["preempt=full"];
+  boot.plymouth.enable = true;
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS";
