@@ -19,7 +19,10 @@
 
   networking = {
     hostName = "paku";
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      wifi.powersave = false;
+    };
   };
 
   virtualisation.docker.storageDriver = "btrfs";
