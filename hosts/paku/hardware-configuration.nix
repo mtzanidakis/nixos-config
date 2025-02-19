@@ -5,6 +5,7 @@
   config,
   lib,
   modulesPath,
+  pkgs,
   ...
 }: {
   imports = [
@@ -16,6 +17,7 @@
   boot.extraModulePackages = [];
   boot.kernelModules = ["kvm-intel"];
   boot.kernelParams = ["preempt=full"];
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_6_12;
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS";
