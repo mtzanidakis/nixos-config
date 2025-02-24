@@ -24,6 +24,7 @@
       krecorder
       ksshaskpass
       kweather
+      mlt
       sddm-kcm
       skanlite
       xwaylandvideobridge
