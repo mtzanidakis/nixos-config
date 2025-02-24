@@ -16,7 +16,6 @@
 
   home.packages = with pkgs; [
     wl-clipboard
-    xwaylandvideobridge
     xorg.xhost
   ];
 

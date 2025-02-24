@@ -9,7 +9,6 @@
     handbrake
     imagemagick
     inkscape
-    kdenlive
     jellyfin-media-player
     mousai
     obs-studio

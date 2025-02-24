@@ -20,11 +20,13 @@
       kcalc
       kclock
       kdeconnect-kde
+      kdenlive
       krecorder
       ksshaskpass
       kweather
       sddm-kcm
       skanlite
+      xwaylandvideobridge
     ];
 
     # skip default packages
