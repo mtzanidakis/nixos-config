@@ -62,22 +62,6 @@
         ];
       };
 
-      paku = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/paku/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.manolis = import ./hosts/paku/home.nix;
-              users.aris = import ./hosts/paku/home-aris.nix;
-            };
-          }
-        ];
-      };
-
       pitsi = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
