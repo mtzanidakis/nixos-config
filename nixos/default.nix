@@ -61,6 +61,10 @@
   programs.zsh.enable = true;
 
   services = {
+    envfs = {
+      enable = true;
+    };
+
     fwupd = {
       enable = true;
     };
