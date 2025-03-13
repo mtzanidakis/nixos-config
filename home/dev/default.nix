@@ -23,6 +23,7 @@
     graphviz
     hyperfine
     jd-diff-patch
+    just
     mkcert
     nfpm
     nssTools
