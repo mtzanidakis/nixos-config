@@ -36,6 +36,7 @@
     dua
     exfatprogs
     eza
+    fd
     fortune
     gocryptfs
     htop
