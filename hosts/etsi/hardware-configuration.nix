@@ -5,50 +5,61 @@
   config,
   lib,
   modulesPath,
+  pkgs,
   ...
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc"];
+  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"];
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
 
   fileSystems."/" = {
-    #device = "/dev/disk/by-label/NIXOS";
-    device = "/dev/nvme0n1p3";
+    device = "/dev/disk/by-label/NIXOS";
     fsType = "ext4";
     options = ["noatime" "discard"];
   };
 
   fileSystems."/boot" = {
-    #device = "/dev/disk/by-label/NIXBOOT";
-    device = "/dev/nvme0n1p1";
+    device = "/dev/disk/by-label/NIXBOOT";
     fsType = "vfat";
   };
 
   fileSystems."/mnt/pool/slot1" = {
-    device = "/dev/disk/by-label/ICY_SLOT1";
+    device = "/dev/disk/by-label/SLOT1";
     fsType = "ext4";
     options = ["noatime" "noexec" "nosuid"];
   };
 
   fileSystems."/mnt/pool/slot2" = {
-    device = "/dev/disk/by-label/ICY_SLOT2";
+    device = "/dev/disk/by-label/SLOT2";
     fsType = "ext4";
     options = ["noatime" "noexec" "nosuid"];
   };
 
   fileSystems."/mnt/pool/slot3" = {
-    device = "/dev/disk/by-label/ICY_SLOT3";
+    device = "/dev/disk/by-label/SLOT3";
     fsType = "ext4";
-    options = ["discard" "noatime" "noexec" "nosuid"];
+    options = ["noatime" "noexec" "nosuid"];
+  };
+
+  fileSystems."/mnt/pool/slot4" = {
+    device = "/dev/disk/by-label/SLOT4";
+    fsType = "ext4";
+    options = ["noatime" "noexec" "nosuid"];
+  };
+
+  fileSystems."/mnt/pool/slot5" = {
+    device = "/dev/disk/by-label/SLOT5";
+    fsType = "ext4";
+    options = ["noatime" "noexec" "nosuid"];
   };
 
   fileSystems."/mnt/parity" = {
-    device = "/dev/disk/by-label/ICY_SLOT4";
+    device = "/dev/disk/by-label/SLOT6";
     fsType = "ext4";
     options = ["noatime" "noexec" "nosuid"];
   };
@@ -67,6 +78,8 @@
       "/mnt/pool/slot1"
       "/mnt/pool/slot2"
       "/mnt/pool/slot3"
+      "/mnt/pool/slot4"
+      "/mnt/pool/slot5"
     ];
   };
 

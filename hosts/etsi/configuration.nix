@@ -12,7 +12,7 @@
 
   networking = {
     hostName = "etsi";
-    interfaces.eno1.wakeOnLan.enable = true;
+    interfaces.enp1s0.wakeOnLan.enable = true;
     firewall = {
       allowedTCPPorts = [
         45876 # beszel
@@ -26,12 +26,16 @@
       d1 = "/mnt/pool/slot1";
       d2 = "/mnt/pool/slot2";
       d3 = "/mnt/pool/slot3";
+      d4 = "/mnt/pool/slot4";
+      d5 = "/mnt/pool/slot5";
     };
     contentFiles = [
       "/var/snapraid.content"
       "/mnt/pool/slot1/.snapraid.content"
       "/mnt/pool/slot2/.snapraid.content"
       "/mnt/pool/slot3/.snapraid.content"
+      "/mnt/pool/slot4/.snapraid.content"
+      "/mnt/pool/slot5/.snapraid.content"
     ];
     parityFiles = [
       "/mnt/parity/snapraid.parity"
