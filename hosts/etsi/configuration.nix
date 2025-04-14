@@ -45,7 +45,7 @@
       "/tmp/"
       "/lost+found/"
     ];
-    sync.interval = "daily";
+    sync.interval = "*-*-* 00/4:00:00";
     scrub.interval = "weekly";
   };
 
