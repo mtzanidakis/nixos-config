@@ -44,6 +44,7 @@
       "*.unrecoverable"
       "/tmp/"
       "/lost+found/"
+      "/mnt/pool/*/downloads/incomplete/"
     ];
     sync.interval = "*-*-* 00/4:00:00";
     scrub.interval = "weekly";
