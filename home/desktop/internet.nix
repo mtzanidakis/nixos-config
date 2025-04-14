@@ -9,7 +9,7 @@
     nicotine-plus
     ntfy-sh
     shoutrrr
-    signal-desktop
+    signal-desktop-source
     slack
     transmission_3-qt
     yt-dlp
