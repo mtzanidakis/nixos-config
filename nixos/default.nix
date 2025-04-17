@@ -40,6 +40,7 @@
       file
       git
       gnumake
+      lesspipe
       nvme-cli
       openssl
       pciutils
@@ -56,6 +57,12 @@
 
   # enable zsh
   programs.zsh.enable = true;
+
+  # add lesspipe support for less
+  programs.less = {
+    enable = true;
+    lessopen = "|${pkgs.lesspipe}/bin/lesspipe.sh %s";
+  };
 
   services = {
     envfs = {
