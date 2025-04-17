@@ -18,6 +18,7 @@
         "--disable-up-arrow"
       ];
     };
+    lesspipe.enable = true;
     nix-index.enable = true;
     zoxide = {
       enable = true;
