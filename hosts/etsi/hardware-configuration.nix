@@ -28,6 +28,12 @@
     fsType = "vfat";
   };
 
+  fileSystems."/mnt/data1" = {
+    device = "/dev/disk/by-label/DATA1";
+    fsType = "ext4";
+    options = ["noatime" "nosuid" "discard"];
+  };
+
   fileSystems."/mnt/pool/slot1" = {
     device = "/dev/disk/by-label/SLOT1";
     fsType = "ext4";
