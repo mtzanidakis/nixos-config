@@ -3,7 +3,6 @@
     audacity
     curtail
     darktable
-    easytag
     feishin
     ffmpeg
     gimp
