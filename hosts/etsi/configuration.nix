@@ -44,16 +44,8 @@
       "*.unrecoverable"
       "/tmp/"
       "/lost+found/"
-      "/mnt/pool/slot1/downloads/incomplete/"
-      "/mnt/pool/slot2/downloads/incomplete/"
-      "/mnt/pool/slot3/downloads/incomplete/"
-      "/mnt/pool/slot4/downloads/incomplete/"
-      "/mnt/pool/slot5/downloads/incomplete/"
-      "/mnt/pool/slot1/downloads/slskd/"
-      "/mnt/pool/slot2/downloads/slskd/"
-      "/mnt/pool/slot3/downloads/slskd/"
-      "/mnt/pool/slot4/downloads/slskd/"
-      "/mnt/pool/slot5/downloads/slskd/"
+      "incomplete/"
+      "slskd/"
     ];
     sync.interval = "*-*-* 00/4:00:00";
     scrub.interval = "weekly";
