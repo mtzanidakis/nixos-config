@@ -31,6 +31,7 @@
   # default packages
   environment = {
     systemPackages = with pkgs; [
+      bc
       cifs-utils
       linuxPackages_latest.cpupower
       comma
