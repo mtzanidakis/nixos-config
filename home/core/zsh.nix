@@ -20,7 +20,7 @@
       ];
     };
 
-    initExtra = ''
+    initContent = ''
       # run getnixindexdb first
       source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
 
