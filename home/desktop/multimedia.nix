@@ -3,6 +3,7 @@
     audacity
     curtail
     darktable
+    easytag
     feishin
     ffmpeg
     gimp
@@ -13,7 +14,9 @@
     jellyfin-media-player
     mousai
     obs-studio
+    picard
     scribus
+    tidal-dl
     vhs
     vlc
   ];
