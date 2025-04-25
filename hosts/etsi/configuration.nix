@@ -45,6 +45,7 @@
       "/tmp/"
       "/lost+found/"
       "/mnt/pool/*/downloads/incomplete/"
+      "/mnt/pool/*/downloads/slskd/"
     ];
     sync.interval = "*-*-* 00/4:00:00";
     scrub.interval = "weekly";
