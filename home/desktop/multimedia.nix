@@ -3,6 +3,7 @@
     audacity
     curtail
     darktable
+    feishin
     ffmpeg
     gimp
     glaxnimate
@@ -13,8 +14,6 @@
     mousai
     obs-studio
     scribus
-    tidal-dl
-    tidal-hifi
     vhs
     vlc
   ];
