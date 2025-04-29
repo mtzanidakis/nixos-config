@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   imports = [
     ../../nixos
     ../../nixos/docker.nix
