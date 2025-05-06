@@ -2,7 +2,6 @@
   home.packages = with pkgs; [
     bitwarden
     bitwarden-cli
-    buffer
     calibre
     fastfetch
     gnome-frog
