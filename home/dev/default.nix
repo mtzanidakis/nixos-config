@@ -21,6 +21,7 @@
     glow
     go-task
     graphviz
+    httpie
     hyperfine
     jd-diff-patch
     just
