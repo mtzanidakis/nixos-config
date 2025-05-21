@@ -1,9 +1,6 @@
 {
   programs.keychain = {
     enable = true;
-    agents = [
-      "ssh"
-    ];
     keys = [
       "github_ed25519"
       "id_ed25519"
