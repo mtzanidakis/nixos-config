@@ -9,6 +9,7 @@
     kubectl
     kubectx
     kubernetes-helm
+    kubernetes-helmPlugins.helm-diff
     kubent
     stern
   ];
