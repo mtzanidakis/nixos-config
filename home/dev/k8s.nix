@@ -8,9 +8,12 @@
     helmfile
     kubectl
     kubectx
-    kubernetes-helm
-    kubernetes-helmPlugins.helm-diff
     kubent
     stern
+    (wrapHelm kubernetes-helm {
+      plugins = with pkgs.kubernetes-helmPlugins; [
+        helm-diff
+      ];
+    })
   ];
 }
