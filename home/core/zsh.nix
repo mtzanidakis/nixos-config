@@ -81,7 +81,7 @@
       kns = "kubens";
       kctx = "kubectx";
       kingtail = "kubectl logs -f -n default daemonsets.apps/nginx-ingress-nginx-controller";
-      lwdc = "docker-compose -f docker-compose.yml -f extra/adminer.yml -f extra/website.yml -f extra/marketplace.yml -f extra/cameraman.yml -f extra/pubsub-emulator.yml -f extra/cloner.yml -f extra/lwdemomaker.yml -f extra/iplocate.yml -f extra/mailpit.yml -f docker-compose.override.yml";
+      lwdc = "docker-compose -f docker-compose.yml -f extra/account.yml -f extra/adminer.yml -f extra/website.yml -f extra/marketplace.yml -f extra/cameraman.yml -f extra/pubsub-emulator.yml -f extra/cloner.yml -f extra/lwdemomaker.yml -f extra/iplocate.yml -f extra/mailpit.yml -f docker-compose.override.yml";
       lwdctail = "lwdc logs --no-log-prefix --no-color -f";
     };
   };
