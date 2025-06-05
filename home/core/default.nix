@@ -34,6 +34,7 @@
     dnsutils
     dogdns
     dua
+    duf
     exfatprogs
     eza
     fd
