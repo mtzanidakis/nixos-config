@@ -4,7 +4,7 @@
     enableZshIntegration = true;
     settings = {
       theme = "Solarized Dark - Patched";
-      font-size = 13;
+      font-size = 12;
     };
   };
 }
