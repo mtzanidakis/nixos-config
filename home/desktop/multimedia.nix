@@ -5,7 +5,7 @@
     darktable
     feishin
     ffmpeg
-    gimp
+    gimp3
     glaxnimate
     handbrake
     imagemagick
