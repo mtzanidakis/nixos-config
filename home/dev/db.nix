@@ -2,7 +2,6 @@
   home.packages = with pkgs; [
     dbgate
     go-migrate
-    iredis
     mongodb-compass
     mongodb-tools
     mongosh
