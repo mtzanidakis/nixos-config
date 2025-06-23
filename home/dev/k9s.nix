@@ -3,22 +3,18 @@
     enable = true;
 
     views = {
-      k9s = {
-        views = {
-          "v1/pods" = {
-            columns = [
-              "NAME"
-              "PF"
-              "READY"
-              "RESTARTS"
-              "STATUS"
-              "AGE"
-              "CPU"
-              "MEM"
-              "IP"
-            ];
-          };
-        };
+      "v1/pods" = {
+        columns = [
+          "NAME"
+          "PF"
+          "READY"
+          "RESTARTS"
+          "STATUS"
+          "AGE"
+          "CPU"
+          "MEM"
+          "IP"
+        ];
       };
     };
 
