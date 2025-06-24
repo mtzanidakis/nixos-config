@@ -34,6 +34,26 @@
       };
     };
 
+    plugins = {
+      stern = {
+        shortCut = "Ctrl-L";
+        confirm = false;
+        description = "Logs <Stern>";
+        scopes = [ "pods" ];
+        command = "stern";
+        background = false;
+        args = [
+          "--tail"
+          "50"
+          "$FILTER"
+          "-n"
+          "$NAMESPACE"
+          "--context"
+          "$CONTEXT"
+        ];
+      };
+    };
+
     skins = {
       skin = {
         foreground = "#839495";
