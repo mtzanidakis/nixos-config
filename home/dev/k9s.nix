@@ -54,8 +54,19 @@
       };
     };
 
+    settings = {
+      k9s = {
+        skipLatestRevCheck = true;
+        ui = {
+          logoless = true;
+          enableMouse = true;
+          skin = "solarized";
+        };
+      };
+    };
+
     skins = {
-      skin = {
+      solarized = {
         foreground = "#839495";
         background = "#002833";
         "current_line" = "#003440";
