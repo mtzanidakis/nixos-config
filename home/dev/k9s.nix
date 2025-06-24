@@ -4,16 +4,23 @@
 
     views = {
       "v1/pods" = {
+        sortColumn = "NAME:asc";
         columns = [
           "NAME"
-          "PF"
+          "VERSION:.metadata.labels.version"
           "READY"
-          "RESTARTS"
           "STATUS"
-          "AGE"
+          "RESTARTS"
           "CPU"
           "MEM"
+          "NODE|H"
+          "PF"
           "IP"
+          "AGE"
+          "%CPU/R|H"
+          "%CPU/L|H"
+          "%MEM/R|H"
+          "%MEM/L|H"
         ];
       };
     };
