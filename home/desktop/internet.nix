@@ -11,6 +11,7 @@
     shoutrrr
     signal-desktop
     slack
+    telegram-desktop
     transmission_3-qt
     yt-dlp
   ];
