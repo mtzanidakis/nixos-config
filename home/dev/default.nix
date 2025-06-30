@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   imports = [
+    ./ai.nix
     ./db.nix
     ./direnv.nix
     ./docker.nix
