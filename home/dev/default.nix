@@ -18,6 +18,7 @@
     ddosify
     fx
     gh
+    glab
     glow
     go-task
     graphviz
