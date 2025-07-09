@@ -53,6 +53,7 @@
 
   services.restic.backups.periodic.paths = [
     "/var/services"
+    "/mnt/storage/immich"
   ];
 
   services.samba = {
