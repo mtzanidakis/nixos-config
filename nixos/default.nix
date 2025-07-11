@@ -42,7 +42,9 @@
       git
       gnumake
       lesspipe
+      lsof
       moreutils
+      nettools
       nvme-cli
       openssl
       pciutils
