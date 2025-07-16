@@ -49,6 +49,7 @@
       openssl
       pciutils
       smartmontools
+      somo
       usbutils
     ];
 
