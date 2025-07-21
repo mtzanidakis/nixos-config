@@ -5,6 +5,7 @@
     ./direnv.nix
     ./docker.nix
     ./go.nix
+    ./js.nix
     ./k8s.nix
     ./neovim.nix
     ./php.nix
