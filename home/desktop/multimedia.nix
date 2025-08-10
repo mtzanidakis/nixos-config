@@ -2,7 +2,7 @@
   home.packages = with pkgs; [
     audacity
     curtail
-    darktable
+    #darktable
     feishin
     ffmpeg
     gimp3
