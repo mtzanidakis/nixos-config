@@ -7,8 +7,6 @@
     monolith
     nextcloud-client
     nicotine-plus
-    ntfy-sh
-    shoutrrr
     signal-desktop
     slack
     telegram-desktop

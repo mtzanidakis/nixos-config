@@ -48,6 +48,7 @@
     lm_sensors
     ncdu
     nmap
+    ntfy-sh
     nvd
     pwgen
     rclone
