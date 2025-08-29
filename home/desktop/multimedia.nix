@@ -10,7 +10,7 @@
     handbrake
     imagemagick
     inkscape
-    jellyfin-media-player
+    #jellyfin-media-player
     mousai
     obs-studio
     picard
