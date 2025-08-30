@@ -17,6 +17,9 @@
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
 
+  # use latest kernel
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS";
     fsType = "ext4";
