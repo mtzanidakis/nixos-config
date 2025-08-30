@@ -31,6 +31,13 @@
     fsType = "vfat";
   };
 
+  fileSystems."/mnt/eisvo1" = {
+    device = "/dev/disk/by-label/EISVO1";
+    fsType = "ext4";
+    options = ["noatime"];
+  };
+
+
   swapDevices = [
     {device = "/dev/disk/by-label/NIXSWAP";}
   ];
