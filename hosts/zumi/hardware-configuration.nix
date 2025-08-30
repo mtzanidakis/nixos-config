@@ -31,8 +31,8 @@
     fsType = "vfat";
   };
 
-  fileSystems."/mnt/eisvo1" = {
-    device = "/dev/disk/by-label/EISVO1";
+  fileSystems."/mnt/data1" = {
+    device = "/dev/disk/by-label/DATA1";
     fsType = "ext4";
     options = ["noatime"];
   };
