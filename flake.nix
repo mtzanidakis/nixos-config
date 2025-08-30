@@ -91,6 +91,22 @@
           }
         ];
       };
+
+      zumi = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/zumi/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.manolis = import ./hosts/zumi/home.nix;
+            };
+          }
+        ];
+      };
+
     };
   };
 }
