@@ -37,6 +37,11 @@
     options = ["noatime"];
   };
 
+  fileSystems."/mnt/data2" = {
+    device = "/dev/disk/by-label/DATA2";
+    fsType = "ext4";
+    options = ["noatime" "discard"];
+  };
 
   swapDevices = [
     {device = "/dev/disk/by-label/NIXSWAP";}
