@@ -36,6 +36,7 @@
       linuxPackages_latest.cpupower
       comma
       curl
+      e2fsprogs
       efibootmgr
       ethtool
       file
