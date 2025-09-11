@@ -11,7 +11,6 @@
     ./php.nix
     ./virt-manager.nix
     ./vscode.nix
-    ./zed-editor.nix
   ];
 
   home.packages = with pkgs; [
