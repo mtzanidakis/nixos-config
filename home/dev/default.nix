@@ -23,6 +23,7 @@
     glow
     go-task
     graphviz
+    grype
     httpie
     hyperfine
     jd-diff-patch
