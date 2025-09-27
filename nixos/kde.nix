@@ -28,6 +28,15 @@
       sddm-kcm
       skanlite
       xwaylandvideobridge
+    ] ++ [
+      (pkgs.catppuccin-kde.override {
+         flavour = ["macchiato"];
+         accents = ["sapphire"];
+       })
+      (pkgs.catppuccin-sddm.override {
+         flavor = "macchiato";
+         accent = "sapphire";
+       })
     ];
 
     # skip default packages
