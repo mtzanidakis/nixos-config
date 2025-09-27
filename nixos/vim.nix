@@ -6,6 +6,7 @@
           name = "vim";
           vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
             start = [
+              catppuccin-vim
               nerdcommenter
               vim-airline
               vim-airline-themes
@@ -73,7 +74,7 @@
 
             syn on
             set background=dark
-            colorscheme solarized
+            colorscheme catppuccin_macchiato
 
             nnoremap <F5> :UndotreeToggle<CR>
             if has("persistent_undo")
