@@ -60,7 +60,6 @@
         ui = {
           logoless = true;
           enableMouse = true;
-          skin = "solarized";
         };
       };
     };

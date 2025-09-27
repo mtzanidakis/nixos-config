@@ -18,7 +18,11 @@
         "--disable-up-arrow"
       ];
     };
+
+    btop.enable = true;
+
     nix-index.enable = true;
+
     zoxide = {
       enable = true;
       options = [
@@ -29,7 +33,6 @@
 
   home.packages = with pkgs; [
     bat
-    btop
     comma
     dnsutils
     dogdns

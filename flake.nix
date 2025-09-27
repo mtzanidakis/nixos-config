@@ -4,7 +4,7 @@
   inputs = {
     # default to nixpkgs-unstable
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
+    catppuccin.url = "github:catppuccin/nix";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,6 +14,7 @@
   outputs = inputs @ {
     nixpkgs,
     home-manager,
+    catppuccin,
     ...
   }: {
     nixosConfigurations = {
@@ -36,12 +37,16 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/gizu/configuration.nix
+          catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.manolis = import ./hosts/gizu/home.nix;
+              users.manolis.imports = [
+                ./hosts/gizu/home.nix
+                catppuccin.homeModules.catppuccin
+              ];
             };
           }
         ];

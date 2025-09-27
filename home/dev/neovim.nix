@@ -6,7 +6,6 @@
     vimAlias = true;
     coc.enable = true;
     plugins = with pkgs.vimPlugins; [
-      NeoSolarized
       copilot-vim
       fzf-vim
       nerdcommenter
@@ -76,7 +75,6 @@
 
       syn on
       set background=dark
-      colorscheme NeoSolarized
     '';
   };
 }
