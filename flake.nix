@@ -22,12 +22,16 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/etsi/configuration.nix
+          catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.manolis = import ./hosts/etsi/home.nix;
+              users.manolis.imports = [
+                ./hosts/etsi/home.nix
+                catppuccin.homeModules.catppuccin
+              ];
             };
           }
         ];
@@ -56,12 +60,16 @@
         system = "aarch64-linux";
         modules = [
           ./hosts/mika/configuration.nix
+          catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.manolis = import ./hosts/mika/home.nix;
+              users.manolis.imports = [
+                ./hosts/mika/home.nix
+                catppuccin.homeModules.catppuccin
+              ];
             };
           }
         ];
@@ -71,12 +79,16 @@
         system = "aarch64-linux";
         modules = [
           ./hosts/pitsi/configuration.nix
+          catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.manolis = import ./hosts/pitsi/home.nix;
+              users.manolis.imports = [
+                ./hosts/pitsi/home.nix
+                catppuccin.homeModules.catppuccin
+              ];
             };
           }
         ];
@@ -86,12 +98,16 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/suna/configuration.nix
+          catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.manolis = import ./hosts/suna/home.nix;
+              users.manolis.imports = [
+                ./hosts/suna/home.nix
+                catppuccin.homeModules.catppuccin
+              ];
             };
           }
         ];
@@ -101,12 +117,16 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/zumi/configuration.nix
+          catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.manolis = import ./hosts/zumi/home.nix;
+              users.manolis.imports = [
+                ./hosts/zumi/home.nix
+                catppuccin.homeModules.catppuccin
+              ];
             };
           }
         ];
