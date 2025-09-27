@@ -50,6 +50,16 @@
     options = ["subvol=nix" "compress=zstd" "noatime"];
   };
 
+  fileSystems."/mnt/etsi" = {
+    device = "//etsi/storage";
+    fsType = "cifs";
+    options = let
+      # this line prevents hanging on network split
+      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+
+    in ["${automount_opts},credentials=/root/.config/smb-creds,iocharset=utf8,uid=${toString config.users.users.manolis.uid},gid=${toString config.users.groups.manolis.gid}"];
+  };
+
   swapDevices = [];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
