@@ -5,5 +5,6 @@
     fabric-ai
     gemini-cli
     warp-terminal
+    openai-whisper
   ];
 }
