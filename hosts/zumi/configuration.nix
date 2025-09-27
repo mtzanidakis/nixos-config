@@ -8,6 +8,8 @@
     ./hardware-configuration.nix
   ];
 
+  i18n.extraLocales = "all";
+
   networking = {
     hostName = "zumi";
     interfaces.eno1.wakeOnLan.enable = true;
