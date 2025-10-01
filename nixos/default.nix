@@ -41,6 +41,7 @@
       ethtool
       file
       git
+      git-filter-repo
       gnumake
       lesspipe
       lsof
