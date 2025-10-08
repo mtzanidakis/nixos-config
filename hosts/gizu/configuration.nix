@@ -4,6 +4,7 @@
     ../../nixos/amd_gpu.nix
     ../../nixos/bluetooth.nix
     ../../nixos/docker.nix
+    ../../nixos/devenv.nix
     ../../nixos/extrahosts.nix
     ../../nixos/flatpak.nix
     ../../nixos/fonts.nix
