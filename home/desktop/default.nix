@@ -6,7 +6,6 @@
   imports = [
     ./alacritty.nix
     ./games.nix
-    ./ghostty.nix
     ./internet.nix
     ./multimedia.nix
     ./productivity.nix
