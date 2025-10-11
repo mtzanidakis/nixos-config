@@ -10,7 +10,7 @@
     signal-desktop
     slack
     telegram-desktop
-    transmission_3-qt
+    transmission_4-qt
     yt-dlp
   ];
 }
