@@ -10,7 +10,7 @@
     ../../nixos/fonts.nix
     ../../nixos/fprintd.nix
     ../../nixos/kde.nix
-    ../../nixos/ollama.nix
+    #../../nixos/ollama.nix
     ../../nixos/pipewire.nix
     ../../nixos/printing.nix
     ../../nixos/steam.nix
@@ -40,10 +40,10 @@
     trezor-udev-rules
   ];
 
-  services.ollama = {
-    acceleration = "rocm";
-    rocmOverrideGfx = "11.0.2";
-  };
+  #services.ollama = {
+    #acceleration = "rocm";
+    #rocmOverrideGfx = "11.0.2";
+  #};
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
