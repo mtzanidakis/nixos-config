@@ -36,9 +36,16 @@
 
   services.btrfs.autoScrub.enable = true;
 
-  services.udev.packages = with pkgs; [
-    trezor-udev-rules
-  ];
+  services.udev = {
+    # shokz loop 120 receiver triggers sleep; disable it
+    extraRules = ''
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="3511", ATTRS{idProduct}=="2f06", DRIVER=="usbhid", ATTR{authorized}="0"
+    '';
+
+    packages = with pkgs; [
+      trezor-udev-rules
+    ];
+  };
 
   #services.ollama = {
     #acceleration = "rocm";
