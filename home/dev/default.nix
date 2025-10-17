@@ -18,6 +18,7 @@
     ddosify
     dos2unix
     fx
+    gcc
     gh
     glab
     glow
