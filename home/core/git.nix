@@ -1,13 +1,15 @@
 {
   programs.git = {
     enable = true;
-    userName = "Manolis Tzanidakis";
-    userEmail = "mtzanidakis@gmail.com";
-    aliases = {
-      retag = "!f() { git tag -f -a \"$1\" -m \"$1\" && git push origin \"$1\" -f; }; f";
-      deltag = "!f() { git tag -d \"$1\" && git push --delete origin \"$1\"; }; f";
-    };
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Manolis Tzanidakis";
+        email = "mtzanidakis@gmail.com";
+      };
+      alias = {
+        retag = "!f() { git tag -f -a \"$1\" -m \"$1\" && git push origin \"$1\" -f; }; f";
+        deltag = "!f() { git tag -d \"$1\" && git push --delete origin \"$1\"; }; f";
+      };
       init = {
         defaultBranch = "main";
       };
