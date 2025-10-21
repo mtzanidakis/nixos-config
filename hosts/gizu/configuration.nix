@@ -40,6 +40,10 @@
     trezor-udev-rules
   ];
 
+  environment.systemPackages = with pkgs; [
+    framework-tool
+  ];
+
   #services.ollama = {
     #acceleration = "rocm";
     #rocmOverrideGfx = "11.0.2";
