@@ -27,7 +27,6 @@
       mlt
       sddm-kcm
       skanlite
-      xwaylandvideobridge
     ] ++ [
       (pkgs.catppuccin-kde.override {
          flavour = ["macchiato"];
