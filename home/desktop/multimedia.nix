@@ -2,15 +2,14 @@
   home.packages = with pkgs; [
     audacity
     curtail
-    #darktable
+    darktable
     feishin
     ffmpeg
-    gimp3
+    gimp
     glaxnimate
     handbrake
     imagemagick
     inkscape
-    #jellyfin-media-player
     mousai
     obs-studio
     picard
