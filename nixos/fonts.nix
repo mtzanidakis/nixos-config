@@ -7,8 +7,8 @@
       nerd-fonts.jetbrains-mono
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
-      ubuntu_font_family
+      noto-fonts-color-emoji
+      ubuntu-classic
     ];
 
     fontconfig = {
