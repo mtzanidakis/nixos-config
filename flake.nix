@@ -19,8 +19,8 @@
   }: {
     nixosConfigurations = {
       etsi = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
         modules = [
+          { nixpkgs.hostPlatform = "x86_64-linux"; }
           ./hosts/etsi/configuration.nix
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
@@ -38,8 +38,8 @@
       };
 
       gizu = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
         modules = [
+          { nixpkgs.hostPlatform = "x86_64-linux"; }
           ./hosts/gizu/configuration.nix
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
@@ -57,8 +57,8 @@
       };
 
       mika = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
         modules = [
+          { nixpkgs.hostPlatform = "aarch64-linux"; }
           ./hosts/mika/configuration.nix
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
@@ -76,8 +76,8 @@
       };
 
       pitsi = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
         modules = [
+          { nixpkgs.hostPlatform = "aarch64-linux"; }
           ./hosts/pitsi/configuration.nix
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
@@ -95,8 +95,8 @@
       };
 
       suna = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
         modules = [
+          { nixpkgs.hostPlatform = "x86_64-linux"; }
           ./hosts/suna/configuration.nix
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
@@ -114,8 +114,8 @@
       };
 
       zumi = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
         modules = [
+          { nixpkgs.hostPlatform = "x86_64-linux"; }
           ./hosts/zumi/configuration.nix
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
