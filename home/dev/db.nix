@@ -8,6 +8,7 @@
     mycli
     pg_activity
     pgcli
+    redisinsight
     sqlite
   ];
 }
