@@ -13,22 +13,30 @@
       init = {
         defaultBranch = "main";
       };
-      diff = {
-        colorMoved = "zebra";
-        tool = "nvim -d";
-      };
       fetch = {
         prune = true;
       };
       log = {
         date = "iso8601";
       };
-      merge = {
-        tool = "nvimdiff";
-      };
       pull = {
         rebase = false;
       };
+    };
+  };
+
+  programs.mergiraf.enable = true;
+
+  programs.difftastic = {
+    enable = true;
+
+    git = {
+      enable = true;
+      diffToolMode = true;
+    };
+
+    options = {
+      color = "dark";
     };
   };
 }
