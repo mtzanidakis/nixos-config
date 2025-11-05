@@ -19,6 +19,9 @@
       log = {
         date = "iso8601";
       };
+      merge = {
+        tool = "nvimdiff";
+      };
       pull = {
         rebase = false;
       };
@@ -36,7 +39,7 @@
     };
 
     options = {
-      color = "dark";
+      background = "dark";
     };
   };
 }
