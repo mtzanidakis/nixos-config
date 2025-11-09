@@ -3,7 +3,6 @@
     audacity
     curtail
     darktable
-    feishin
     ffmpeg
     gimp
     glaxnimate
