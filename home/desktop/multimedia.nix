@@ -3,6 +3,7 @@
     audacity
     curtail
     darktable
+    easyeffects
     ffmpeg
     gimp
     glaxnimate
