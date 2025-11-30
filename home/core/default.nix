@@ -43,6 +43,7 @@
     fd
     fortune
     gocryptfs
+    hl-log-viewer
     htop
     inetutils
     jnv
