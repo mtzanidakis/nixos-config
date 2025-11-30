@@ -24,7 +24,7 @@
   ];
   boot.plymouth.enable = true;
 
-  # use latest kernel
+  # use zen kernel
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
   fileSystems."/" = {
