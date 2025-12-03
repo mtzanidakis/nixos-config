@@ -17,6 +17,12 @@
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
 
+  boot.kernelParams = [
+    "nvme_core.default_ps_max_latency_us=0"
+    "pcie_aspm=off"
+    "pcie_port_pm=off"
+  ];
+
   # use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
