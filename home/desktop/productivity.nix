@@ -3,6 +3,7 @@
     bitwarden-cli
     bitwarden-desktop
     calibre
+    cointop
     fastfetch
     gnome-frog
     hunspell
