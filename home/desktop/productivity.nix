@@ -9,6 +9,7 @@
     libreoffice-qt
     obsidian
     pdfcpu
+    ticker
     tradingview
     trezor-suite
   ];
