@@ -15,6 +15,7 @@
     picard
     scribus
     tidal-dl
+    upscayl
     vhs
     vlc
   ];

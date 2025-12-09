@@ -6,6 +6,7 @@
     cursor-cli
     fabric-ai
     gemini-cli
+    lmstudio
     warp-terminal
     openai-whisper
   ];

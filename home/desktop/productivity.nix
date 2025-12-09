@@ -5,6 +5,7 @@
     calibre
     cointop
     fastfetch
+    foliate
     gnome-frog
     hunspell
     libreoffice-qt
