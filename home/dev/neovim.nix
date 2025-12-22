@@ -4,6 +4,7 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+    withNodeJs = true;
     coc.enable = true;
     plugins = with pkgs.vimPlugins; [
       copilot-vim
