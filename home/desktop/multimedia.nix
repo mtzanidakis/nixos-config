@@ -10,6 +10,7 @@
     handbrake
     imagemagick
     inkscape
+    jellyfin-desktop
     mousai
     obs-studio
     picard
