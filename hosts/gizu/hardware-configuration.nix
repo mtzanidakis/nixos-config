@@ -19,7 +19,6 @@
   boot.extraModulePackages = [];
   boot.kernelModules = ["kvm-amd"];
   boot.kernelParams = [
-    "preempt=full"
     "quiet"
   ];
   boot.plymouth.enable = true;
