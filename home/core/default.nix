@@ -35,7 +35,6 @@
     bat
     comma
     dnsutils
-    dogdns
     dua
     duf
     exfatprogs
@@ -63,6 +62,7 @@
     unzip
     unrar
     wget
+    witr
     wol
     zip
     zstd
