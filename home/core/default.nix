@@ -57,6 +57,7 @@
     rclone
     restic
     ripgrep
+    snitch
     sshfs
     tldr
     unzip
