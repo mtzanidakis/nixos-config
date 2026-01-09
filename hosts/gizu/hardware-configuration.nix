@@ -19,12 +19,13 @@
   boot.extraModulePackages = [];
   boot.kernelModules = ["kvm-amd"];
   boot.kernelParams = [
+    "preempt=full"
     "quiet"
   ];
   boot.plymouth.enable = true;
 
-  # use zen kernel
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  # use latest kernel
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS";
