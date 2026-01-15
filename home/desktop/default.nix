@@ -15,7 +15,6 @@
 
   home.packages = with pkgs; [
     wl-clipboard
-    xorg.xhost
   ];
 
   home.file.pw-pa-conf = {
