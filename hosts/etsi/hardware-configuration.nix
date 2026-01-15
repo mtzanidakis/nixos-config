@@ -23,9 +23,6 @@
     "pcie_port_pm=off"
   ];
 
-  # use latest kernel
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS";
     fsType = "ext4";
