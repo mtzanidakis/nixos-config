@@ -27,7 +27,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
-    options = ["subvol=root" "noatime"];
+    options = ["subvol=root" "compress=zstd" "noatime"];
   };
 
   fileSystems."/boot" = {
@@ -38,13 +38,13 @@
   fileSystems."/home" = {
     device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
-    options = ["subvol=home" "noatime"];
+    options = ["subvol=home" "compress=zstd" "noatime"];
   };
 
   fileSystems."/nix" = {
     device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
-    options = ["subvol=nix" "noatime"];
+    options = ["subvol=nix" "compress=zstd" "noatime"];
   };
 
   fileSystems."/mnt/etsi" = {
