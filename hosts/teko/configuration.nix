@@ -9,6 +9,7 @@
     ../../nixos/kde.nix
     ../../nixos/pipewire.nix
     ../../nixos/printing.nix
+    ../../nixos/steam.nix
     ../../nixos/systemd-boot.nix
     ../../nixos/virt-manager.nix
     ../../nixos/zramswap.nix
