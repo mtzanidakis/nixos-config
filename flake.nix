@@ -113,6 +113,25 @@
         ];
       };
 
+      teko = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/teko/configuration.nix
+          catppuccin.nixosModules.catppuccin
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.manolis.imports = [
+                ./hosts/teko/home.nix
+                catppuccin.homeModules.catppuccin
+              ];
+            };
+          }
+        ];
+      };
+
       zumi = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
