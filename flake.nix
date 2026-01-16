@@ -56,6 +56,25 @@
         ];
       };
 
+      kiki = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/kiki/configuration.nix
+          catppuccin.nixosModules.catppuccin
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.manolis.imports = [
+                ./hosts/kiki/home.nix
+                catppuccin.homeModules.catppuccin
+              ];
+            };
+          }
+        ];
+      };
+
       mika = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
