@@ -18,11 +18,6 @@
     options = ["noatime"];
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-label/NIXBOOT";
-    fsType = "vfat";
-  };
-
   swapDevices = [
     {device = "/dev/disk/by-label/NIXSWAP";}
   ];
