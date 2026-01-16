@@ -21,7 +21,7 @@
 
   systemd.network.enable = true;
   systemd.network.networks."10-wan" = {
-    matchConfig.Name = "ens3"; # either ens3 (amd64) or enp1s0 (arm64)
+    matchConfig.Name = "enp1s0";
     networkConfig.DHCP = "ipv4";
     address = [
       # replace this address with the one assigned to your instance
