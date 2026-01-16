@@ -38,7 +38,7 @@
   };
 
   services.restic.backups.periodic.paths = [
-    "/var/services"
+    "/srv"
   ];
 
   services.logrotate.settings = {
@@ -48,7 +48,7 @@
     };
 
     # dockerized traefik access.log
-    "/var/services/traefik/logs/access.log" = {
+    "/srv/services/traefik/logs/access.log" = {
       frequency = "daily";
       rotate = 7;
       compress = true;
