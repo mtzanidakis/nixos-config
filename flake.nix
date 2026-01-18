@@ -94,25 +94,6 @@
         ];
       };
 
-      pitsi = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        modules = [
-          ./hosts/pitsi/configuration.nix
-          catppuccin.nixosModules.catppuccin
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.manolis.imports = [
-                ./hosts/pitsi/home.nix
-                catppuccin.homeModules.catppuccin
-              ];
-            };
-          }
-        ];
-      };
-
       suna = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
