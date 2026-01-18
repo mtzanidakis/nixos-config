@@ -8,9 +8,12 @@
 
   boot.initrd.availableKernelModules = ["xhci_pci" "virtio_pci" "virtio_scsi" "usbhid" "sr_mod"];
   boot.initrd.kernelModules = ["virtio_gpu"];
-  boot.kernelParams = ["console=tty"];
   boot.kernelModules = [];
   boot.extraModulePackages = [];
+  boot.kernelParams = [
+    "console=tty"
+    "cgroup_disable=hugetlb"
+  ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS";
