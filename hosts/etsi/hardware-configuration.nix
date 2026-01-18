@@ -16,8 +16,8 @@
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
-
   boot.kernelParams = [
+    "cgroup_disable=hugetlb"
     "nvme_core.default_ps_max_latency_us=0"
     "pcie_aspm=off"
     "pcie_port_pm=off"
