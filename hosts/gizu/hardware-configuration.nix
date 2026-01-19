@@ -21,6 +21,7 @@
   boot.kernelParams = [
     "preempt=full"
     "quiet"
+    "amdgpu.dcdebugmask=0x10"
   ];
   boot.plymouth.enable = true;
 
