@@ -36,9 +36,19 @@
 
   services.btrfs.autoScrub.enable = true;
 
-  services.udev.packages = with pkgs; [
-    trezor-udev-rules
-  ];
+  services.udev = {
+    # logi bolt breaks suspend
+    extraRules = ''
+      ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c52b|c548", ATTR{power/wakeup}="disabled"
+      '';
+
+    packages = with pkgs; [
+      trezor-udev-rules
+    ];
+  };
+
+  hardware.logitech.wireless.enable = true;
+  hardware.logitech.wireless.enableGraphical = true;
 
   environment.systemPackages = with pkgs; [
     framework-tool
