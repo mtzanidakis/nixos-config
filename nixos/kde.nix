@@ -22,6 +22,7 @@
       kdeconnect-kde
       kdenlive
       krecorder
+      krdc
       ksshaskpass
       kweather
       mlt
