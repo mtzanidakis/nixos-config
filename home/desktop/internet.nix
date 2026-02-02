@@ -12,5 +12,6 @@
     telegram-desktop
     transmission_4-qt
     yt-dlp
+    zoom-us
   ];
 }
