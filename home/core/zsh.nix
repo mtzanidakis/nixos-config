@@ -63,7 +63,7 @@
     '';
 
     shellAliases = {
-      ls = "eza --header --git --icons --long";
+      ls = "eza --header --git --icons --long --group-directories-first";
       l = "ls";
       la = "ls -a";
       cp = "nocorrect cp -i";
