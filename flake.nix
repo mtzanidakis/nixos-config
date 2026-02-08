@@ -9,19 +9,24 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    claude-code.url = "github:sadjow/claude-code-nix";
   };
 
   outputs = inputs @ {
     nixpkgs,
     home-manager,
     catppuccin,
+    claude-code,
     ...
-  }: {
+  }: let
+    claude-code-overlay = {nixpkgs.overlays = [claude-code.overlays.default];};
+  in {
     nixosConfigurations = {
       etsi = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./hosts/etsi/configuration.nix
+          claude-code-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -41,6 +46,7 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/gizu/configuration.nix
+          claude-code-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -60,6 +66,7 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/kiki/configuration.nix
+          claude-code-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -79,6 +86,7 @@
         system = "aarch64-linux";
         modules = [
           ./hosts/mika/configuration.nix
+          claude-code-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -98,6 +106,7 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/suna/configuration.nix
+          claude-code-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -117,6 +126,7 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/teko/configuration.nix
+          claude-code-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -136,6 +146,7 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/zumi/configuration.nix
+          claude-code-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
