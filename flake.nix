@@ -10,6 +10,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     claude-code.url = "github:sadjow/claude-code-nix";
+    golazo.url = "github:0xjuanma/golazo";
   };
 
   outputs = inputs @ {
@@ -17,9 +18,19 @@
     home-manager,
     catppuccin,
     claude-code,
+    golazo,
     ...
   }: let
     claude-code-overlay = {nixpkgs.overlays = [claude-code.overlays.default];};
+    golazo-overlay = {nixpkgs.overlays = [(final: prev: {
+      golazo = prev.buildGoModule {
+        pname = "golazo";
+        version = "0.21.0";
+        src = golazo;
+        vendorHash = "sha256-M2gfqU5rOfuiVSZnH/Dr8OVmDhyU2jYkgW7RuIUTd+E=";
+        subPackages = ["."];
+      };
+    })];};
   in {
     nixosConfigurations = {
       etsi = nixpkgs.lib.nixosSystem {
@@ -27,6 +38,7 @@
         modules = [
           ./hosts/etsi/configuration.nix
           claude-code-overlay
+          golazo-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -47,6 +59,7 @@
         modules = [
           ./hosts/gizu/configuration.nix
           claude-code-overlay
+          golazo-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -67,6 +80,7 @@
         modules = [
           ./hosts/kiki/configuration.nix
           claude-code-overlay
+          golazo-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -87,6 +101,7 @@
         modules = [
           ./hosts/mika/configuration.nix
           claude-code-overlay
+          golazo-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -107,6 +122,7 @@
         modules = [
           ./hosts/suna/configuration.nix
           claude-code-overlay
+          golazo-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -127,6 +143,7 @@
         modules = [
           ./hosts/teko/configuration.nix
           claude-code-overlay
+          golazo-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -147,6 +164,7 @@
         modules = [
           ./hosts/zumi/configuration.nix
           claude-code-overlay
+          golazo-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
