@@ -13,7 +13,6 @@
     obsidian
     pdfcpu
     ticker
-    tradingview
     trezor-suite
   ];
 }
