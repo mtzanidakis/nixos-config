@@ -9,6 +9,7 @@
     kubectl
     kubectx
     kubent
+    kubie
     stern
     (wrapHelm kubernetes-helm {
       plugins = with pkgs.kubernetes-helmPlugins; [
