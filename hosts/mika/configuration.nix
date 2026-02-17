@@ -1,4 +1,4 @@
-{
+{lib, ...}: {
   imports = [
     ../../nixos
     ../../nixos/docker.nix
