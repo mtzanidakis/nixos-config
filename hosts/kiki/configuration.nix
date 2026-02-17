@@ -14,6 +14,8 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG7wZQ2vg+fcPbKMP8B6q1rIpwplVnsK6QiinxnXfEr5"
   ];
 
+  services.fwupd.enable = false;
+
   networking = {
     hostName = "kiki";
     firewall.enable = false;
