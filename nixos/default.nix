@@ -22,8 +22,8 @@
     };
   };
 
-  # use latest kernel
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # use lts kernel
+  boot.kernelPackages = pkgs.linuxPackages;
 
   # allow unfree packages globally
   nixpkgs.config.allowUnfree = true;

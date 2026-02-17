@@ -25,6 +25,9 @@
   ];
   boot.plymouth.enable = true;
 
+  # use latest kernel
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
+
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
