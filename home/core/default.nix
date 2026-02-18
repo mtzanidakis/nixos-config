@@ -63,6 +63,7 @@
     unzip
     unrar
     wget
+    whosthere
     witr
     wol
     zip
