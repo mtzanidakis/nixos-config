@@ -23,6 +23,9 @@
       sddm-kcm
       skanlite
     ] ++ [
+      (pkgs.kdePackages.spectacle.override {
+         tesseractLanguages = ["ell" "eng" "fra"];
+       })
       (pkgs.catppuccin-kde.override {
          flavour = ["macchiato"];
          accents = ["sapphire"];
