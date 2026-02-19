@@ -4,13 +4,7 @@
   services = {
     colord.enable = true;
     desktopManager.plasma6.enable = true;
-    displayManager = {
-      sddm = {
-        enable = true;
-        wayland.enable = true;
-      };
-      defaultSession = "plasma";
-    };
+    displayManager.plasma-login-manager.enable = true;
   };
 
   environment = {
