@@ -60,6 +60,7 @@
     snitch
     sshfs
     tldr
+    tree
     unzip
     unrar
     wget
