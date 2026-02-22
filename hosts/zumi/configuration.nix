@@ -21,8 +21,7 @@
   };
 
   services.restic.backups.periodic.paths = [
-    "/var/services"
-    "/mnt/data1"
+    "/srv"
   ];
 
   # This value determines the NixOS release from which the default
