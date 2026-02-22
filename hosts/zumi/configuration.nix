@@ -4,6 +4,7 @@
     ../../nixos/docker.nix
     ../../nixos/restic.nix
     ../../nixos/systemd-boot.nix
+    ../../nixos/zramswap.nix
 
     ./hardware-configuration.nix
   ];
