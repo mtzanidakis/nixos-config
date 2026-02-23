@@ -15,6 +15,7 @@
 
   home.packages = with pkgs; [
     backblaze-b2
+    codespelunker
     ddosify
     dos2unix
     fx
