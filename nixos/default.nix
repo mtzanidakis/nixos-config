@@ -55,6 +55,7 @@
       pciutils
       smartmontools
       somo
+      testssl
       usbutils
     ];
 
