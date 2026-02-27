@@ -112,6 +112,24 @@
         "type": "github"
       }
     },
+    "msgvault": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1772137997,
+        "narHash": "sha256-6oSXZ9yTQEXdJxiQ9OkpWK/wqjZpLwMC4+3/1yv6Eu8=",
+        "owner": "wesm",
+        "repo": "msgvault",
+        "rev": "4801588bcce881e7dd1cbd3475857f90919125c8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "wesm",
+        "repo": "msgvault",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1771369470,
@@ -177,6 +195,22 @@
     },
     "nixpkgs_4": {
       "locked": {
+        "lastModified": 1770141374,
+        "narHash": "sha256-yD4K/vRHPwXbJf5CK3JkptBA6nFWUKNX/jlFp2eKEQc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "41965737c1797c1d83cfb0b644ed0840a6220bd1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_5": {
+      "locked": {
         "lastModified": 1771369470,
         "narHash": "sha256-0NBlEBKkN3lufyvFegY4TYv5mCNHbi5OmBDrzihbBMQ=",
         "owner": "nixos",
@@ -197,7 +231,8 @@
         "claude-code": "claude-code",
         "golazo": "golazo",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs_4"
+        "msgvault": "msgvault",
+        "nixpkgs": "nixpkgs_5"
       }
     },
     "systems": {
