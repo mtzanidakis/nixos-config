@@ -21,6 +21,10 @@
     };
   };
 
+  environment.systemPackages = with pkgs; [
+    msgvault
+  ];
+
   services.restic.backups.periodic.paths = [
     "/srv"
   ];
