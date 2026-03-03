@@ -5,7 +5,7 @@
     mongodb-compass
     mongodb-tools
     mongosh
-    mycli
+    #mycli
     pg_activity
     pgcli
     sqlite

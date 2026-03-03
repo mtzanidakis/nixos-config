@@ -2,7 +2,7 @@
   home.packages = with pkgs; [
     bitwarden-cli
     bitwarden-desktop
-    calibre
+    #calibre
     cointop
     fastfetch
     foliate
