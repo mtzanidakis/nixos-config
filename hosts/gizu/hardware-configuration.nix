@@ -64,7 +64,7 @@
   fileSystems."/mnt/etsi" = {
     device = "192.168.68.65:/storage";
     fsType = "nfs";
-    options = ["x-systemd.automount" "noauto" "x-systemd.idle-timeout=60" "noac" "lookupcache=none"];
+    options = ["x-systemd.automount" "noauto" "x-systemd.idle-timeout=60"];
   };
 
   swapDevices = [];
