@@ -15,6 +15,7 @@
     interfaces.enp1s0.wakeOnLan.enable = true;
     firewall = {
       allowedTCPPorts = [
+        2049  # nfs
         45876 # beszel
       ];
     };
@@ -83,6 +84,14 @@
   services.samba-wsdd = {
     enable = true;
     openFirewall = true;
+  };
+
+  services.nfs.server = {
+    enable = true;
+    exports = ''
+      /export         192.168.68.63(rw,fsid=0,no_subtree_check)
+      /export/storage 192.168.68.63(rw,fsid=1,nohide,insecure,no_subtree_check)
+    '';
   };
 
   environment = {

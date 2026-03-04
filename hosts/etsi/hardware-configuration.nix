@@ -95,6 +95,11 @@
     ];
   };
 
+  fileSystems."/export/storage" = {
+    device = "/mnt/storage";
+    options = ["bind"];
+  };
+
   swapDevices = [
     {device = "/dev/disk/by-label/NIXSWAP";}
   ];

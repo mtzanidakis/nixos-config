@@ -51,7 +51,7 @@
     options = ["subvol=nix" "compress=zstd" "noatime"];
   };
 
-  fileSystems."/mnt/etsi" = {
+  fileSystems."/mnt/etsi-smb" = {
     device = "//etsi/storage";
     fsType = "cifs";
     options = let
@@ -59,6 +59,12 @@
       automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
 
     in ["${automount_opts},credentials=/root/.config/smb-creds,iocharset=utf8,uid=${toString config.users.users.manolis.uid},gid=${toString config.users.groups.manolis.gid}"];
+  };
+
+  fileSystems."/mnt/etsi" = {
+    device = "192.168.68.65:/storage";
+    fsType = "nfs";
+    options = ["x-systemd.automount" "noauto" "x-systemd.idle-timeout=60"];
   };
 
   swapDevices = [];
