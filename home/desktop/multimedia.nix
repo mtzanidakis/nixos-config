@@ -4,6 +4,7 @@
     curtail
     darktable
     easyeffects
+    feishin
     ffmpeg
     gimp
     glaxnimate
