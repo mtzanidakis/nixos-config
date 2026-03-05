@@ -24,8 +24,8 @@
   ];
   boot.plymouth.enable = true;
 
-  # use zen kernel
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_zen;
+  # use latest kernel
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS";
