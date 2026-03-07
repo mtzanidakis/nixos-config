@@ -9,6 +9,7 @@
     ./k8s.nix
     ./neovim.nix
     ./php.nix
+    ./python.nix
     ./virt-manager.nix
     ./vscode.nix
   ];
