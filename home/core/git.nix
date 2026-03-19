@@ -1,4 +1,8 @@
-{
+{pkgs, ...}: {
+  home.packages = with pkgs; [
+    git-filter-repo
+  ];
+
   programs.git = {
     enable = true;
     settings = {
