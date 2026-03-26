@@ -10,7 +10,6 @@
     ../../nixos/fonts.nix
     ../../nixos/fprintd.nix
     ../../nixos/kde.nix
-    #../../nixos/ollama.nix
     ../../nixos/pipewire.nix
     ../../nixos/printing.nix
     ../../nixos/steam.nix
@@ -47,17 +46,17 @@
     ];
   };
 
+  services.ollama = {
+    enable = true;
+  };
+
   hardware.logitech.wireless.enable = true;
   hardware.logitech.wireless.enableGraphical = true;
 
   environment.systemPackages = with pkgs; [
     framework-tool
+    ollama-rocm
   ];
-
-  #services.ollama = {
-    #acceleration = "rocm";
-    #rocmOverrideGfx = "11.0.2";
-  #};
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
