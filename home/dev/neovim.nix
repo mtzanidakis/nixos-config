@@ -5,6 +5,8 @@
     viAlias = true;
     vimAlias = true;
     withNodeJs = true;
+    withPython3 = true;
+    withRuby = false;
     coc.enable = true;
     plugins = with pkgs.vimPlugins; [
       copilot-vim
