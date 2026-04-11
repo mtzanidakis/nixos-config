@@ -11,5 +11,6 @@
     lmstudio
     warp-terminal
     openai-whisper
+    opencode
   ];
 }
