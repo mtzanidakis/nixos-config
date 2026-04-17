@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, lib, ...}: {
   programs.go = {
     enable = true;
   };
@@ -9,7 +9,7 @@
     gofumpt
     golangci-lint
     gopls
-    gotools
+    (lib.lowPrio gotools)
     go-tools
   ];
 }
