@@ -19,6 +19,7 @@
       vim-surround
       {
         plugin = undotree;
+        type = "viml";
         config = ''
           nnoremap <F5> :UndotreeToggle<CR>
           if has("persistent_undo")
