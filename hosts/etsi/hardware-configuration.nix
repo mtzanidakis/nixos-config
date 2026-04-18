@@ -97,6 +97,7 @@
 
   fileSystems."/export/storage" = {
     device = "/mnt/storage";
+    fsType = "none";
     options = ["bind"];
   };
 
