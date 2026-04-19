@@ -9,6 +9,7 @@
     gofumpt
     golangci-lint
     gopls
+    goreleaser
     (lib.lowPrio gotools)
     go-tools
   ];
