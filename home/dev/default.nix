@@ -8,6 +8,7 @@
     ./js.nix
     ./k8s.nix
     ./neovim.nix
+    ./nodejs.nix
     ./php.nix
     ./python.nix
     ./virt-manager.nix
