@@ -7,6 +7,7 @@
     ./go.nix
     ./js.nix
     ./k8s.nix
+    ./mise.nix
     ./neovim.nix
     ./nodejs.nix
     ./php.nix
