@@ -5,7 +5,6 @@
     ../../nixos/bluetooth.nix
     ../../nixos/docker.nix
     ../../nixos/devenv.nix
-    ../../nixos/mise.nix
     ../../nixos/extrahosts.nix
     ../../nixos/flatpak.nix
     ../../nixos/fonts.nix
