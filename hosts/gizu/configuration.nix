@@ -10,6 +10,7 @@
     ../../nixos/fonts.nix
     ../../nixos/fprintd.nix
     ../../nixos/kde.nix
+    ../../nixos/nix-ld.nix
     ../../nixos/pipewire.nix
     ../../nixos/printing.nix
     ../../nixos/steam.nix
