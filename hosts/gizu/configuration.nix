@@ -23,7 +23,14 @@
 
   networking = {
     hostName = "gizu";
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      unmanaged = [
+        "interface-name:veth*"
+        "interface-name:br-*"
+        "interface-name:docker*"
+      ];
+    };
   };
 
   virtualisation.docker = {
