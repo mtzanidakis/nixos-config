@@ -7,7 +7,19 @@
   modulesPath,
   pkgs,
   ...
-}: {
+}: let
+  # temporarily switch to linux 7.0.6 due to broken bluetooth
+  linux_7_0_6 = pkgs.linux_7_0.override {
+    argsOverride = rec {
+      version = "7.0.6";
+      modDirVersion = version;
+      src = pkgs.fetchurl {
+        url = "mirror://kernel/linux/kernel/v7.x/linux-${version}.tar.xz";
+        hash = "sha256-y6REQKpXr/18ISQdxbwjSw31PEmfj/w+vCkN0zkKdSM=";
+      };
+    };
+  };
+in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
@@ -25,7 +37,10 @@
   boot.plymouth.enable = true;
 
   # use latest kernel
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
+  #boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
+
+  # temporarily switch to linux 7.0.6 due to broken bluetooth
+  boot.kernelPackages = lib.mkForce (pkgs.linuxPackagesFor linux_7_0_6);
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS";
