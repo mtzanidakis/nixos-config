@@ -64,6 +64,9 @@
 
     # add ~/bin to PATH
     homeBinInPath = true;
+
+    # add ~/.local/bin to PATH
+    localBinInPath = true;
   };
 
   # enable zsh
