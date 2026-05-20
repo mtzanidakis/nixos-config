@@ -25,6 +25,9 @@
       # run getnixindexdb first
       source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
 
+      # load user-local completions if present
+      [[ -r ~/.zsh_completion ]] && source ~/.zsh_completion
+
       function getnixindexdb {
         local _index="index-$(uname -m | sed 's/^arm64$/aarch64/')-$(uname | tr A-Z a-z)"
         local _cache=~/.cache/nix-index
