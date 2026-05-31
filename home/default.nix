@@ -5,6 +5,7 @@
   programs.home-manager.enable = true;
 
   catppuccin = {
+    autoEnable = true;
     enable = true;
     flavor = "macchiato";
     accent = "sapphire";
