@@ -2,6 +2,7 @@
   home.sessionVariables = {
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=60";
     NTFY_TOPIC = "generic";
+    _ZO_DOCTOR = "0";
   };
 
   programs.zsh = {
