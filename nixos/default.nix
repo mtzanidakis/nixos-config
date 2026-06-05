@@ -28,6 +28,11 @@
   # allow unfree packages globally
   nixpkgs.config.allowUnfree = true;
 
+  # bitwarden-desktop still pins EOL electron 39
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-39.8.10"
+  ];
+
   # timezone
   time.timeZone = "Europe/Athens";
 

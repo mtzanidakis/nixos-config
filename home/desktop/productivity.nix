@@ -1,7 +1,9 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     bitwarden-cli
-    bitwarden-desktop
+    (bitwarden-desktop.override {
+      electron_39 = electron_39-bin;
+    })
     calibre
     cointop
     fastfetch
