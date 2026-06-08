@@ -1,4 +1,8 @@
 {
+  pkgs,
+  inputs,
+  ...
+}: {
   home.username = "manolis";
   home.homeDirectory = "/home/manolis";
 
@@ -9,6 +13,16 @@
     enable = true;
     flavor = "macchiato";
     accent = "sapphire";
+
+    # Use the whiskers from nixpkgs (cached) instead of building catppuccin's
+    # own from source. overrideScope swaps it in the whole package scope so the
+    # generated port sources don't pull in the from-source build either.
+    # https://github.com/catppuccin/nix/issues/927#issuecomment-4456677608
+    sources =
+      inputs.catppuccin.packages.${pkgs.stdenv.hostPlatform.system}.overrideScope
+      (final: prev: {
+        whiskers = pkgs.catppuccin-whiskers;
+      });
   };
 
   # This value determines the Home Manager release that your configuration is

@@ -24,18 +24,26 @@
     ...
   }: let
     claude-code-overlay = {nixpkgs.overlays = [claude-code.overlays.default];};
-    golazo-overlay = {nixpkgs.overlays = [(final: prev: {
-      golazo = prev.buildGoModule {
-        pname = "golazo";
-        version = "0.21.0";
-        src = golazo;
-        vendorHash = "sha256-M2gfqU5rOfuiVSZnH/Dr8OVmDhyU2jYkgW7RuIUTd+E=";
-        subPackages = ["."];
-      };
-    })];};
-    msgvault-overlay = {nixpkgs.overlays = [(final: prev: {
-      msgvault = msgvault.packages.${prev.system}.default;
-    })];};
+    golazo-overlay = {
+      nixpkgs.overlays = [
+        (final: prev: {
+          golazo = prev.buildGoModule {
+            pname = "golazo";
+            version = "0.21.0";
+            src = golazo;
+            vendorHash = "sha256-M2gfqU5rOfuiVSZnH/Dr8OVmDhyU2jYkgW7RuIUTd+E=";
+            subPackages = ["."];
+          };
+        })
+      ];
+    };
+    msgvault-overlay = {
+      nixpkgs.overlays = [
+        (final: prev: {
+          msgvault = msgvault.packages.${prev.system}.default;
+        })
+      ];
+    };
   in {
     nixosConfigurations = {
       etsi = nixpkgs.lib.nixosSystem {
@@ -51,6 +59,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              extraSpecialArgs = {inherit inputs;};
               users.manolis.imports = [
                 ./hosts/etsi/home.nix
                 catppuccin.homeModules.catppuccin
@@ -73,6 +82,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              extraSpecialArgs = {inherit inputs;};
               users.manolis.imports = [
                 ./hosts/gizu/home.nix
                 catppuccin.homeModules.catppuccin
@@ -95,6 +105,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              extraSpecialArgs = {inherit inputs;};
               users.manolis.imports = [
                 ./hosts/kiki/home.nix
                 catppuccin.homeModules.catppuccin
@@ -117,6 +128,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              extraSpecialArgs = {inherit inputs;};
               users.manolis.imports = [
                 ./hosts/mika/home.nix
                 catppuccin.homeModules.catppuccin
@@ -139,6 +151,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              extraSpecialArgs = {inherit inputs;};
               users.manolis.imports = [
                 ./hosts/suna/home.nix
                 catppuccin.homeModules.catppuccin
@@ -161,6 +174,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              extraSpecialArgs = {inherit inputs;};
               users.manolis.imports = [
                 ./hosts/teko/home.nix
                 catppuccin.homeModules.catppuccin
@@ -183,6 +197,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              extraSpecialArgs = {inherit inputs;};
               users.manolis.imports = [
                 ./hosts/zumi/home.nix
                 catppuccin.homeModules.catppuccin
@@ -191,7 +206,6 @@
           }
         ];
       };
-
     };
   };
 }
