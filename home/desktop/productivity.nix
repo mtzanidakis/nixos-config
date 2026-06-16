@@ -9,7 +9,6 @@
     fastfetch
     foliate
     gnome-frog
-    golazo
     hunspell
     libreoffice-qt
     obsidian
