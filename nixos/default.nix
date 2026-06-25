@@ -5,6 +5,14 @@
     ./vim.nix
   ];
 
+  # Pin catppuccin's system-level enrollment explicitly. Pre-27.05 the module
+  # force-enables auto-enroll when autoEnable is unset and warns about it; set
+  # both to keep current behavior (all ports themed) and silence the warning.
+  catppuccin = {
+    enable = true;
+    autoEnable = true;
+  };
+
   nix = {
     # weekly gc
     gc = {
