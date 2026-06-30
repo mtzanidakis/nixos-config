@@ -65,6 +65,14 @@
         alias = "deepreinforce-ai/Ornith-1.0-9B";
         ctx-size = 262144;
       };
+      "Qwen3.5-9B" = {
+        hf-repo = "unsloth/Qwen3.5-9B-GGUF";
+        hf-file = "Qwen3.5-9B-Q4_K_M.gguf";
+        alias = "Qwen3.5-9B";
+        ctx-size = 131072;
+        cache-type-k = "q4_0";
+        cache-type-v = "q4_0";
+      };
     };
   };
 
