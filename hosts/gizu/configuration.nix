@@ -57,15 +57,23 @@
   # llama-server -hf deepreinforce-ai/Ornith-1.0-9B-GGUF --port 8000 -c 262144
   services.llama-cpp = {
     enable = true;
-    package = pkgs.llama-cpp-rocm;
-    settings = {
-      hf-repo = "deepreinforce-ai/Ornith-1.0-9B-GGUF";
-      port = 8000;
-      ctx-size = 262144;
+    package = pkgs.llama-cpp-vulkan;
+    settings.port = 8000;
+    settings.models-preset = (pkgs.formats.ini { }).generate "models-preset.ini" {
+      "Ornith-1.0-9B" = {
+        hf-repo = "deepreinforce-ai/Ornith-1.0-9B-GGUF";
+        alias = "deepreinforce-ai/Ornith-1.0-9B";
+        ctx-size = 262144;
+      };
     };
   };
 
-  systemd.services.llama-cpp.environment.HSA_OVERRIDE_GFX_VERSION = "11.0.0";
+  systemd.services.llama-cpp = {
+    environment = {
+      XDG_CACHE_HOME = "/var/cache/llama-cpp";
+      MESA_SHADER_CACHE_DIR = "/var/cache/llama-cpp";
+    };
+  };
 
   hardware.logitech.wireless.enable = true;
   hardware.logitech.wireless.enableGraphical = true;
