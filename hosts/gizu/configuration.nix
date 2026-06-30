@@ -54,16 +54,24 @@
     ];
   };
 
-  services.ollama = {
+  # llama-server -hf deepreinforce-ai/Ornith-1.0-9B-GGUF --port 8000 -c 262144
+  services.llama-cpp = {
     enable = true;
+    package = pkgs.llama-cpp-rocm;
+    settings = {
+      hf-repo = "deepreinforce-ai/Ornith-1.0-9B-GGUF";
+      port = 8000;
+      ctx-size = 262144;
+    };
   };
+
+  systemd.services.llama-cpp.environment.HSA_OVERRIDE_GFX_VERSION = "11.0.0";
 
   hardware.logitech.wireless.enable = true;
   hardware.logitech.wireless.enableGraphical = true;
 
   environment.systemPackages = with pkgs; [
     framework-tool
-    ollama-rocm
   ];
 
   # This value determines the NixOS release from which the default
