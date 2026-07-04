@@ -4,5 +4,6 @@
     llmfit
     openai-whisper
     opencode
+    opencode-desktop
   ];
 }
