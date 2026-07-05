@@ -17,6 +17,7 @@
       set-option -g display-panes-colour brightred
       set-window-option -g clock-mode-colour green
       set-window-option -g window-status-bell-style fg=black,bg=red
+      bind-key -n S-Enter send-keys -l "${builtins.fromJSON ''"\u001b"''}[13;2u"
     '';
   };
 }
