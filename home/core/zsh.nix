@@ -92,6 +92,7 @@
       gdet = "git deltag";
       gret = "git retag";
       mkdir = "nocorrect mkdir";
+      oc = "opencode";
       whatsmyip = "dig -4 +short myip.opendns.com @resolver1.opendns.com";
       whatsmyip-curl = "curl -4 -s https://ifconfig.co";
     };
