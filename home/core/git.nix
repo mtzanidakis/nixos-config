@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     git-filter-repo
+    lazygit
   ];
 
   programs.git = {
