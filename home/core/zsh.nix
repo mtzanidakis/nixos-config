@@ -68,6 +68,12 @@
         cd "''${_rsb}/$1"
       }
 
+      ${lib.optionalString (osConfig.networking.hostName == "gizu") ''
+        function orusage {
+          (cd ~/src/openrouter-usage; ./openrouter-usage "$@")
+        }
+      ''}
+
       echo -e "\n$(fortune -s)"
     '';
 
@@ -88,9 +94,6 @@
       mkdir = "nocorrect mkdir";
       whatsmyip = "dig -4 +short myip.opendns.com @resolver1.opendns.com";
       whatsmyip-curl = "curl -4 -s https://ifconfig.co";
-    }
-    // (lib.optionalAttrs (osConfig.networking.hostName == "gizu") {
-      orusage = "(cd ~/src/openrouter-usage; ./openrouter-usage)";
-    });
+    };
   };
 }
