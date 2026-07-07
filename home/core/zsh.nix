@@ -79,6 +79,7 @@
 
     shellAliases = {
       h = "herdr";
+      hss = "herdr server stop";
       ls = "eza --header --git --icons --long --group-directories-first";
       l = "ls";
       la = "ls -a";
