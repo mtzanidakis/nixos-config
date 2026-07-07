@@ -14,13 +14,6 @@
   };
 
   nix = {
-    # weekly gc
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 1w";
-    };
-
     settings = {
       # optimize store (run manually with `nix-store --optimise`)
       auto-optimise-store = true;
