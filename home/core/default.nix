@@ -42,6 +42,7 @@
     fd
     fortune
     gocryptfs
+    herdr
     hl-log-viewer
     htop
     inetutils

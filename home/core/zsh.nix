@@ -78,6 +78,7 @@
     '';
 
     shellAliases = {
+      h = "herdr";
       ls = "eza --header --git --icons --long --group-directories-first";
       l = "ls";
       la = "ls -a";
