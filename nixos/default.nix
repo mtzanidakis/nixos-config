@@ -88,6 +88,14 @@
     localBinInPath = true;
   };
 
+  # add nh
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 4d --keep 3";
+    flake = "/home/manolis/src/nixos-config";
+  };
+
   # enable zsh
   programs.zsh.enable = true;
 
