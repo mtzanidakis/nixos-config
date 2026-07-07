@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  osConfig,
+  ...
+}: {
   home.sessionVariables = {
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=60";
     NTFY_TOPIC = "generic";
@@ -83,8 +88,9 @@
       mkdir = "nocorrect mkdir";
       whatsmyip = "dig -4 +short myip.opendns.com @resolver1.opendns.com";
       whatsmyip-curl = "curl -4 -s https://ifconfig.co";
-      kns = "kubens";
-      kctx = "kubectx";
-    };
+    }
+    // (lib.optionalAttrs (osConfig.networking.hostName == "gizu") {
+      orusage = "(cd ~/src/openrouter-usage; ./openrouter-usage)";
+    });
   };
 }
