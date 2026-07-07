@@ -10,7 +10,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     claude-code.url = "github:sadjow/claude-code-nix";
-    msgvault.url = "github:wesm/msgvault";
   };
 
   outputs = inputs @ {
@@ -18,17 +17,9 @@
     home-manager,
     catppuccin,
     claude-code,
-    msgvault,
     ...
   }: let
     claude-code-overlay = {nixpkgs.overlays = [claude-code.overlays.default];};
-    msgvault-overlay = {
-      nixpkgs.overlays = [
-        (final: prev: {
-          msgvault = msgvault.packages.${prev.system}.default;
-        })
-      ];
-    };
   in {
     nixosConfigurations = {
       etsi = nixpkgs.lib.nixosSystem {
@@ -36,7 +27,6 @@
         modules = [
           ./hosts/etsi/configuration.nix
           claude-code-overlay
-          msgvault-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -58,7 +48,6 @@
         modules = [
           ./hosts/gizu/configuration.nix
           claude-code-overlay
-          msgvault-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -80,7 +69,6 @@
         modules = [
           ./hosts/kiki/configuration.nix
           claude-code-overlay
-          msgvault-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -102,7 +90,6 @@
         modules = [
           ./hosts/mika/configuration.nix
           claude-code-overlay
-          msgvault-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -124,7 +111,6 @@
         modules = [
           ./hosts/suna/configuration.nix
           claude-code-overlay
-          msgvault-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -146,7 +132,6 @@
         modules = [
           ./hosts/teko/configuration.nix
           claude-code-overlay
-          msgvault-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
@@ -168,7 +153,6 @@
         modules = [
           ./hosts/zumi/configuration.nix
           claude-code-overlay
-          msgvault-overlay
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           {
