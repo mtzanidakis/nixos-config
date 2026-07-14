@@ -84,6 +84,7 @@
       l = "ls";
       la = "ls -a";
       cp = "nocorrect cp -i";
+      dco = "docker compose";
       rm = "nocorrect rm -i";
       mv = "nocorrect mv -i";
       df = "df -h";
