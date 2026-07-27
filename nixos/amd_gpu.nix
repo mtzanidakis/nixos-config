@@ -13,8 +13,5 @@
   environment.systemPackages = with pkgs; [
     amdgpu_top
     clinfo
-    lact
-    #rocmPackages.rocminfo
-    #rocmPackages.rocm-smi
   ];
 }
