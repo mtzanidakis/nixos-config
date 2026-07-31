@@ -1,0 +1,753 @@
+diff --git a/src-tauri/Cargo.lock b/src-tauri/Cargo.lock
+index fae1ad2..d6da018 100644
+--- a/src-tauri/Cargo.lock
++++ b/src-tauri/Cargo.lock
+@@ -189,6 +189,23 @@ version = "0.7.6"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "7c02d123df017efcdfbd739ef81735b36c5ba83ec3c59c80a9d7ecc718f92e50"
+ 
++[[package]]
++name = "ashpd"
++version = "0.12.3"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "33a3c86f3fd70c0ffa500ed189abfa90b5a52398a45d5dc372fcc38ebeb7a645"
++dependencies = [
++ "enumflags2",
++ "futures-channel",
++ "futures-util",
++ "rand 0.9.4",
++ "serde",
++ "serde_repr",
++ "tokio",
++ "url",
++ "zbus",
++]
++
+ [[package]]
+ name = "async-broadcast"
+ version = "0.7.2"
+@@ -2450,6 +2467,7 @@ name = "handy"
+ version = "0.9.4"
+ dependencies = [
+  "anyhow",
++ "ashpd",
+  "chrono",
+  "clap",
+  "cpal",
+@@ -6947,8 +6965,10 @@ dependencies = [
+  "libc",
+  "mio 1.1.1",
+  "pin-project-lite",
++ "signal-hook-registry",
+  "socket2",
+  "tokio-macros",
++ "tracing",
+  "windows-sys 0.61.2",
+ ]
+ 
+@@ -8848,6 +8868,7 @@ dependencies = [
+  "rustix",
+  "serde",
+  "serde_repr",
++ "tokio",
+  "tracing",
+  "uds_windows",
+  "uuid",
+@@ -9006,6 +9027,7 @@ dependencies = [
+  "endi",
+  "enumflags2",
+  "serde",
++ "url",
+  "winnow 0.7.14",
+  "zvariant_derive",
+  "zvariant_utils",
+diff --git a/src-tauri/Cargo.toml b/src-tauri/Cargo.toml
+index 77051b4..d0eb581 100644
+--- a/src-tauri/Cargo.toml
++++ b/src-tauri/Cargo.toml
+@@ -152,6 +152,8 @@ objc2-app-kit = "0.3"
+ [target.'cfg(target_os = "linux")'.dependencies]
+ gtk-layer-shell = { version = "0.8", features = ["v0_6"] }
+ gtk = "0.18"
++# xdg-desktop-portal RemoteDesktop, for keysym-based typing on Wayland.
++ashpd = { version = "0.12", default-features = false, features = ["tokio"] }
+ transcribe-cpp = { version = "0.1.3", default-features = false, features = [
+   "dynamic-backends",
+   "vulkan",
+diff --git a/src-tauri/src/clipboard.rs b/src-tauri/src/clipboard.rs
+index 5a18134..a2c14d0 100644
+--- a/src-tauri/src/clipboard.rs
++++ b/src-tauri/src/clipboard.rs
+@@ -20,6 +20,7 @@ fn paste_via_clipboard(
+     paste_method: &PasteMethod,
+     paste_delay_ms: u64,
+     paste_delay_after_ms: u64,
++    #[cfg(target_os = "linux")] typing_tool: TypingTool,
+ ) -> Result<(), String> {
+     let clipboard = app_handle.clipboard();
+     let saved_text = clipboard.read_text().ok().filter(|t| !t.is_empty());
+@@ -55,7 +56,7 @@ fn paste_via_clipboard(
+ 
+     // Send paste key combo
+     #[cfg(target_os = "linux")]
+-    let key_combo_sent = try_send_key_combo_linux(paste_method)?;
++    let key_combo_sent = try_send_key_combo_linux(paste_method, typing_tool)?;
+ 
+     #[cfg(not(target_os = "linux"))]
+     let key_combo_sent = false;
+@@ -103,7 +104,17 @@ fn paste_via_clipboard(
+ /// Attempts to send a key combination using Linux-native tools.
+ /// Returns `Ok(true)` if a native tool handled it, `Ok(false)` to fall back to enigo.
+ #[cfg(target_os = "linux")]
+-fn try_send_key_combo_linux(paste_method: &PasteMethod) -> Result<bool, String> {
++fn try_send_key_combo_linux(
++    paste_method: &PasteMethod,
++    preferred_tool: TypingTool,
++) -> Result<bool, String> {
++    // The portal is the one backend that needs no binary on PATH and no uinput
++    // access, so an explicit choice of it covers the chord too -- otherwise a
++    // portal user would still need dotool installed just to press Ctrl+V.
++    if preferred_tool == TypingTool::Portal && crate::portal_input::is_available() {
++        info!("Using xdg-desktop-portal for key combo");
++        return send_key_combo_via_portal(paste_method).map(|()| true);
++    }
+     if is_wayland() {
+         // Wayland: prefer wtype (but not on KDE), then dotool, then ydotool
+         // Note: wtype doesn't work on KDE (no zwp_virtual_keyboard_manager_v1 support)
+@@ -139,6 +150,19 @@ fn try_send_key_combo_linux(paste_method: &PasteMethod) -> Result<bool, String>
+     Ok(false)
+ }
+ 
++/// Sends the paste chord through the portal. Uses keycodes rather than keysyms:
++/// a keysym absent from the active layout group makes the compositor swap in a
++/// scratch keymap, which force-releases the modifier we are holding.
++#[cfg(target_os = "linux")]
++fn send_key_combo_via_portal(paste_method: &PasteMethod) -> Result<(), String> {
++    match paste_method {
++        PasteMethod::CtrlV => crate::portal_input::ctrl_v(),
++        PasteMethod::CtrlShiftV => crate::portal_input::ctrl_shift_v(),
++        PasteMethod::ShiftInsert => crate::portal_input::shift_insert(),
++        other => Err(format!("Portal cannot send paste method {:?}", other)),
++    }
++}
++
+ /// Attempts to type text directly using Linux-native tools.
+ /// Returns `Ok(true)` if a native tool handled it, `Ok(false)` to fall back to enigo.
+ #[cfg(target_os = "linux")]
+@@ -171,6 +195,11 @@ fn try_direct_typing_linux(text: &str, preferred_tool: TypingTool) -> Result<boo
+                 type_text_via_xdotool(text)?;
+                 Ok(true)
+             }
++            TypingTool::Portal if crate::portal_input::is_available() => {
++                info!("Using user-specified xdg-desktop-portal");
++                crate::portal_input::type_text(text)?;
++                Ok(true)
++            }
+             _ => Err(format!(
+                 "Typing tool {:?} is not available on this system",
+                 preferred_tool
+@@ -240,6 +269,9 @@ pub fn get_available_typing_tools() -> Vec<String> {
+     if is_xdotool_available() {
+         tools.push("xdotool".to_string());
+     }
++    if crate::portal_input::is_available() {
++        tools.push("portal".to_string());
++    }
+     tools
+ }
+ 
+@@ -680,6 +712,8 @@ pub fn paste(text: String, app_handle: AppHandle) -> Result<(), String> {
+                 &paste_method,
+                 paste_delay_ms,
+                 paste_delay_after_ms,
++                #[cfg(target_os = "linux")]
++                settings.typing_tool,
+             )?
+         }
+         PasteMethod::ExternalScript => {
+diff --git a/src-tauri/src/lib.rs b/src-tauri/src/lib.rs
+index 621b6a0..f535d91 100644
+--- a/src-tauri/src/lib.rs
++++ b/src-tauri/src/lib.rs
+@@ -14,6 +14,8 @@ mod managers;
+ mod overlay;
+ mod paste_tx;
+ pub mod portable;
++#[cfg(target_os = "linux")]
++mod portal_input;
+ mod secure_input;
+ mod settings;
+ mod shortcut;
+@@ -925,6 +927,12 @@ pub fn run(cli_args: CliArgs) {
+             // the Carbon fallback. See secure_input.rs and issue #1578.
+             secure_input::init(&app_handle);
+ 
++            // xdg-desktop-portal typing backend (Linux/Wayland): spawns the
++            // worker thread only. The session -- and its consent dialog -- is
++            // established lazily on first paste. See portal_input.rs.
++            #[cfg(target_os = "linux")]
++            portal_input::init(app_handle.clone());
++
+             // Populate the overlay-enabled cache from initial settings so the
+             // audio path (overlay::emit_levels, called ~24 Hz during recording)
+             // can do a single atomic load instead of reading the Tauri store.
+diff --git a/src-tauri/src/portal_input.rs b/src-tauri/src/portal_input.rs
+new file mode 100644
+index 0000000..60249c7
+--- /dev/null
++++ b/src-tauri/src/portal_input.rs
+@@ -0,0 +1,507 @@
++//! Text injection through the xdg-desktop-portal RemoteDesktop API.
++//!
++//! Every other Linux typing backend resolves a character to a *keycode* and
++//! presses it: `wtype` uploads its own keymap, `dotool`/`ydotool` push keycodes
++//! through uinput, and enigo's libei backend scans the compositor keymap for a
++//! matching key. They share one failure: on a multi-layout setup (`us,gr`,
++//! `us,ru`, ...) the character must exist in the layout group that happens to
++//! be active, or the user gets gibberish -- or nothing at all.
++//!
++//! `NotifyKeyboardKeysym` takes an X11 *keysym* and leaves the compositor to
++//! produce it, synthesizing a scratch keymap when the symbol is not reachable
++//! from the active group. Nothing here depends on that group, so Greek,
++//! Cyrillic or CJK transcripts land correctly whatever the user was typing in
++//! a second ago.
++//!
++//! The portal asks for consent once. `PersistMode::ExplicitlyRevoked` plus the
++//! returned restore token means later launches attach silently. The portal
++//! rotates that token on every `Start` and the old one stops working, so it is
++//! written back each time -- otherwise the user is prompted on every launch.
++//!
++//! ashpd is async and the paste path is not, so the session lives on a
++//! dedicated thread with its own current-thread runtime, driven over a channel.
++//! Commands arrive on a tokio channel that the worker awaits, so the runtime
++//! keeps driving the shared zbus connection while idle; replies come back on a
++//! std channel because the callers are ordinary blocking code.
++
++use std::sync::atomic::{AtomicU8, Ordering};
++use std::sync::mpsc::{self as std_mpsc, SyncSender};
++use std::sync::OnceLock;
++use std::time::Duration;
++
++use ashpd::desktop::remote_desktop::{DeviceType, KeyState, RemoteDesktop};
++use ashpd::desktop::{PersistMode, Session};
++use log::{debug, info, warn};
++use tauri::AppHandle;
++use tokio::sync::mpsc as tokio_mpsc;
++
++use crate::settings::{get_settings, write_settings};
++
++/// X11 keysyms for the whitespace we emit (`keysymdef.h`).
++const KEYSYM_BACKSPACE: u32 = 0xFF08;
++const KEYSYM_TAB: u32 = 0xFF09;
++const KEYSYM_RETURN: u32 = 0xFF0D;
++
++/// Chords go through `NotifyKeyboardKeycode` instead, with evdev codes from
++/// `linux/input-event-codes.h`.
++///
++/// Keysyms are wrong for chords, and dangerously so: when the symbol is not
++/// reachable from the active layout group the compositor swaps in a scratch
++/// keymap, and that swap force-releases every key the session holds. A Ctrl+V
++/// sent as keysyms while a Greek group is active loses the Ctrl and types a
++/// bare "v" into the user's document. Keycodes skip symbol resolution entirely,
++/// so the modifier survives -- and applications match paste shortcuts through
++/// the Latin fallback anyway, which is why Ctrl+V has always worked on a Greek
++/// layout.
++const KEY_LEFTCTRL: u32 = 29;
++const KEY_LEFTSHIFT: u32 = 42;
++const KEY_V: u32 = 47;
++const KEY_INSERT: u32 = 110;
++
++/// How long a caller waits before giving up and letting the next backend try.
++/// Establishing the session can sit in a consent dialog, hence the generosity.
++const CALL_TIMEOUT: Duration = Duration::from_secs(90);
++/// The worker's own budget. Deliberately shorter than `CALL_TIMEOUT` so a wedged
++/// portal always frees the worker before the caller stops listening -- otherwise
++/// one stuck call would queue every later command behind it.
++const WORKER_TIMEOUT: Duration = Duration::from_secs(75);
++/// Budget for a single Notify round trip.
++const KEY_TIMEOUT: Duration = Duration::from_secs(5);
++/// Probing is one D-Bus round trip and the answer is cached afterwards.
++const PROBE_TIMEOUT: Duration = Duration::from_secs(2);
++
++/// Gap between keys. Measured on KWin 6.7.3: 60 mixed Greek/Latin characters at
++/// this rate arrive complete and in order, including the ones that force the
++/// compositor to swap in a scratch keymap.
++const KEY_INTERVAL: Duration = Duration::from_millis(8);
++/// How long a chord's modifiers stay held around the key. Applications that
++/// poll global keyboard state (rather than reading the key event's flags) need
++/// the modifier still down when they handle the key -- same reason
++/// `input::send_paste_ctrl_v` holds it.
++const MODIFIER_HOLD: Duration = Duration::from_millis(30);
++
++/// Cached answer of `is_available`, so backend selection never pays for a D-Bus
++/// round trip twice and never blocks behind an in-flight consent dialog.
++const AVAILABILITY_UNKNOWN: u8 = 0;
++const AVAILABILITY_YES: u8 = 1;
++static AVAILABILITY: AtomicU8 = AtomicU8::new(AVAILABILITY_UNKNOWN);
++
++static SENDER: OnceLock<tokio_mpsc::UnboundedSender<Command>> = OnceLock::new();
++
++/// What the worker should do once it has a live session.
++enum Action {
++    Type(String),
++    /// Modifiers held (in order) around a key, released in reverse.
++    Chord { modifiers: Vec<u32>, key: u32 },
++}
++
++struct Command {
++    action: Option<Action>,
++    /// `None` action means "just tell me whether the portal is usable".
++    reply: SyncSender<Result<(), String>>,
++}
++
++/// Spawn the portal thread. The session itself -- and its consent dialog -- is
++/// established lazily on first use, so startup stays silent.
++pub fn init(app: AppHandle) {
++    if SENDER.get().is_some() {
++        debug!("Portal input already initialized");
++        return;
++    }
++    let (tx, rx) = tokio_mpsc::unbounded_channel();
++    // Spawn first: a failed spawn must not burn the OnceLock, or every later
++    // call reports a thread that never existed.
++    match std::thread::Builder::new()
++        .name("portal-input".into())
++        .spawn(move || run(app, rx))
++    {
++        Ok(_) => {
++            let _ = SENDER.set(tx);
++            debug!("Portal input thread started");
++        }
++        Err(e) => warn!("Failed to start portal input thread: {}", e),
++    }
++}
++
++/// Whether the RemoteDesktop portal can type for us. Never prompts, and the
++/// answer is cached after the first probe.
++pub fn is_available() -> bool {
++    if !crate::utils::is_wayland() {
++        return false;
++    }
++    if AVAILABILITY.load(Ordering::Relaxed) == AVAILABILITY_YES {
++        return true;
++    }
++    // Only a positive answer is cached. A probe that loses the race with
++    // xdg-desktop-portal coming up, or one that arrives while the worker is
++    // mid-consent-dialog, must not disable the backend for the whole process.
++    let available = probe().unwrap_or(false);
++    if available {
++        AVAILABILITY.store(AVAILABILITY_YES, Ordering::Relaxed);
++    }
++    available
++}
++
++fn probe() -> Option<bool> {
++    let tx = SENDER.get()?;
++    let (rtx, rrx) = std_mpsc::sync_channel(1);
++    tx.send(Command {
++        action: None,
++        reply: rtx,
++    })
++    .ok()?;
++    Some(rrx.recv_timeout(PROBE_TIMEOUT).ok()?.is_ok())
++}
++
++pub fn type_text(text: &str) -> Result<(), String> {
++    dispatch(Action::Type(text.to_string()))
++}
++
++pub fn ctrl_v() -> Result<(), String> {
++    dispatch(Action::Chord {
++        modifiers: vec![KEY_LEFTCTRL],
++        key: KEY_V,
++    })
++}
++
++pub fn ctrl_shift_v() -> Result<(), String> {
++    dispatch(Action::Chord {
++        modifiers: vec![KEY_LEFTCTRL, KEY_LEFTSHIFT],
++        key: KEY_V,
++    })
++}
++
++pub fn shift_insert() -> Result<(), String> {
++    dispatch(Action::Chord {
++        modifiers: vec![KEY_LEFTSHIFT],
++        key: KEY_INSERT,
++    })
++}
++
++fn dispatch(action: Action) -> Result<(), String> {
++    let tx = SENDER
++        .get()
++        .ok_or_else(|| "Portal input is not initialized".to_string())?;
++    let (rtx, rrx) = std_mpsc::sync_channel(1);
++    tx.send(Command {
++        action: Some(action),
++        reply: rtx,
++    })
++    .map_err(|_| "Portal input thread is gone".to_string())?;
++    rrx.recv_timeout(CALL_TIMEOUT)
++        .map_err(|_| "Portal input timed out".to_string())?
++}
++
++/// Map a character to an X11 keysym, or `None` for something unprintable.
++///
++/// libxkbcommon's rule: Latin-1 keysyms are `0x20..=0x7E` and `0xA0..=0xFF`
++/// only -- the C0/C1 control ranges have no keysym and must be skipped rather
++/// than sent verbatim. Everything else uses the Unicode range.
++fn char_to_keysym(ch: char) -> Option<u32> {
++    match ch {
++        '\n' => Some(KEYSYM_RETURN),
++        // CRLF would otherwise press Return twice and double-space the paste.
++        '\r' => None,
++        '\t' => Some(KEYSYM_TAB),
++        '\u{8}' => Some(KEYSYM_BACKSPACE),
++        _ => {
++            let cp = ch as u32;
++            if cp < 0x20 || (0x7F..0xA0).contains(&cp) {
++                None
++            } else if cp < 0x100 {
++                Some(cp)
++            } else {
++                Some(0x0100_0000 | cp)
++            }
++        }
++    }
++}
++
++fn run(app: AppHandle, mut rx: tokio_mpsc::UnboundedReceiver<Command>) {
++    let runtime = match tokio::runtime::Builder::new_current_thread()
++        .enable_all()
++        .build()
++    {
++        Ok(rt) => rt,
++        Err(e) => {
++            warn!("Portal input runtime failed to start: {}", e);
++            return;
++        }
++    };
++
++    runtime.block_on(async move {
++        let mut session: Option<PortalSession> = None;
++
++        while let Some(command) = rx.recv().await {
++            let result = match &command.action {
++                None => probe_portal().await,
++                Some(action) => {
++                    match tokio::time::timeout(WORKER_TIMEOUT, perform(&app, &mut session, action))
++                        .await
++                    {
++                        Ok(result) => result,
++                        Err(_) => {
++                            // A wedged session is worse than none: drop it so the
++                            // next command starts clean instead of inheriting it.
++                            session = None;
++                            Err("Portal input timed out".to_string())
++                        }
++                    }
++                }
++            };
++            let _ = command.reply.send(result);
++        }
++
++        if let Some(session) = session.take() {
++            session.close().await;
++        }
++    });
++}
++
++/// Liveness check that also confirms a keyboard is on offer -- a backend that
++/// only does screen capture would pass a bare interface check and then fail at
++/// `select_devices`.
++async fn probe_portal() -> Result<(), String> {
++    let proxy = tokio::time::timeout(PROBE_TIMEOUT, RemoteDesktop::new())
++        .await
++        .map_err(|_| "RemoteDesktop portal did not answer".to_string())?
++        .map_err(|e| format!("RemoteDesktop portal unavailable: {}", e))?;
++    let types = tokio::time::timeout(PROBE_TIMEOUT, proxy.available_device_types())
++        .await
++        .map_err(|_| "RemoteDesktop portal did not answer".to_string())?
++        .map_err(|e| format!("Failed to query portal devices: {}", e))?;
++    if types.contains(DeviceType::Keyboard) {
++        Ok(())
++    } else {
++        Err("RemoteDesktop portal offers no keyboard".to_string())
++    }
++}
++
++/// Run `action` against a live session, establishing one on first use.
++///
++/// A session can die under us (screen lock, portal restart), so one retry is
++/// allowed -- but only when nothing has been injected yet. Retrying after keys
++/// have landed would duplicate half a transcript into the user's document.
++async fn perform(
++    app: &AppHandle,
++    slot: &mut Option<PortalSession>,
++    action: &Action,
++) -> Result<(), String> {
++    let reused = slot.is_some();
++    if slot.is_none() {
++        *slot = Some(PortalSession::establish(app).await?);
++    }
++
++    let mut emitted = false;
++    let first = {
++        let session = slot.as_ref().expect("session established above");
++        session.run(action, &mut emitted).await
++    };
++
++    let Err(error) = first else {
++        return Ok(());
++    };
++
++    // A freshly created session that fails was denied or is broken; retrying
++    // just throws a second consent dialog at the user. And once a key has been
++    // emitted, a retry duplicates text.
++    if !reused || emitted {
++        return Err(error);
++    }
++
++    warn!("Portal session went stale ({}), reconnecting", error);
++    if let Some(old) = slot.take() {
++        old.close().await;
++    }
++    *slot = Some(
++        PortalSession::establish(app)
++            .await
++            .map_err(|e| format!("{} (after: {})", e, error))?,
++    );
++    let session = slot.as_ref().expect("session re-established above");
++    let mut retry_emitted = false;
++    session.run(action, &mut retry_emitted).await
++}
++
++struct PortalSession {
++    proxy: RemoteDesktop<'static>,
++    session: Session<'static, RemoteDesktop<'static>>,
++}
++
++impl PortalSession {
++    async fn establish(app: &AppHandle) -> Result<Self, String> {
++        let proxy = RemoteDesktop::new()
++            .await
++            .map_err(|e| format!("RemoteDesktop portal unavailable: {}", e))?;
++        let session = proxy
++            .create_session()
++            .await
++            .map_err(|e| format!("Failed to create portal session: {}", e))?;
++
++        let stored = get_settings(app).portal_restore_token;
++        proxy
++            .select_devices(
++                &session,
++                DeviceType::Keyboard.into(),
++                stored.as_deref(),
++                PersistMode::ExplicitlyRevoked,
++            )
++            .await
++            .map_err(|e| format!("Failed to select portal devices: {}", e))?;
++
++        let devices = proxy
++            .start(&session, None)
++            .await
++            .map_err(|e| format!("Portal session was not started: {}", e))?
++            .response()
++            .map_err(|e| format!("Portal session was denied: {}", e))?;
++
++        // The portal invalidates the old token and mints a new one on every
++        // Start, so it has to be written back or the next launch prompts again.
++        if let Some(token) = devices.restore_token() {
++            let mut settings = get_settings(app);
++            if settings.portal_restore_token.as_deref() != Some(token) {
++                settings.portal_restore_token = Some(token.to_string());
++                write_settings(app, settings);
++            }
++        }
++
++        info!(
++            "Portal input session established (devices: {:?}, restored: {})",
++            devices.devices(),
++            stored.is_some()
++        );
++        Ok(Self { proxy, session })
++    }
++
++    async fn run(&self, action: &Action, emitted: &mut bool) -> Result<(), String> {
++        match action {
++            Action::Type(text) => self.type_text(text, emitted).await,
++            Action::Chord { modifiers, key } => self.chord(modifiers, *key, emitted).await,
++        }
++    }
++
++    async fn type_text(&self, text: &str, emitted: &mut bool) -> Result<(), String> {
++        let mut first = true;
++        for keysym in text.chars().filter_map(char_to_keysym) {
++            if !first {
++                tokio::time::sleep(KEY_INTERVAL).await;
++            }
++            first = false;
++            self.press_release(keysym).await?;
++            *emitted = true;
++        }
++        Ok(())
++    }
++
++    async fn chord(&self, modifiers: &[u32], key: u32, emitted: &mut bool) -> Result<(), String> {
++        let mut result = Ok(());
++        let mut held = Vec::with_capacity(modifiers.len());
++
++        for modifier in modifiers {
++            match self.keycode(*modifier, KeyState::Pressed).await {
++                Ok(()) => {
++                    held.push(*modifier);
++                    *emitted = true;
++                }
++                Err(e) => {
++                    result = Err(e);
++                    break;
++                }
++            }
++        }
++
++        if result.is_ok() {
++            result = self.keycode(key, KeyState::Pressed).await;
++            // Applications that poll global keyboard state -- rather than read
++            // the modifier out of the key event -- need it still down when they
++            // handle the key. Same reason input::send_paste_ctrl_v holds it.
++            tokio::time::sleep(MODIFIER_HOLD).await;
++            if result.is_ok() {
++                result = self.keycode(key, KeyState::Released).await;
++            }
++        }
++
++        // Best effort and unconditional: bailing out with Ctrl still down would
++        // leave the whole desktop modifier-latched for the life of the session.
++        for modifier in held.iter().rev() {
++            if let Err(e) = self.keycode(*modifier, KeyState::Released).await {
++                warn!("Failed to release modifier {}: {}", modifier, e);
++            }
++        }
++
++        result
++    }
++
++    async fn key(&self, keysym: u32, state: KeyState) -> Result<(), String> {
++        tokio::time::timeout(
++            KEY_TIMEOUT,
++            self.proxy
++                .notify_keyboard_keysym(&self.session, keysym as i32, state),
++        )
++        .await
++        .map_err(|_| format!("Portal did not answer for keysym {:#x}", keysym))?
++        .map_err(|e| format!("notify_keyboard_keysym failed: {}", e))
++    }
++
++    async fn keycode(&self, keycode: u32, state: KeyState) -> Result<(), String> {
++        tokio::time::timeout(
++            KEY_TIMEOUT,
++            self.proxy
++                .notify_keyboard_keycode(&self.session, keycode as i32, state),
++        )
++        .await
++        .map_err(|_| format!("Portal did not answer for keycode {}", keycode))?
++        .map_err(|e| format!("notify_keyboard_keycode failed: {}", e))
++    }
++
++    async fn press_release(&self, keysym: u32) -> Result<(), String> {
++        self.key(keysym, KeyState::Pressed).await?;
++        self.key(keysym, KeyState::Released).await
++    }
++
++    /// Sessions are not closed by `Drop`; without this the portal keeps the
++    /// session (and KDE its "remote control active" indicator) alive.
++    async fn close(self) {
++        if let Err(e) = self.session.close().await {
++            debug!("Failed to close portal session: {}", e);
++        }
++    }
++}
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++
++    #[test]
++    fn latin1_maps_to_itself() {
++        assert_eq!(char_to_keysym('v'), Some(0x76));
++        assert_eq!(char_to_keysym(' '), Some(0x20));
++        assert_eq!(char_to_keysym('ä'), Some(0xE4));
++    }
++
++    #[test]
++    fn beyond_latin1_uses_the_unicode_range() {
++        assert_eq!(char_to_keysym('γ'), Some(0x0100_03B3));
++        assert_eq!(char_to_keysym('я'), Some(0x0100_044F));
++        assert_eq!(char_to_keysym('好'), Some(0x0100_597D));
++        assert_eq!(char_to_keysym('🎙'), Some(0x0101_F399));
++    }
++
++    #[test]
++    fn whitespace_uses_named_keysyms() {
++        assert_eq!(char_to_keysym('\n'), Some(KEYSYM_RETURN));
++        assert_eq!(char_to_keysym('\t'), Some(KEYSYM_TAB));
++    }
++
++    #[test]
++    fn unprintables_are_skipped_rather_than_sent_raw() {
++        // C0, DEL and C1 have no keysym; sending them verbatim types garbage.
++        assert_eq!(char_to_keysym('\u{0}'), None);
++        assert_eq!(char_to_keysym('\u{7F}'), None);
++        assert_eq!(char_to_keysym('\u{9F}'), None);
++        // CR is dropped so CRLF presses Return once, not twice.
++        assert_eq!(char_to_keysym('\r'), None);
++        assert_eq!(char_to_keysym('\u{A0}'), Some(0xA0));
++    }
++}
+diff --git a/src-tauri/src/settings.rs b/src-tauri/src/settings.rs
+index 7cf32fe..24d2213 100644
+--- a/src-tauri/src/settings.rs
++++ b/src-tauri/src/settings.rs
+@@ -278,6 +278,10 @@ pub enum TypingTool {
+     Dotool,
+     Ydotool,
+     Xdotool,
++    /// xdg-desktop-portal RemoteDesktop (Wayland). Unlike the others it is not
++    /// a binary on PATH, and it types by keysym, so it is the only backend that
++    /// survives a multi-layout setup. See portal_input.rs.
++    Portal,
+ }
+ 
+ #[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Type, Default)]
+@@ -450,6 +454,11 @@ pub struct AppSettings {
+     pub reliable_paste: bool,
+     #[serde(default = "default_typing_tool")]
+     pub typing_tool: TypingTool,
++    /// Restore token for the xdg-desktop-portal RemoteDesktop session, so later
++    /// launches reattach without a consent dialog. The portal rotates it on
++    /// every Start, so it is rewritten each time. Linux/Wayland only.
++    #[serde(default)]
++    pub portal_restore_token: Option<String>,
+     #[serde(default)]
+     pub external_script_path: Option<String>,
+     #[serde(default)]
+@@ -892,6 +901,7 @@ pub fn get_default_settings() -> AppSettings {
+         paste_delay_after_ms: default_paste_delay_after_ms(),
+         reliable_paste: false,
+         typing_tool: default_typing_tool(),
++        portal_restore_token: None,
+         external_script_path: None,
+         custom_filler_words: None,
+         transcribe_accelerator: TranscribeAcceleratorSetting::default(),
+diff --git a/src-tauri/src/shortcut/mod.rs b/src-tauri/src/shortcut/mod.rs
+index d69bc0e..094e439 100644
+--- a/src-tauri/src/shortcut/mod.rs
++++ b/src-tauri/src/shortcut/mod.rs
+@@ -909,6 +909,7 @@ pub fn change_typing_tool_setting(app: AppHandle, tool: String) -> Result<(), St
+         "dotool" => TypingTool::Dotool,
+         "ydotool" => TypingTool::Ydotool,
+         "xdotool" => TypingTool::Xdotool,
++        "portal" => TypingTool::Portal,
+         other => {
+             warn!("Invalid typing tool '{}', defaulting to auto", other);
+             TypingTool::Auto
