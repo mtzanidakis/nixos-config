@@ -8,6 +8,7 @@
     ../../nixos/flatpak.nix
     ../../nixos/fonts.nix
     ../../nixos/fprintd.nix
+    ../../nixos/handy.nix
     ../../nixos/kde.nix
     ../../nixos/nix-ld.nix
     ../../nixos/pipewire.nix
