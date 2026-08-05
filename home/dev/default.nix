@@ -8,11 +8,9 @@
     ./js.nix
     ./mise.nix
     ./neovim.nix
-    ./nodejs.nix
     ./php.nix
     ./python.nix
     ./virt-manager.nix
-    ./vscode.nix
   ];
 
   home.packages = with pkgs; [
