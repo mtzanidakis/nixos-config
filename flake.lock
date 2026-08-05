@@ -125,7 +125,41 @@
         "catppuccin": "catppuccin",
         "claude-code": "claude-code",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_3",
+        "skills-mtzanidakis": "skills-mtzanidakis",
+        "skills-vercel": "skills-vercel"
+      }
+    },
+    "skills-mtzanidakis": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777380229,
+        "narHash": "sha256-GTHWsyCEhP9BQ1YmZlRfYAZdTjbb6a7rTBtJnTAlnyU=",
+        "owner": "mtzanidakis",
+        "repo": "skills",
+        "rev": "93f5af21fce988384f685a2d3bcc9b6941f2050c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mtzanidakis",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
+    "skills-vercel": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785882603,
+        "narHash": "sha256-ECkobgxV5ZAcpBJVIngSefuDM0SaFWM4KJGKKI5+eeQ=",
+        "owner": "vercel-labs",
+        "repo": "skills",
+        "rev": "ab4fc49265c443279a5deae20297e631470da68c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vercel-labs",
+        "repo": "skills",
+        "type": "github"
       }
     },
     "systems": {

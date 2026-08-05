@@ -10,6 +10,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     claude-code.url = "github:sadjow/claude-code-nix";
+    # Agent skills, consumed as plain source trees by home/dev/ai.nix.
+    skills-mtzanidakis = {
+      url = "github:mtzanidakis/skills";
+      flake = false;
+    };
+    skills-vercel = {
+      url = "github:vercel-labs/skills";
+      flake = false;
+    };
   };
 
   outputs = inputs @ {
