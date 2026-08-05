@@ -5,7 +5,8 @@
 in {
   # The package itself lives in nixos/handy.nix rather than home.packages: it
   # ships ggml libs whose filenames collide with the whisper-cpp in
-  # home/dev/ai.nix, and the home profile would shadow the system one anyway.
+  # home/dev/whisper-cpp.nix, and the home profile would shadow the system one
+  # anyway.
 
   # handy's own global shortcuts don't reach a wayland session, so the hotkey is
   # a kde custom shortcut running `handy --toggle-transcription`; that needs an

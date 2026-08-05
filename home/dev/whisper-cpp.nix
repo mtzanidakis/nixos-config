@@ -1,7 +1,5 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    claude-code
-    llmfit
-    opencode
+    (whisper-cpp.override {vulkanSupport = true;})
   ];
 }
