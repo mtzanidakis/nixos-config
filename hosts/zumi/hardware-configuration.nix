@@ -28,6 +28,12 @@
     fsType = "vfat";
   };
 
+  fileSystems."/data" = {
+    device = "/dev/disk/by-label/NIXOS";
+    fsType = "btrfs";
+    options = ["subvol=data" "compress=zstd" "noatime"];
+  };
+
   fileSystems."/home" = {
     device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
