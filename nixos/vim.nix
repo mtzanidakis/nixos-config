@@ -2,7 +2,7 @@
   environment = {
     systemPackages = with pkgs; [
       (
-        (vim-full.override {}).customize {
+        vim-full.customize {
           name = "vim";
           vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
             start = [
