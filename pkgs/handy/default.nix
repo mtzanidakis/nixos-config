@@ -4,24 +4,27 @@
 # us,gr layout a greek transcript arrives as latin gibberish unless the greek
 # group happens to be active. The patch adds a backend that goes through the
 # RemoteDesktop portal's NotifyKeyboardKeysym instead, which leaves the symbol
-# lookup to kwin. Upstream equivalent is cjpais/Handy#689, still unreviewed and
-# still keycode-based; the patch belongs there eventually.
+# lookup to kwin. Upstream equivalent is cjpais/Handy#689, which is keycode-based
+# and so has the same blind spot; the patch belongs there eventually.
 #
-# nixpkgs is on 0.9.1 and the patch is written against upstream main, so the
-# source is pinned here rather than applied to the packaged version.
+# For that to reach chromium and electron applications kwin needs patching too --
+# see nixos/kwin-scratch-keymap.nix.
+#
+# nixpkgs is still on 0.9.1, so the source is pinned to the current release here
+# rather than applied to the packaged version.
 {
   handy,
   fetchFromGitHub,
   rustPlatform,
 }:
 handy.overrideAttrs (finalAttrs: prevAttrs: {
-  version = "0.9.4-unstable-2026-07-31";
+  version = "0.9.5";
 
   src = fetchFromGitHub {
     owner = "cjpais";
     repo = "Handy";
-    rev = "a70ac84fd66819d171a0bce156e4f729aa46527a";
-    hash = "sha256-S7IEMXja2MxamM9esNowy0YO29Szy8cF1ManaUeHU50=";
+    rev = "v${finalAttrs.version}";
+    hash = "sha256-CYSvo03b7d8CeLtvSdO9cyGSdrlpDupKGHITr7E7LuI=";
   };
 
   patches = (prevAttrs.patches or []) ++ [./portal-typing.patch];
@@ -33,7 +36,7 @@ handy.overrideAttrs (finalAttrs: prevAttrs: {
     name = "handy-${finalAttrs.version}-vendor";
     inherit (finalAttrs) src patches;
     cargoRoot = "src-tauri";
-    hash = "sha256-Ku43JdiI2+i5gY+Nz4gAEC4Goro7wMoE+YijhQcFpwI=";
+    hash = "sha256-X/VHX7iW+EhnOh0jL7pfnPvw0oJk5RU/5SpR6xC4oeQ=";
   };
 
   # frontendDeps picks up the new src through the fixed point, but its own hash
@@ -43,7 +46,7 @@ handy.overrideAttrs (finalAttrs: prevAttrs: {
     // {
       frontendDeps = prevAttrs.passthru.frontendDeps.overrideAttrs (_: {
         inherit (finalAttrs) src version;
-        outputHash = "sha256-Yb8lA+BdGfdrMs7xbYxyIkyw1Q+UdK4PVQ6fnIr54o8=";
+        outputHash = "sha256-bkBgSjXPPLCG2ex67jP/euEX/i4IDaK38g6YkXDDAW0=";
       });
     };
 })
