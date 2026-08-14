@@ -6,6 +6,10 @@
   #
   # Requires `Typing Tool: portal` in handy's settings; the portal asks for
   # consent once and the restore token keeps later launches silent.
+  #
+  # Chromium and electron applications additionally need the kwin patch in
+  # nixos/kwin-scratch-keymap.nix -- without it they drop every character the
+  # active xkb group cannot produce.
   environment.systemPackages = [
     (pkgs.callPackage ../pkgs/handy {})
   ];

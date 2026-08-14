@@ -10,6 +10,7 @@
     ../../nixos/fprintd.nix
     ../../nixos/handy.nix
     ../../nixos/kde.nix
+    ../../nixos/kwin-scratch-keymap.nix
     ../../nixos/nix-ld.nix
     ../../nixos/pipewire.nix
     ../../nixos/printing.nix

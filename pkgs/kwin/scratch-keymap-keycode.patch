@@ -1,0 +1,55 @@
+Use a keycode Chromium recognises for the scratch keymap
+
+A keysym that the active xkb layout group cannot produce is delivered on a
+throwaway keycode carrying a one-key scratch keymap, and both places that do
+this pick 247 (KEY_RFKILL). That code has no entry in Chromium's evdev ->
+DomCode table (ui/events/keycodes/dom/dom_code_data.inc), and
+WaylandKeyboard::DispatchKey does
+
+    DomCode dom_code = KeycodeConverter::EvdevCodeToDomCode(key);
+    if (dom_code == ui::DomCode::NONE)
+      return;
+
+so every Chromium and Electron application -- Chrome, VS Code, Slack, Discord,
+Signal -- silently drops the key, both for the RemoteDesktop portal and for the
+virtual keyboard. On a us,gr layout that means a dictation tool can type Latin
+text into a browser but not Greek; the same happens to any symbol outside the
+active group, EuroSign included.
+
+The character itself comes from the keysym rather than from the DomCode
+(XkbKeyboardLayoutEngine::Lookup ends in DomKey::FromCharacter(character)), so
+any keycode Chromium knows produces the right result. KEY_F24 is in its table,
+is not part of the pc+us include the scratch keymap builds on, and is rarely
+bound as a shortcut.
+
+Verified on Plasma 6.7.4: wev shows `key: 255 sym: U03B3 utf8: 'γ'` arriving
+correctly, while the same keystroke into Chrome 151 produces no keydown event at
+all. Qt and GTK clients are unaffected because they resolve the keycode through
+xkbcommon directly rather than through a fixed table.
+
+--- a/src/backends/fakeinput/fakeinputbackend.cpp
++++ b/src/backends/fakeinput/fakeinputbackend.cpp
+@@ -340,7 +340,10 @@
+     // clients don't seem to like having a keymap change whilst a key is pressed
+     // for now send a fake release with every press and ignore other releases. We can make the keymap resetting more lazy if it's an issue IRL
+     if (nativeState == KeyboardKeyState::Pressed) {
+-        static const uint unmappedKeyCode = 247;
++        // Has to be a keycode chromium knows: it maps evdev codes to DomCode
++        // through a fixed table and drops the event outright for anything
++        // missing from it, which 247 (KEY_RFKILL) is.
++        static const uint unmappedKeyCode = 194; // KEY_F24
+         bool keymapUpdated = input()->keyboard()->xkb()->updateToKeymapForKeySym(unmappedKeyCode, keySym);
+         if (!keymapUpdated) {
+             return;
+--- a/src/inputmethod.cpp
++++ b/src/inputmethod.cpp
+@@ -538,7 +538,8 @@
+     std::optional<Xkb::KeyCode> keyCode = input()->keyboard()->xkb()->keycodeFromKeysym(keySym);
+     if (!keyCode) {
+         qCWarning(KWIN_VIRTUALKEYBOARD) << "Could not map keysym " << keySym << "to keycode. Trying custom keymap";
+-        static const uint unmappedKeyCode = 247;
++        // See fakeinputbackend.cpp: chromium clients drop keycode 247.
++        static const uint unmappedKeyCode = 194; // KEY_F24
+         auto temporaryKeymap = input()->keyboard()->xkb()->keymapContentsForKeysym(unmappedKeyCode, keySym);
+         if (temporaryKeymap.isEmpty()) {
+             return;
