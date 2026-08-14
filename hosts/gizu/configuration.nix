@@ -84,8 +84,8 @@
     };
   };
 
-  hardware.logitech.wireless.enable = true;
-  hardware.logitech.wireless.enableGraphical = true;
+  # implies hardware.logitech.wireless.enable
+  programs.solaar.enable = true;
 
   environment.systemPackages = with pkgs; [
     framework-tool
