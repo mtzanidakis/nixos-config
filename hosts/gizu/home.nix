@@ -5,6 +5,7 @@
     ../../home/desktop
     ../../home/desktop/handy.nix
     ../../home/dev
+    ../../home/dev/mongodb-compass.nix
     ../../home/dev/opencode-desktop.nix
     ../../home/dev/virt-manager.nix
     ../../home/dev/vscode.nix
