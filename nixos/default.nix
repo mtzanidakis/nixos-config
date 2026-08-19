@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ./localization.nix
     ./users.nix
@@ -121,5 +125,13 @@
         "--ssh"
       ];
     };
+  };
+
+  # Upstream ships Restart=on-failure, so a tailscaled that exits cleanly (e.g.
+  # after its TUN read dies with ENOBUFS during a netlink storm) stays down
+  # until someone notices. Bring it back whatever the exit status.
+  systemd.services.tailscaled.serviceConfig = {
+    Restart = lib.mkForce "always";
+    RestartSec = "5s";
   };
 }

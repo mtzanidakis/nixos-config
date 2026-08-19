@@ -24,14 +24,8 @@
 
   networking = {
     hostName = "gizu";
-    networkmanager = {
-      enable = true;
-      unmanaged = [
-        "interface-name:veth*"
-        "interface-name:br-*"
-        "interface-name:docker*"
-      ];
-    };
+    # docker interfaces are excluded in nixos/docker.nix
+    networkmanager.enable = true;
   };
 
   virtualisation.docker = {
