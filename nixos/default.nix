@@ -127,6 +127,12 @@
     };
   };
 
+  # dhcpcd deconfigures its interfaces when it stops; NixOS only narrows that
+  # window to a single `systemctl restart` on rebuild (stopIfChanged = false).
+  # These hosts are reached over SSH on a DHCP interface, so keep the address
+  # configured across restarts instead of relying on a fast re-lease.
+  networking.dhcpcd.persistent = true;
+
   # Upstream ships Restart=on-failure, so a tailscaled that exits cleanly (e.g.
   # after its TUN read dies with ENOBUFS during a netlink storm) stays down
   # until someone notices. Bring it back whatever the exit status.
