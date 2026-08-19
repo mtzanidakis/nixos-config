@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     dbgate
     go-migrate
+    mongodb-atlas-cli
     mongodb-tools
     mongosh
     #mycli
