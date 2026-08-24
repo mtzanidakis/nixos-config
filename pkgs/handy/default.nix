@@ -18,13 +18,13 @@
   rustPlatform,
 }:
 handy.overrideAttrs (finalAttrs: prevAttrs: {
-  version = "0.9.5";
+  version = "0.9.6";
 
   src = fetchFromGitHub {
     owner = "cjpais";
     repo = "Handy";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-CYSvo03b7d8CeLtvSdO9cyGSdrlpDupKGHITr7E7LuI=";
+    hash = "sha256-6eNa9iNjwKgLL8t72GeMHTxjyHaeVl+9VF/QWjlHzts=";
   };
 
   patches = (prevAttrs.patches or []) ++ [./portal-typing.patch];
@@ -36,7 +36,7 @@ handy.overrideAttrs (finalAttrs: prevAttrs: {
     name = "handy-${finalAttrs.version}-vendor";
     inherit (finalAttrs) src patches;
     cargoRoot = "src-tauri";
-    hash = "sha256-X/VHX7iW+EhnOh0jL7pfnPvw0oJk5RU/5SpR6xC4oeQ=";
+    hash = "sha256-VmFrChECctwy4KAs0lMrqWu0rYEFrmod59UiakAU71I=";
   };
 
   # frontendDeps picks up the new src through the fixed point, but its own hash
@@ -46,7 +46,7 @@ handy.overrideAttrs (finalAttrs: prevAttrs: {
     // {
       frontendDeps = prevAttrs.passthru.frontendDeps.overrideAttrs (_: {
         inherit (finalAttrs) src version;
-        outputHash = "sha256-bkBgSjXPPLCG2ex67jP/euEX/i4IDaK38g6YkXDDAW0=";
+        outputHash = "sha256-huOC2smHU0sGIxeyvWmzdewUEpKHfdSGNhf9xWpH9Jk=";
       });
     };
 })
