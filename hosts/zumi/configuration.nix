@@ -24,11 +24,6 @@
 
   environment.systemPackages = with pkgs; [];
 
-  # GOPATH lives here, see home/dev/go.nix
-  systemd.tmpfiles.rules = [
-    "d /data/go 0755 manolis manolis -"
-  ];
-
   services.restic.backups.periodic.paths = [
     "/srv"
   ];
