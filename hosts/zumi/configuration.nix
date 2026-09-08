@@ -3,7 +3,6 @@
     ../../nixos
     ../../nixos/docker.nix
     ../../nixos/restic.nix
-    ../../nixos/nix-ld.nix
     ../../nixos/systemd-boot.nix
     ../../nixos/zramswap.nix
 
