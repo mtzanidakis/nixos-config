@@ -1,8 +1,16 @@
+# vim-full defaults to a gtk3 gvim build (`guiSupport ? "gtk3"`, `waylandSupport
+# ? true` in nixpkgs' full.nix), which drags gtk+3 and wayland into the closure
+# -- ~550MB, and on the headless hosts nothing else references them. Nobody uses
+# gvim here, so build the terminal vim instead.
 {pkgs, ...}: {
   environment = {
     systemPackages = with pkgs; [
       (
-        vim-full.customize {
+        (vim-full.override {
+          guiSupport = false;
+          waylandSupport = false;
+        })
+        .customize {
           name = "vim";
           vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
             start = [
