@@ -1,16 +1,18 @@
-# vim-full defaults to a gtk3 gvim build (`guiSupport ? "gtk3"`, `waylandSupport
-# ? true` in nixpkgs' full.nix), which drags gtk+3 and wayland into the closure
-# -- ~550MB, and on the headless hosts nothing else references them. Nobody uses
-# gvim here, so build the terminal vim instead.
+# `vim-full` is a gtk3 gvim build (`guiSupport ? "gtk3"`, `waylandSupport ? true`
+# in nixpkgs' full.nix), so it drags gtk+3 and wayland into the closure -- 550MB,
+# and on the headless hosts nothing else references them. Overriding those two
+# flags works but loses the binary cache and rebuilds vim from source, so use the
+# plain `vim` attribute instead: a separate top-level package, "huge version
+# without GUI", substitutable, closure ncurses/bash/gawk.
+#
+# What it drops beyond the GUI: the python/lua/ruby interpreters (no plugin here
+# needs one) and `+clipboard`, which requires X -- so no `"+y` from a terminal
+# vim. The desktops run neovim as their editor anyway.
 {pkgs, ...}: {
   environment = {
     systemPackages = with pkgs; [
       (
-        (vim-full.override {
-          guiSupport = false;
-          waylandSupport = false;
-        })
-        .customize {
+        vim.customize {
           name = "vim";
           vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
             start = [
