@@ -1,6 +1,6 @@
-From 3b277b9b77588fbed032d198cd4ea5681199cfcc Mon Sep 17 00:00:00 2001
+From 2061c6f3492adbc555ae15bfcd260b3e766be99c Mon Sep 17 00:00:00 2001
 From: Manolis Tzanidakis <mtzanidakis@gmail.com>
-Date: Fri, 31 Jul 2026 20:00:32 +0300
+Date: Tue, 8 Sep 2026 14:55:30 +0300
 Subject: [PATCH] feat(linux): type through the xdg-desktop-portal
  RemoteDesktop API
 
@@ -21,15 +21,27 @@ loses the Ctrl and types a bare "v".
 Consent is asked once; PersistMode::ExplicitlyRevoked plus the restore
 token (rotated on every Start, so written back each time) keeps later
 launches silent.
+
+Opt-in: it is a new TypingTool variant, so nothing changes for anyone who
+does not select it, and get_available_typing_tools only offers it when the
+portal answers. src/bindings.ts is regenerated so the frontend, which
+builds its dropdown from that list, can offer it too.
+
+ashpd is the only new dependency and it adds 22 lines to Cargo.lock --
+its transitive tree (zbus and friends) is already pulled in by tauri.
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01Mi4LD93Ls8zyxpUPtowEkE
 ---
  src-tauri/Cargo.lock          |  22 ++
  src-tauri/Cargo.toml          |   2 +
  src-tauri/src/clipboard.rs    |  38 ++-
  src-tauri/src/lib.rs          |   8 +
- src-tauri/src/portal_input.rs | 507 ++++++++++++++++++++++++++++++++++
+ src-tauri/src/portal_input.rs | 510 ++++++++++++++++++++++++++++++++++
  src-tauri/src/settings.rs     |  10 +
  src-tauri/src/shortcut/mod.rs |   1 +
- 7 files changed, 586 insertions(+), 2 deletions(-)
+ src/bindings.ts               |  16 +-
+ 8 files changed, 603 insertions(+), 4 deletions(-)
  create mode 100644 src-tauri/src/portal_input.rs
 
 diff --git a/src-tauri/Cargo.lock b/src-tauri/Cargo.lock
@@ -227,10 +239,10 @@ index ec93568..8562593 100644
              // can do a single atomic load instead of reading the Tauri store.
 diff --git a/src-tauri/src/portal_input.rs b/src-tauri/src/portal_input.rs
 new file mode 100644
-index 0000000..60249c7
+index 0000000..3185f37
 --- /dev/null
 +++ b/src-tauri/src/portal_input.rs
-@@ -0,0 +1,507 @@
+@@ -0,0 +1,510 @@
 +//! Text injection through the xdg-desktop-portal RemoteDesktop API.
 +//!
 +//! Every other Linux typing backend resolves a character to a *keycode* and
@@ -325,7 +337,10 @@ index 0000000..60249c7
 +enum Action {
 +    Type(String),
 +    /// Modifiers held (in order) around a key, released in reverse.
-+    Chord { modifiers: Vec<u32>, key: u32 },
++    Chord {
++        modifiers: Vec<u32>,
++        key: u32,
++    },
 +}
 +
 +struct Command {
@@ -785,3 +800,37 @@ index 1a1e76a..4a94178 100644
          other => {
              warn!("Invalid typing tool '{}', defaulting to auto", other);
              TypingTool::Auto
+diff --git a/src/bindings.ts b/src/bindings.ts
+index 53458b0..5b98888 100644
+--- a/src/bindings.ts
++++ b/src/bindings.ts
+@@ -959,7 +959,13 @@ selected_channel?: number | null; clamshell_microphone?: string | null; selected
+  * after the target app actually reads the transcript, instead of after a
+  * fixed delay. See `paste_tx`. macOS and Windows only.
+  */
+-reliable_paste?: boolean; typing_tool?: TypingTool; external_script_path?: string | null; filler_word_removal_enabled?: boolean; custom_filler_words?: string[] | null; transcribe_accelerator?: TranscribeAcceleratorSetting; ort_accelerator?: OrtAcceleratorSetting; 
++reliable_paste?: boolean; typing_tool?: TypingTool; 
++/**
++ * Restore token for the xdg-desktop-portal RemoteDesktop session, so later
++ * launches reattach without a consent dialog. The portal rotates it on
++ * every Start, so it is rewritten each time. Linux/Wayland only.
++ */
++portal_restore_token?: string | null; external_script_path?: string | null; filler_word_removal_enabled?: boolean; custom_filler_words?: string[] | null; transcribe_accelerator?: TranscribeAcceleratorSetting; ort_accelerator?: OrtAcceleratorSetting; 
+ /**
+  * Stable transcribe.cpp device selector. This is derived from the backend's
+  * `device_id` when available (or its name for backends such as Metal),
+@@ -1118,7 +1124,13 @@ export type StreamWorkKind = "transcribing" | "polishing"
+  */
+ export type Theme = "system" | "light" | "dark"
+ export type TranscribeAcceleratorSetting = "auto" | "cpu" | "gpu"
+-export type TypingTool = "auto" | "wtype" | "kwtype" | "dotool" | "ydotool" | "xdotool"
++export type TypingTool = "auto" | "wtype" | "kwtype" | "dotool" | "ydotool" | "xdotool" | 
++/**
++ * xdg-desktop-portal RemoteDesktop (Wayland). Unlike the others it is not
++ * a binary on PATH, and it types by keysym, so it is the only backend that
++ * survives a multi-layout setup. See portal_input.rs.
++ */
++"portal"
+ export type WindowsMicrophonePermissionStatus = { supported: boolean; overall_access: PermissionAccess; device_access: PermissionAccess; app_access: PermissionAccess; desktop_app_access: PermissionAccess }
+ 
+ /** tauri-specta globals **/

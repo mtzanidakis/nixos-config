@@ -4,8 +4,14 @@
 # us,gr layout a greek transcript arrives as latin gibberish unless the greek
 # group happens to be active. The patch adds a backend that goes through the
 # RemoteDesktop portal's NotifyKeyboardKeysym instead, which leaves the symbol
-# lookup to kwin. Upstream equivalent is cjpais/Handy#689, which is keycode-based
-# and so has the same blind spot; the patch belongs there eventually.
+# lookup to kwin.
+#
+# The patch is content-identical to the branch prepared for upstream,
+# feat/portal-typing-main in ~/src/handy-portal-main -- same eight files, same
+# added lines, only the hunk offsets differ. It applies to current main as
+# cleanly as it does here, so it no longer waits on cjpais/Handy#689 (which is
+# keycode-based, stalled, and has the same blind spot). Keep the two in step:
+# whatever goes upstream lands here first.
 #
 # For that to reach chromium and electron applications kwin needs patching too --
 # see nixos/kwin-scratch-keymap.nix.
