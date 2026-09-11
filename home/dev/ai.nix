@@ -1,5 +1,6 @@
 {
   inputs,
+  lib,
   pkgs,
   ...
 }: {
@@ -14,9 +15,7 @@
   # update`. Claude still reads unmanaged entries dropped into `.claude/skills`.
   # Everything else under `~/.claude` (settings, auth, session history) stays
   # mutable -- Claude and herdr both write it.
-  home.file = {
-    ".claude/skills/find-skills".source = "${inputs.skills-vercel}/skills/find-skills";
-    ".claude/skills/github-make-release".source = "${inputs.skills-mtzanidakis}/skills/github/github-make-release";
-    ".claude/skills/github-merge-prs".source = "${inputs.skills-mtzanidakis}/skills/github/github-merge-prs";
-  };
+  home.file =
+    lib.mapAttrs' (name: source: lib.nameValuePair ".claude/skills/${name}" {inherit source;})
+    (import ./claude-skills.nix inputs);
 }
