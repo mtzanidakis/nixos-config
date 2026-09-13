@@ -33,6 +33,10 @@
     };
   };
 
+  # The channel tarball ships programs.sqlite, which auto-enables this; nix-index
+  # (home/core) already provides the handler and would shadow it in zsh anyway.
+  programs.command-not-found.enable = false;
+
   # use lts kernel
   boot.kernelPackages = pkgs.linuxPackages;
 

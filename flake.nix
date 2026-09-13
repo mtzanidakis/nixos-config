@@ -2,14 +2,21 @@
   description = "NixOS configuration";
 
   inputs = {
-    # default to nixpkgs-unstable
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixos-unstable from the project-hosted channel tarball rather than
+    # GitHub: smaller (zstd), no GitHub rate limits, ships programs.sqlite.
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
+    # No nixpkgs follows here: catppuccin.cachix only has the ports built
+    # against catppuccin's own nixpkgs, and a miss makes cross-arch hosts
+    # (mika) need an aarch64 builder just to evaluate.
     catppuccin.url = "github:catppuccin/nix";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    claude-code.url = "github:sadjow/claude-code-nix";
+    claude-code = {
+      url = "github:sadjow/claude-code-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Agent skills, consumed as plain source trees by home/dev/ai.nix.
     skills-mtzanidakis = {
       url = "github:mtzanidakis/skills";
