@@ -9,6 +9,7 @@
     extraFlags = [
       "--quiet"
       "--timeout 600"
+      "--immediate"
     ];
   };
 }
