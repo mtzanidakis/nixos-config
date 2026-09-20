@@ -16,21 +16,21 @@
 # For that to reach chromium and electron applications kwin needs patching too --
 # see nixos/kwin-scratch-keymap.nix.
 #
-# nixpkgs is still on 0.9.1, so the source is pinned to the current release here
-# rather than applied to the packaged version.
+# nixpkgs lags the upstream release, so the source is pinned to the current
+# release here rather than applied to the packaged version.
 {
   handy,
   fetchFromGitHub,
   rustPlatform,
 }:
 handy.overrideAttrs (finalAttrs: prevAttrs: {
-  version = "0.9.6";
+  version = "0.9.7";
 
   src = fetchFromGitHub {
     owner = "cjpais";
     repo = "Handy";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-6eNa9iNjwKgLL8t72GeMHTxjyHaeVl+9VF/QWjlHzts=";
+    hash = "sha256-Pjrwp82xfMgiCawU3dPQPaQzLor3+netA+HwE42akIY=";
   };
 
   patches = (prevAttrs.patches or []) ++ [./portal-typing.patch];
@@ -42,17 +42,26 @@ handy.overrideAttrs (finalAttrs: prevAttrs: {
     name = "handy-${finalAttrs.version}-vendor";
     inherit (finalAttrs) src patches;
     cargoRoot = "src-tauri";
-    hash = "sha256-VmFrChECctwy4KAs0lMrqWu0rYEFrmod59UiakAU71I=";
+    hash = "sha256-ol38Q+5jci8zs8HfrtwKpujOJ64Iniq7GO6R4ppdVd8=";
   };
 
+  # A nix-built handy can never self-update, and since 0.9.7 (#1576) this
+  # variable makes it stop asking GitHub on every start.
+  preFixup =
+    (prevAttrs.preFixup or "")
+    + ''
+      gappsWrapperArgs+=(--set HANDY_DISABLE_UPDATER 1)
+    '';
+
   # frontendDeps picks up the new src through the fixed point, but its own hash
-  # is pinned to the 0.9.1 bun.lock.
+  # is pinned to the nixpkgs release. It changes on every bump even when
+  # bun.lock does not: the package.json version ends up inside node_modules.
   passthru =
     prevAttrs.passthru
     // {
       frontendDeps = prevAttrs.passthru.frontendDeps.overrideAttrs (_: {
         inherit (finalAttrs) src version;
-        outputHash = "sha256-huOC2smHU0sGIxeyvWmzdewUEpKHfdSGNhf9xWpH9Jk=";
+        outputHash = "sha256-sBrQToz8+tRTAQNZkSE0Ke5mZ0Sfagl8+IE/4VL990E=";
       });
     };
 })
