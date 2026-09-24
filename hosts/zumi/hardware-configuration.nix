@@ -40,7 +40,21 @@
     options = ["subvol=nix" "compress=zstd" "noatime"];
   };
 
-  swapDevices = [];
+  # dedicated subvolume so the active swapfile does not block snapshots of root;
+  # nofail keeps boot going if the subvolume has not been created yet
+  fileSystems."/swap" = {
+    device = "/dev/disk/by-label/NIXOS";
+    fsType = "btrfs";
+    options = ["subvol=swap" "noatime" "nofail"];
+  };
+
+  # at least the size of RAM, so a hibernation image always fits
+  swapDevices = [
+    {
+      device = "/swap/swapfile";
+      size = 32 * 1024;
+    }
+  ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

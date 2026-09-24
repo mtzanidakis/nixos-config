@@ -17,7 +17,7 @@
     ../../nixos/steam.nix
     ../../nixos/systemd-boot.nix
     ../../nixos/virt-manager.nix
-    ../../nixos/zramswap.nix
+    ../../nixos/zswap.nix
 
     ./hardware-configuration.nix
   ];
@@ -37,6 +37,12 @@
   };
 
   services.btrfs.autoScrub.enable = true;
+
+  # suspend-then-hibernate, so s2idle can't drain the battery overnight.
+  # powerdevil inhibits the logind lid handling inside a plasma session;
+  # there it's "When sleeping, enter: Standby, then hibernate" in its settings
+  services.logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate";
+  systemd.sleep.settings.Sleep.HibernateDelaySec = "2h";
 
   services.udev = {
     # logi bolt breaks suspend
