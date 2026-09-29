@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   home.packages = [
-    (pkgs.php82.buildEnv {
+    (pkgs.php83.buildEnv {
       extensions = {
         enabled,
         all,
