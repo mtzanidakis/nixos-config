@@ -1,4 +1,4 @@
-From 39b5995e73767dbbf6f83a8e971accfcebd36067 Mon Sep 17 00:00:00 2001
+From c4167adf78f8751cc8a43d5d737383b96b5c7724 Mon Sep 17 00:00:00 2001
 From: Manolis Tzanidakis <mtzanidakis@gmail.com>
 Date: Tue, 8 Sep 2026 14:12:21 +0300
 Subject: [PATCH] feat(linux): type through the xdg-desktop-portal
@@ -45,7 +45,7 @@ Claude-Session: https://claude.ai/code/session_01Mi4LD93Ls8zyxpUPtowEkE
  create mode 100644 src-tauri/src/portal_input.rs
 
 diff --git a/src-tauri/Cargo.lock b/src-tauri/Cargo.lock
-index 39445d1..979162f 100644
+index 3d13b84..f50cc1f 100644
 --- a/src-tauri/Cargo.lock
 +++ b/src-tauri/Cargo.lock
 @@ -207,6 +207,23 @@ version = "0.7.6"
@@ -73,7 +73,7 @@ index 39445d1..979162f 100644
  name = "async-broadcast"
  version = "0.7.2"
 @@ -2504,6 +2521,7 @@ name = "handy"
- version = "0.9.7"
+ version = "0.9.8"
  dependencies = [
   "anyhow",
 + "ashpd",
@@ -108,7 +108,7 @@ index 39445d1..979162f 100644
   "zvariant_derive",
   "zvariant_utils",
 diff --git a/src-tauri/Cargo.toml b/src-tauri/Cargo.toml
-index d0b02b3..8c81116 100644
+index d1ff831..3d0d9e8 100644
 --- a/src-tauri/Cargo.toml
 +++ b/src-tauri/Cargo.toml
 @@ -164,6 +164,8 @@ objc2-service-management = "0.3.2"
@@ -117,7 +117,7 @@ index d0b02b3..8c81116 100644
  libc = "0.2"
 +# xdg-desktop-portal RemoteDesktop, for keysym-based typing on Wayland.
 +ashpd = { version = "0.12", default-features = false, features = ["tokio"] }
- transcribe-cpp = { version = "0.2.3", default-features = false, features = [
+ transcribe-cpp = { version = "0.2.4", default-features = false, features = [
    "dynamic-backends",
    "vulkan",
 diff --git a/src-tauri/src/clipboard.rs b/src-tauri/src/clipboard.rs
@@ -212,10 +212,10 @@ index 6beba07..4660a81 100644
          }
          PasteMethod::ExternalScript => {
 diff --git a/src-tauri/src/lib.rs b/src-tauri/src/lib.rs
-index facc978..0af1543 100644
+index 898770b..cb2bc40 100644
 --- a/src-tauri/src/lib.rs
 +++ b/src-tauri/src/lib.rs
-@@ -16,6 +16,8 @@ mod memory;
+@@ -17,6 +17,8 @@ mod memory;
  mod overlay;
  mod paste_tx;
  pub mod portable;
@@ -224,7 +224,7 @@ index facc978..0af1543 100644
  mod secure_input;
  mod settings;
  mod shortcut;
-@@ -1014,6 +1016,12 @@ pub fn run(cli_args: CliArgs) {
+@@ -1017,6 +1019,12 @@ pub fn run(cli_args: CliArgs) {
              // the Carbon fallback. See secure_input.rs and issue #1578.
              secure_input::init(&app_handle);
  
@@ -754,10 +754,10 @@ index 0000000..3185f37
 +    }
 +}
 diff --git a/src-tauri/src/settings.rs b/src-tauri/src/settings.rs
-index 44363d4..181622d 100644
+index bd4ecbd..cedc454 100644
 --- a/src-tauri/src/settings.rs
 +++ b/src-tauri/src/settings.rs
-@@ -294,6 +294,10 @@ pub enum TypingTool {
+@@ -306,6 +306,10 @@ pub enum TypingTool {
      Dotool,
      Ydotool,
      Xdotool,
@@ -768,7 +768,7 @@ index 44363d4..181622d 100644
  }
  
  #[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Type, Default)]
-@@ -484,6 +488,11 @@ pub struct AppSettings {
+@@ -496,6 +500,11 @@ pub struct AppSettings {
      pub reliable_paste: bool,
      #[serde(default = "default_typing_tool")]
      pub typing_tool: TypingTool,
@@ -780,7 +780,7 @@ index 44363d4..181622d 100644
      #[serde(default)]
      pub external_script_path: Option<String>,
      #[serde(default = "default_filler_word_removal_enabled")]
-@@ -960,6 +969,7 @@ pub fn get_default_settings() -> AppSettings {
+@@ -982,6 +991,7 @@ pub fn get_default_settings() -> AppSettings {
          paste_delay_after_ms: default_paste_delay_after_ms(),
          reliable_paste: false,
          typing_tool: default_typing_tool(),
@@ -789,10 +789,10 @@ index 44363d4..181622d 100644
          filler_word_removal_enabled: default_filler_word_removal_enabled(),
          custom_filler_words: None,
 diff --git a/src-tauri/src/shortcut/mod.rs b/src-tauri/src/shortcut/mod.rs
-index 8a603f4..284c4b0 100644
+index 607ef52..f28df44 100644
 --- a/src-tauri/src/shortcut/mod.rs
 +++ b/src-tauri/src/shortcut/mod.rs
-@@ -929,6 +929,7 @@ pub fn change_typing_tool_setting(app: AppHandle, tool: String) -> Result<(), St
+@@ -979,6 +979,7 @@ pub fn change_typing_tool_setting(app: AppHandle, tool: String) -> Result<(), St
          "dotool" => TypingTool::Dotool,
          "ydotool" => TypingTool::Ydotool,
          "xdotool" => TypingTool::Xdotool,
@@ -801,25 +801,25 @@ index 8a603f4..284c4b0 100644
              warn!("Invalid typing tool '{}', defaulting to auto", other);
              TypingTool::Auto
 diff --git a/src/bindings.ts b/src/bindings.ts
-index c6d3953..44a7728 100644
+index 1d8fc9a..f4f5c69 100644
 --- a/src/bindings.ts
 +++ b/src/bindings.ts
-@@ -988,7 +988,13 @@ selected_channel?: number | null; clamshell_microphone?: string | null; selected
+@@ -996,7 +996,13 @@ selected_channel?: number | null; clamshell_microphone?: string | null; selected
   * after the target app actually reads the transcript, instead of after a
   * fixed delay. See `paste_tx`. macOS and Windows only.
   */
--reliable_paste?: boolean; typing_tool?: TypingTool; external_script_path?: string | null; filler_word_removal_enabled?: boolean; custom_filler_words?: string[] | null; transcribe_accelerator?: TranscribeAcceleratorSetting; ort_accelerator?: OrtAcceleratorSetting; 
+-reliable_paste?: boolean; typing_tool?: TypingTool; external_script_path?: string | null; filler_word_removal_enabled?: boolean; custom_filler_words?: string[] | null; 
 +reliable_paste?: boolean; typing_tool?: TypingTool; 
 +/**
 + * Restore token for the xdg-desktop-portal RemoteDesktop session, so later
 + * launches reattach without a consent dialog. The portal rotates it on
 + * every Start, so it is rewritten each time. Linux/Wayland only.
 + */
-+portal_restore_token?: string | null; external_script_path?: string | null; filler_word_removal_enabled?: boolean; custom_filler_words?: string[] | null; transcribe_accelerator?: TranscribeAcceleratorSetting; ort_accelerator?: OrtAcceleratorSetting; 
++portal_restore_token?: string | null; external_script_path?: string | null; filler_word_removal_enabled?: boolean; custom_filler_words?: string[] | null; 
  /**
-  * Stable transcribe.cpp device selector. This is derived from the backend's
-  * `device_id` when available (or its name for backends such as Metal),
-@@ -1169,7 +1175,13 @@ export type StreamWorkKind = "transcribing" | "polishing"
+  * Fresh installs default from the OS locale; existing stores are migrated
+  * in `apply_settings_migrations`.
+@@ -1191,7 +1197,13 @@ export type StreamWorkKind = "transcribing" | "polishing"
   */
  export type Theme = "system" | "light" | "dark"
  export type TranscribeAcceleratorSetting = "auto" | "cpu" | "gpu"

@@ -24,13 +24,13 @@
   rustPlatform,
 }:
 handy.overrideAttrs (finalAttrs: prevAttrs: {
-  version = "0.9.7";
+  version = "0.9.8";
 
   src = fetchFromGitHub {
     owner = "cjpais";
     repo = "Handy";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-Pjrwp82xfMgiCawU3dPQPaQzLor3+netA+HwE42akIY=";
+    hash = "sha256-3j73ss9pwkcK4MfeNY/9PFp//Cbc0OSICDdlmHprSso=";
   };
 
   patches = (prevAttrs.patches or []) ++ [./portal-typing.patch];
@@ -42,7 +42,7 @@ handy.overrideAttrs (finalAttrs: prevAttrs: {
     name = "handy-${finalAttrs.version}-vendor";
     inherit (finalAttrs) src patches;
     cargoRoot = "src-tauri";
-    hash = "sha256-ol38Q+5jci8zs8HfrtwKpujOJ64Iniq7GO6R4ppdVd8=";
+    hash = "sha256-ql0WN0vNhgMYwAjXnt9sQk8cnWlPb7qrpqfbME7T8bw=";
   };
 
   # A nix-built handy can never self-update, and since 0.9.7 (#1576) this
@@ -54,8 +54,8 @@ handy.overrideAttrs (finalAttrs: prevAttrs: {
     '';
 
   # frontendDeps picks up the new src through the fixed point, but its own hash
-  # is pinned to the nixpkgs release. It changes on every bump even when
-  # bun.lock does not: the package.json version ends up inside node_modules.
+  # is pinned to the nixpkgs release. It only moves when bun.lock does (0.9.7
+  # and 0.9.8 share one), so re-check it on every bump but expect no change.
   passthru =
     prevAttrs.passthru
     // {
