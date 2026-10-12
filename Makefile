@@ -41,7 +41,7 @@ ls-updates: update build diff
 
 .PHONY: update
 update:
-	nix flake update
+	NIX_CONFIG="access-tokens = github.com=$$(gh auth token)" nix flake update $(INPUTS)
 
 .PHONY: upgrade
 upgrade: update deploy
