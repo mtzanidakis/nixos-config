@@ -13,8 +13,7 @@
 # keycode-based, stalled, and has the same blind spot). Keep the two in step:
 # whatever goes upstream lands here first.
 #
-# For that to reach chromium and electron applications kwin needs patching too --
-# see nixos/kwin-scratch-keymap.nix.
+# Reaching chromium and electron applications needs KWin >= 6.8 (KDE MR !9755).
 #
 # nixpkgs lags the upstream release, so the source is pinned to the current
 # release here rather than applied to the packaged version.

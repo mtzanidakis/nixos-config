@@ -7,10 +7,8 @@
   # Requires `Typing Tool: portal` in handy's settings; the portal asks for
   # consent once and the restore token keeps later launches silent.
   #
-  # Chromium and electron applications additionally need the kwin patch in
-  # nixos/kwin-scratch-keymap.nix -- without it they drop every character the
-  # active xkb group cannot produce. That fix is upstream as KDE MR !9755 and
-  # ships in Plasma 6.8, so the patch goes away once nixpkgs gets there.
+  # Chromium and electron applications need KWin >= 6.8 (KDE MR !9755): older
+  # KWin sent out-of-group keysyms on a keycode Chromium silently drops.
   environment.systemPackages = [
     (pkgs.callPackage ../pkgs/handy {})
   ];
