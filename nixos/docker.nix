@@ -22,6 +22,16 @@
     ];
   };
 
+  # Unmanaged isn't enough for Chrome: it watches netlink itself, and the IPv6
+  # link-local address the kernel gives every host-side veth on link up counts
+  # as an IP change, so each container start/stop fails in-flight requests with
+  # ERR_NETWORK_CHANGED. The bridge port only switches frames, so it needs no
+  # IPv6 of its own; containers keep theirs. DAD holds the address back ~1s,
+  # which leaves udev time to drop it before it is ever announced.
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="net", KERNEL=="veth*", RUN+="${pkgs.procps}/bin/sysctl -q -w net.ipv6.conf.%k.disable_ipv6=1"
+  '';
+
   environment = {
     systemPackages = with pkgs; [
       ctop
