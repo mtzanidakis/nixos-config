@@ -3,18 +3,34 @@
   pkgs,
   ...
 }: let
-  # The desktop app always starts its own backend on ~/.t3 and refuses to run
-  # while this server holds it, so only the `t3` CLI goes on PATH (for `t3 pair`
-  # and friends). Use the web UI at http://localhost:3773 locally.
+  # The `t3` CLI (for `t3 pair` and friends). The package's own desktop
+  # launcher is swapped for `desktop` below; its .desktop entry runs
+  # `t3code-desktop` from PATH, so it picks that up.
   t3 = pkgs.symlinkJoin {
     name = "t3-${pkgs.t3code.version}";
     paths = [pkgs.t3code];
     postBuild = ''
-      rm -r $out/bin/t3code-desktop $out/bin/.t3code-desktop-wrapped $out/share/applications
+      rm $out/bin/t3code-desktop $out/bin/.t3code-desktop-wrapped
     '';
   };
+
+  # The desktop app as a client of the server below, showing the same threads
+  # as the web UI. By default it starts its own backend on ~/.t3, which the
+  # server holds. So it gets its own state dir, seeded with the local
+  # environment off (the app then starts no backend at all), and the server is
+  # added in the app as a saved environment with a code from `t3 pair`. The
+  # settings file is only seeded, since the app rewrites it (window bounds etc.).
+  desktop = pkgs.writeShellScriptBin "t3code-desktop" ''
+    export T3CODE_HOME="''${T3CODE_HOME:-$HOME/.t3-desktop}"
+    settings=$T3CODE_HOME/userdata/desktop-settings.json
+    if [ ! -e "$settings" ]; then
+      mkdir -p "''${settings%/*}"
+      echo '{"localEnvironmentEnabled": false}' > "$settings"
+    fi
+    exec ${pkgs.t3code}/bin/t3code-desktop "$@"
+  '';
 in {
-  home.packages = [t3];
+  home.packages = [t3 desktop];
 
   # Git over SSH (pull/push from the UI) needs keychain's agent, whose socket
   # name is random per agent start and only known to shells. Each shell that
