@@ -1,5 +1,9 @@
 {pkgs, ...}: {
-  programs.dconf.enable = true;
+  programs = {
+    dconf.enable = true;
+    # plasma6 enables kde-pim by default (akonadi, kmail, kontact, merkuro)
+    kde-pim.enable = false;
+  };
 
   services = {
     colord.enable = true;
