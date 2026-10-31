@@ -15,6 +15,7 @@
     ../../nixos/printing.nix
     ../../nixos/steam.nix
     ../../nixos/systemd-boot.nix
+    ../../nixos/t3code.nix
     ../../nixos/virt-manager.nix
     ../../nixos/zswap.nix
 

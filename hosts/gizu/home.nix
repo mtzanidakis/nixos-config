@@ -8,6 +8,7 @@
     ../../home/dev/claude-work.nix
     ../../home/dev/mongodb-compass.nix
     ../../home/dev/opencode-desktop.nix
+    ../../home/dev/t3code.nix
     ../../home/dev/virt-manager.nix
     ../../home/dev/whisper-cpp.nix
   ];
