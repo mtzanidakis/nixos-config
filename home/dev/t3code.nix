@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  lib,
+  pkgs,
+  ...
+}: let
   # The desktop app always starts its own backend on ~/.t3 and refuses to run
   # while this server holds it, so only the `t3` CLI goes on PATH (for `t3 pair`
   # and friends). Use the web UI at http://localhost:3773 locally.
@@ -11,6 +15,17 @@
   };
 in {
   home.packages = [t3];
+
+  # Git over SSH (pull/push from the UI) needs keychain's agent, whose socket
+  # name is random per agent start and only known to shells. Each shell that
+  # has it points a fixed path at it, and the service uses that path; it is
+  # resolved at connect time, so a later agent restart is picked up by the
+  # next shell. Only keychain's own socket, not a forwarded one that dies with
+  # its ssh session.
+  programs.zsh.initContent = lib.mkAfter ''
+    [[ $SSH_AUTH_SOCK == $HOME/.keychain/* && -S $SSH_AUTH_SOCK ]] &&
+      ln -sfn "$SSH_AUTH_SOCK" "$XDG_RUNTIME_DIR/keychain-ssh-agent.sock"
+  '';
 
   # Our own unit rather than `t3 service install`, which downloads releases
   # into ~/.t3 and writes a unit pointing at them. Nix owns the version: update
@@ -35,6 +50,7 @@ in {
         # next free port when 3773 is busy.
         "T3CODE_PORT=3773"
         "T3CODE_TELEMETRY_ENABLED=false"
+        "SSH_AUTH_SOCK=%t/keychain-ssh-agent.sock"
       ];
       Restart = "on-failure";
       RestartSec = 5;
