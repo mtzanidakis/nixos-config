@@ -1,4 +1,4 @@
-From c4167adf78f8751cc8a43d5d737383b96b5c7724 Mon Sep 17 00:00:00 2001
+From 4663d5a053b0a049b383ea11a5763754febb1a30 Mon Sep 17 00:00:00 2001
 From: Manolis Tzanidakis <mtzanidakis@gmail.com>
 Date: Tue, 8 Sep 2026 14:12:21 +0300
 Subject: [PATCH] feat(linux): type through the xdg-desktop-portal
@@ -33,7 +33,7 @@ its transitive tree (zbus and friends) is already pulled in by tauri.
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_01Mi4LD93Ls8zyxpUPtowEkE
 ---
- src-tauri/Cargo.lock          |  22 ++
+ src-tauri/Cargo.lock          |  21 ++
  src-tauri/Cargo.toml          |   2 +
  src-tauri/src/clipboard.rs    |  38 ++-
  src-tauri/src/lib.rs          |   8 +
@@ -41,11 +41,11 @@ Claude-Session: https://claude.ai/code/session_01Mi4LD93Ls8zyxpUPtowEkE
  src-tauri/src/settings.rs     |  10 +
  src-tauri/src/shortcut/mod.rs |   1 +
  src/bindings.ts               |  16 +-
- 8 files changed, 603 insertions(+), 4 deletions(-)
+ 8 files changed, 602 insertions(+), 4 deletions(-)
  create mode 100644 src-tauri/src/portal_input.rs
 
 diff --git a/src-tauri/Cargo.lock b/src-tauri/Cargo.lock
-index 3d13b84..f50cc1f 100644
+index 7861c67..be4bc34 100644
 --- a/src-tauri/Cargo.lock
 +++ b/src-tauri/Cargo.lock
 @@ -207,6 +207,23 @@ version = "0.7.6"
@@ -72,26 +72,23 @@ index 3d13b84..f50cc1f 100644
  [[package]]
  name = "async-broadcast"
  version = "0.7.2"
-@@ -2504,6 +2521,7 @@ name = "handy"
- version = "0.9.8"
+@@ -2463,6 +2480,7 @@ name = "handy"
+ version = "0.10.0"
  dependencies = [
   "anyhow",
 + "ashpd",
   "chrono",
   "clap",
-  "cpal",
-@@ -7057,8 +7075,10 @@ dependencies = [
-  "libc",
-  "mio 1.1.1",
-  "pin-project-lite",
-+ "signal-hook-registry",
+  "earshot",
+@@ -7094,6 +7112,7 @@ dependencies = [
+  "signal-hook-registry",
   "socket2",
   "tokio-macros",
 + "tracing",
   "windows-sys 0.61.2",
  ]
  
-@@ -8973,6 +8993,7 @@ dependencies = [
+@@ -9032,6 +9051,7 @@ dependencies = [
   "rustix",
   "serde",
   "serde_repr",
@@ -99,7 +96,7 @@ index 3d13b84..f50cc1f 100644
   "tracing",
   "uds_windows",
   "uuid",
-@@ -9131,6 +9152,7 @@ dependencies = [
+@@ -9190,6 +9210,7 @@ dependencies = [
   "endi",
   "enumflags2",
   "serde",
@@ -108,23 +105,23 @@ index 3d13b84..f50cc1f 100644
   "zvariant_derive",
   "zvariant_utils",
 diff --git a/src-tauri/Cargo.toml b/src-tauri/Cargo.toml
-index d1ff831..3d0d9e8 100644
+index 37ad7ef..84cc034 100644
 --- a/src-tauri/Cargo.toml
 +++ b/src-tauri/Cargo.toml
-@@ -164,6 +164,8 @@ objc2-service-management = "0.3.2"
- gtk-layer-shell = { version = "0.8", features = ["v0_6"] }
+@@ -172,6 +172,8 @@ gtk-layer-shell = { version = "0.8", features = ["v0_6"] }
+ # version against the release that introduced damage-based compositing.
+ webkit2gtk-sys = "2.0"
  gtk = "0.18"
- libc = "0.2"
 +# xdg-desktop-portal RemoteDesktop, for keysym-based typing on Wayland.
 +ashpd = { version = "0.12", default-features = false, features = ["tokio"] }
- transcribe-cpp = { version = "0.2.4", default-features = false, features = [
+ transcribe-cpp = { version = "0.4.0", default-features = false, features = [
    "dynamic-backends",
    "vulkan",
 diff --git a/src-tauri/src/clipboard.rs b/src-tauri/src/clipboard.rs
-index 6beba07..4660a81 100644
+index da8485e..ab0d13b 100644
 --- a/src-tauri/src/clipboard.rs
 +++ b/src-tauri/src/clipboard.rs
-@@ -58,6 +58,7 @@ fn paste_via_clipboard(
+@@ -77,6 +77,7 @@ fn paste_via_clipboard(
      paste_method: &PasteMethod,
      paste_delay_ms: u64,
      paste_delay_after_ms: u64,
@@ -132,7 +129,7 @@ index 6beba07..4660a81 100644
  ) -> Result<(), String> {
      let clipboard = app_handle.clipboard();
      let saved_text = clipboard.read_text().ok().filter(|t| !t.is_empty());
-@@ -80,7 +81,7 @@ fn paste_via_clipboard(
+@@ -99,7 +100,7 @@ fn paste_via_clipboard(
      let paste_result = (|| -> Result<(), String> {
          // Send paste key combo
          #[cfg(target_os = "linux")]
@@ -141,7 +138,7 @@ index 6beba07..4660a81 100644
  
          #[cfg(not(target_os = "linux"))]
          let key_combo_sent = false;
-@@ -120,7 +121,17 @@ fn paste_via_clipboard(
+@@ -140,7 +141,17 @@ fn paste_via_clipboard(
  /// Attempts to send a key combination using Linux-native tools.
  /// Returns `Ok(true)` if a native tool handled it, `Ok(false)` to fall back to enigo.
  #[cfg(target_os = "linux")]
@@ -160,7 +157,7 @@ index 6beba07..4660a81 100644
      if is_wayland() {
          // Wayland: prefer wtype (but not on KDE or GNOME), then dotool, then ydotool
          // Note: wtype doesn't work on KDE (no zwp_virtual_keyboard_manager_v1 support)
-@@ -158,6 +169,19 @@ fn try_send_key_combo_linux(paste_method: &PasteMethod) -> Result<bool, String>
+@@ -178,6 +189,19 @@ fn try_send_key_combo_linux(paste_method: &PasteMethod) -> Result<bool, String>
      Ok(false)
  }
  
@@ -180,7 +177,7 @@ index 6beba07..4660a81 100644
  /// Attempts to type text directly using Linux-native tools.
  /// Returns `Ok(true)` if a native tool handled it, `Ok(false)` to fall back to enigo.
  #[cfg(target_os = "linux")]
-@@ -190,6 +214,11 @@ fn try_direct_typing_linux(text: &str, preferred_tool: TypingTool) -> Result<boo
+@@ -210,6 +234,11 @@ fn try_direct_typing_linux(text: &str, preferred_tool: TypingTool) -> Result<boo
                  type_text_via_xdotool(text)?;
                  Ok(true)
              }
@@ -192,7 +189,7 @@ index 6beba07..4660a81 100644
              _ => Err(format!(
                  "Typing tool {:?} is not available on this system",
                  preferred_tool
-@@ -261,6 +290,9 @@ pub fn get_available_typing_tools() -> Vec<String> {
+@@ -281,6 +310,9 @@ pub fn get_available_typing_tools() -> Vec<String> {
      if is_xdotool_available() {
          tools.push("xdotool".to_string());
      }
@@ -202,7 +199,7 @@ index 6beba07..4660a81 100644
      tools
  }
  
-@@ -834,6 +866,8 @@ pub fn paste(text: String, app_handle: AppHandle) -> Result<(), String> {
+@@ -890,6 +922,8 @@ pub fn paste(text: String, app_handle: AppHandle) -> Result<(), String> {
                  &paste_method,
                  paste_delay_ms,
                  paste_delay_after_ms,
@@ -212,10 +209,10 @@ index 6beba07..4660a81 100644
          }
          PasteMethod::ExternalScript => {
 diff --git a/src-tauri/src/lib.rs b/src-tauri/src/lib.rs
-index 898770b..cb2bc40 100644
+index 50a7efd..c006408 100644
 --- a/src-tauri/src/lib.rs
 +++ b/src-tauri/src/lib.rs
-@@ -17,6 +17,8 @@ mod memory;
+@@ -21,6 +21,8 @@ mod notices;
  mod overlay;
  mod paste_tx;
  pub mod portable;
@@ -224,7 +221,7 @@ index 898770b..cb2bc40 100644
  mod secure_input;
  mod settings;
  mod shortcut;
-@@ -1017,6 +1019,12 @@ pub fn run(cli_args: CliArgs) {
+@@ -1087,6 +1089,12 @@ pub fn run(cli_args: CliArgs) {
              // the Carbon fallback. See secure_input.rs and issue #1578.
              secure_input::init(&app_handle);
  
@@ -754,10 +751,10 @@ index 0000000..3185f37
 +    }
 +}
 diff --git a/src-tauri/src/settings.rs b/src-tauri/src/settings.rs
-index bd4ecbd..cedc454 100644
+index 2f76dc9..900e56b 100644
 --- a/src-tauri/src/settings.rs
 +++ b/src-tauri/src/settings.rs
-@@ -306,6 +306,10 @@ pub enum TypingTool {
+@@ -327,6 +327,10 @@ pub enum TypingTool {
      Dotool,
      Ydotool,
      Xdotool,
@@ -768,7 +765,7 @@ index bd4ecbd..cedc454 100644
  }
  
  #[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Type, Default)]
-@@ -496,6 +500,11 @@ pub struct AppSettings {
+@@ -526,6 +530,11 @@ pub struct AppSettings {
      pub reliable_paste: bool,
      #[serde(default = "default_typing_tool")]
      pub typing_tool: TypingTool,
@@ -780,7 +777,7 @@ index bd4ecbd..cedc454 100644
      #[serde(default)]
      pub external_script_path: Option<String>,
      #[serde(default = "default_filler_word_removal_enabled")]
-@@ -982,6 +991,7 @@ pub fn get_default_settings() -> AppSettings {
+@@ -1054,6 +1063,7 @@ pub fn get_default_settings() -> AppSettings {
          paste_delay_after_ms: default_paste_delay_after_ms(),
          reliable_paste: false,
          typing_tool: default_typing_tool(),
@@ -789,10 +786,10 @@ index bd4ecbd..cedc454 100644
          filler_word_removal_enabled: default_filler_word_removal_enabled(),
          custom_filler_words: None,
 diff --git a/src-tauri/src/shortcut/mod.rs b/src-tauri/src/shortcut/mod.rs
-index 607ef52..f28df44 100644
+index c49eca1..5769963 100644
 --- a/src-tauri/src/shortcut/mod.rs
 +++ b/src-tauri/src/shortcut/mod.rs
-@@ -979,6 +979,7 @@ pub fn change_typing_tool_setting(app: AppHandle, tool: String) -> Result<(), St
+@@ -1036,6 +1036,7 @@ pub fn change_typing_tool_setting(app: AppHandle, tool: String) -> Result<(), St
          "dotool" => TypingTool::Dotool,
          "ydotool" => TypingTool::Ydotool,
          "xdotool" => TypingTool::Xdotool,
@@ -801,10 +798,10 @@ index 607ef52..f28df44 100644
              warn!("Invalid typing tool '{}', defaulting to auto", other);
              TypingTool::Auto
 diff --git a/src/bindings.ts b/src/bindings.ts
-index 1d8fc9a..f4f5c69 100644
+index b576dc6..bf814f2 100644
 --- a/src/bindings.ts
 +++ b/src/bindings.ts
-@@ -996,7 +996,13 @@ selected_channel?: number | null; clamshell_microphone?: string | null; selected
+@@ -1138,7 +1138,13 @@ airpods_mode?: boolean; keyboard_implementation?: KeyboardImplementation; show_t
   * after the target app actually reads the transcript, instead of after a
   * fixed delay. See `paste_tx`. macOS and Windows only.
   */
@@ -819,10 +816,10 @@ index 1d8fc9a..f4f5c69 100644
  /**
   * Fresh installs default from the OS locale; existing stores are migrated
   * in `apply_settings_migrations`.
-@@ -1191,7 +1197,13 @@ export type StreamWorkKind = "transcribing" | "polishing"
+@@ -1546,7 +1552,13 @@ export type TranscriptionOutcome =
+  * Transcribing or pasting failed.
   */
- export type Theme = "system" | "light" | "dark"
- export type TranscribeAcceleratorSetting = "auto" | "cpu" | "gpu"
+ "failed"
 -export type TypingTool = "auto" | "wtype" | "kwtype" | "dotool" | "ydotool" | "xdotool"
 +export type TypingTool = "auto" | "wtype" | "kwtype" | "dotool" | "ydotool" | "xdotool" | 
 +/**
@@ -835,5 +832,5 @@ index 1d8fc9a..f4f5c69 100644
  export type WindowsMicrophonePermissionStatus = { supported: boolean; overall_access: PermissionAccess; device_access: PermissionAccess; app_access: PermissionAccess; desktop_app_access: PermissionAccess }
  
 -- 
-2.55.0
+2.56.0
 
