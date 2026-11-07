@@ -56,14 +56,15 @@ handy.overrideAttrs (finalAttrs: prevAttrs: {
   '';
 
   # frontendDeps picks up the new src through the fixed point, but its own hash
-  # is pinned to the nixpkgs release. It only moves when bun.lock does, so
-  # re-check it on every bump.
+  # is pinned to the nixpkgs release. It moves when bun.lock does, so re-check it
+  # on every bump, and also when nixpkgs bumps bun: the installed node_modules
+  # differs between bun releases (1.4.2 -> 1.4.4 changed it with the same lock).
   passthru =
     prevAttrs.passthru
     // {
       frontendDeps = prevAttrs.passthru.frontendDeps.overrideAttrs (_: {
         inherit (finalAttrs) src version;
-        outputHash = "sha256-A45dZkqXl5HOZXvUIazSF956SAhhFSMdYFukmS21MX0=";
+        outputHash = "sha256-2RCuoJpQeg3JN4JqlKvzO4KMz6n7rNXnsb9IyWt9law=";
       });
     };
 })
