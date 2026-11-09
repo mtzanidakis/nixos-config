@@ -48,6 +48,21 @@
     "electron-39.8.10"
   ];
 
+  # cargoSetupHook now forces *-sys crates to link system libraries, which
+  # broke these two. Same changes as upstream; drop the overlay once
+  # nixos-unstable has NixOS/nixpkgs@200cb9662c and NixOS/nixpkgs@16b463698a.
+  nixpkgs.overlays = [
+    (final: prev: {
+      hl-log-viewer = prev.hl-log-viewer.overrideAttrs (old: {
+        nativeBuildInputs = old.nativeBuildInputs ++ [final.pkg-config];
+        buildInputs = old.buildInputs ++ [final.zstd];
+      });
+      codex = prev.codex.overrideAttrs (old: {
+        buildInputs = old.buildInputs ++ (with final; [aws-lc oniguruma sqlite zstd]);
+      });
+    })
+  ];
+
   # timezone
   time.timeZone = "Europe/Athens";
 
