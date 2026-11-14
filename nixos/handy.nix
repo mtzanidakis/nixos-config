@@ -1,15 +1,23 @@
 {pkgs, ...}: {
-  # handy patched to type through the xdg-desktop-portal RemoteDesktop API --
-  # see pkgs/handy. That replaces dotool, which pushed raw keycodes through
-  # uinput and could only ever type what the active xkb group could reach, so
-  # neither hardware.uinput nor the uinput group is needed any more.
-  #
-  # Requires `Typing Tool: portal` in handy's settings; the portal asks for
-  # consent once and the restore token keeps later launches silent.
-  #
-  # Chromium and electron applications need KWin >= 6.8 (KDE MR !9755): older
-  # KWin sent out-of-group keysyms on a keycode Chromium silently drops.
+  # handy pastes through the clipboard and sends Shift+Insert with dotool -- see
+  # pkgs/handy. Settings: Paste Method "Shift+Insert", Typing Tool "auto".
   environment.systemPackages = [
     (pkgs.callPackage ../pkgs/handy {})
+  ];
+
+  # dotool needs /dev/uinput. uaccess hands it to whoever owns the active seat,
+  # without a uinput group that every process of the user would carry. The steam
+  # and logitech rules already do the same, but only by accident; this keeps
+  # handy working if either goes. The tag has to be set before 73-seat-late
+  # applies it, so this is a 70- rule rather than services.udev.extraRules,
+  # which lands in 99-local.
+  services.udev.packages = [
+    (pkgs.writeTextFile {
+      name = "uinput-uaccess-udev-rules";
+      destination = "/etc/udev/rules.d/70-uinput-uaccess.rules";
+      text = ''
+        KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uinput"
+      '';
+    })
   ];
 }

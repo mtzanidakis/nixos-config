@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  # Same patched build the system module installs; referenced directly so the
+  # Same build the system module installs; referenced directly so the
   # unit can never end up pointing at a different handy than the one on PATH.
   handy = pkgs.callPackage ../../pkgs/handy {};
 in {

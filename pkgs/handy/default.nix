@@ -1,57 +1,55 @@
-# handy with an xdg-desktop-portal typing backend.
+# handy pinned to the current upstream release, unpatched.
 #
-# Every typing backend handy ships resolves a character to a keycode, so on our
-# us,gr layout a greek transcript arrives as latin gibberish unless the greek
-# group happens to be active. The patch adds a backend that goes through the
-# RemoteDesktop portal's NotifyKeyboardKeysym instead, which leaves the symbol
-# lookup to kwin.
+# Since 0.10.1 handy's Linux default is "Shift+Insert": it puts the transcript on
+# the clipboard and the primary selection and sends only the chord, so greek
+# survives on our us,gr layout whichever xkb group is active. That replaced our
+# own xdg-desktop-portal typing patch (upstream wants to deprecate direct typing,
+# so the patch had no future there).
 #
-# The patch is content-identical to the branch prepared for upstream,
-# feat/portal-typing-main in ~/src/handy-portal-main -- same eight files, same
-# added lines, only the hunk offsets differ. It applies to current main as
-# cleanly as it does here, so it no longer waits on cjpais/Handy#689 (which is
-# keycode-based, stalled, and has the same blind spot). Keep the two in step:
-# whatever goes upstream lands here first.
+# The chord still needs a sender on kwin: wtype is skipped on kde, and enigo's
+# XTest fallback lands in Xwayland only. dotool goes through /dev/uinput, which
+# nixos/handy.nix opens to the seat user. It sends keycodes, but shift and
+# insert sit on the same keys in every group.
 #
-# Reaching chromium and electron applications needs KWin >= 6.8 (KDE MR !9755).
-#
-# nixpkgs lags the upstream release, so the source is pinned to the current
-# release here rather than applied to the packaged version.
+# nixpkgs lags the upstream release, so the source is pinned here.
 {
   handy,
+  dotool,
   fetchFromGitHub,
+  lib,
   rustPlatform,
 }:
 handy.overrideAttrs (finalAttrs: prevAttrs: {
-  version = "0.10.0";
+  version = "0.10.1";
 
   src = fetchFromGitHub {
     owner = "cjpais";
     repo = "Handy";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-PnL2le8URBs4I3pv9DKh+JLDII20xtDkJEUJghLToXQ=";
+    hash = "sha256-vIBZ5FcIvQT5YXkR/63QCSUJbWWBdW8TPP6+OMuejKg=";
   };
 
-  patches = (prevAttrs.patches or []) ++ [./portal-typing.patch];
-
   # buildRustPackage reads cargoHash before the fixed point, so overriding it
-  # does nothing -- the vendor tree has to be rebuilt by hand. It needs the
-  # patch applied too: the lockfile gains ashpd.
+  # does nothing -- the vendor tree has to be rebuilt by hand.
   cargoDeps = rustPlatform.fetchCargoVendor {
     name = "handy-${finalAttrs.version}-vendor";
-    inherit (finalAttrs) src patches;
+    inherit (finalAttrs) src;
     cargoRoot = "src-tauri";
-    hash = "sha256-jK+4a1HBZ0nwjzXG+9ckPKoV/Nd7kPcQ5hU3BvrfpWc=";
+    hash = "sha256-xiT82ODb3F78fiAVBdkSfVKC2Ulvi+T5MUs1LcjjAF8=";
   };
 
   # Replaces the nixpkgs preFixup rather than extending it, to lose its
   # WEBKIT_DISABLE_DMABUF_RENDERER=1. Since 0.10.0 (src/webkit_renderer.rs) handy
   # picks the renderer from the linked WebKitGTK version, and any value set here
   # skips that. On 2.54 and later the variable leaves the overlay half painted.
+  # HANDY_DISABLE_UPDATER stays even though 0.10.1 turns the updater off for
+  # builds that cannot install updates: the nixpkgs build goes through a deb
+  # bundle, so the binary is stamped "deb" and only the missing dpkg keeps it off.
   preFixup = ''
     gappsWrapperArgs+=(
       --set ALSA_PLUGIN_DIR "${finalAttrs.passthru.alsaPluginDirectory}"
       --set HANDY_DISABLE_UPDATER 1
+      --prefix PATH : "${lib.makeBinPath [dotool]}"
     )
   '';
 
