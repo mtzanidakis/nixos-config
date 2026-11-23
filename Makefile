@@ -39,9 +39,15 @@ gc-old: | $(result_dir)
 .PHONY: ls-updates
 ls-updates: update build diff
 
+# gizu updates almost daily and hits the anonymous GitHub API rate limit,
+# so authenticate there; the other hosts update rarely and have no gh.
+ifeq ($(shell uname -n),gizu)
+update: export NIX_CONFIG = access-tokens = github.com=$(shell gh auth token)
+endif
+
 .PHONY: update
 update:
-	NIX_CONFIG="access-tokens = github.com=$$(gh auth token)" nix flake update $(INPUTS)
+	nix flake update $(INPUTS)
 
 .PHONY: upgrade
 upgrade: update deploy
