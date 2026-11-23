@@ -38,6 +38,27 @@
     claude-code-overlay = {nixpkgs.overlays = [claude-code.overlays.default];};
   in {
     nixosConfigurations = {
+      bini = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          ./hosts/bini/configuration.nix
+          claude-code-overlay
+          catppuccin.nixosModules.catppuccin
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = {inherit inputs;};
+              users.manolis.imports = [
+                ./hosts/bini/home.nix
+                catppuccin.homeModules.catppuccin
+              ];
+            };
+          }
+        ];
+      };
+
       etsi = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
