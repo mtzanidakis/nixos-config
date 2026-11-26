@@ -3,6 +3,16 @@
   pkgs,
   ...
 }: let
+  # Telemetry off, for the server, the desktop app and the `t3` CLI alike; all
+  # three read these. The first stops the PostHog analytics and the relay
+  # traces, the second any OTLP export, whatever configured it. The nixpkgs
+  # build has no relay tracing or OTLP endpoint baked in, so the second is a
+  # guard against a later build or a settings.json that brings one.
+  telemetryOff = {
+    T3CODE_TELEMETRY_ENABLED = "false";
+    T3CODE_OTEL_SDK_DISABLED = "true";
+  };
+
   # The `t3` CLI (for `t3 pair` and friends). The package's own desktop
   # launcher is swapped for `desktop` below; its .desktop entry runs
   # `t3code-desktop` from PATH, so it picks that up.
@@ -22,6 +32,8 @@
   # settings file is only seeded, since the app rewrites it (window bounds etc.).
   desktop = pkgs.writeShellScriptBin "t3code-desktop" ''
     export T3CODE_HOME="''${T3CODE_HOME:-$HOME/.t3-desktop}"
+    ${lib.toShellVars telemetryOff}
+    export ${toString (lib.attrNames telemetryOff)}
     settings=$T3CODE_HOME/userdata/desktop-settings.json
     if [ ! -e "$settings" ]; then
       mkdir -p "''${settings%/*}"
@@ -31,6 +43,9 @@
   '';
 in {
   home.packages = [t3 desktop];
+
+  # For `t3` run from a shell.
+  home.sessionVariables = telemetryOff;
 
   # Git over SSH (pull/push from the UI) needs keychain's agent, whose socket
   # name is random per agent start and only known to shells. Each shell that
@@ -58,14 +73,15 @@ in {
     Service = {
       ExecStart = "${pkgs.t3code}/bin/t3 serve";
       WorkingDirectory = "%h";
-      Environment = [
+      Environment =
+        lib.mapAttrsToList (name: value: "${name}=${value}") telemetryOff
+        ++ [
         # Loopback only; nixos/t3code.nix publishes it on the tailnet over
         # HTTPS with Tailscale Serve.
         "T3CODE_HOST=127.0.0.1"
         # Fixed, so clients' saved routes keep working; otherwise it takes the
         # next free port when 3773 is busy.
         "T3CODE_PORT=3773"
-        "T3CODE_TELEMETRY_ENABLED=false"
         "SSH_AUTH_SOCK=%t/keychain-ssh-agent.sock"
       ];
       Restart = "on-failure";

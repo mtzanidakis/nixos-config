@@ -29,6 +29,15 @@ in {
     };
   };
 
+  # Where the PostHog analytics go. Telemetry is already off by environment in
+  # home/dev/t3code.nix; this holds whatever a later version or a stray `t3`
+  # run does with those variables. Both families, so a lookup cannot fall
+  # through to DNS for the other one.
+  networking.hosts = {
+    "0.0.0.0" = ["ingest.t3.codes"];
+    "::" = ["ingest.t3.codes"];
+  };
+
   # Start the user manager, and with it the server, at boot rather than at
   # first login, so the machine is reachable remotely right after a reboot.
   users.users.manolis.linger = true;
