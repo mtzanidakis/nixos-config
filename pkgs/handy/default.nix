@@ -20,13 +20,13 @@
   rustPlatform,
 }:
 handy.overrideAttrs (finalAttrs: prevAttrs: {
-  version = "0.10.1";
+  version = "0.10.2";
 
   src = fetchFromGitHub {
     owner = "cjpais";
     repo = "Handy";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-vIBZ5FcIvQT5YXkR/63QCSUJbWWBdW8TPP6+OMuejKg=";
+    hash = "sha256-yvbCDA6pjN8y+Ft8HpZxR180aigTHVuZfUbIEWGMsLo=";
   };
 
   # buildRustPackage reads cargoHash before the fixed point, so overriding it
@@ -35,7 +35,7 @@ handy.overrideAttrs (finalAttrs: prevAttrs: {
     name = "handy-${finalAttrs.version}-vendor";
     inherit (finalAttrs) src;
     cargoRoot = "src-tauri";
-    hash = "sha256-xiT82ODb3F78fiAVBdkSfVKC2Ulvi+T5MUs1LcjjAF8=";
+    hash = "sha256-5m9KEYBRbZlpt/d+/WXHSnygnnEtpiymEjdLAjc33RQ=";
   };
 
   # Replaces the nixpkgs preFixup rather than extending it, to lose its
